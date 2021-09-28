@@ -1,0 +1,24 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /fitnessab
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/fitnessAB
+    username: postgres
+    password: 123
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  #  Hibernate
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        ddl-auto: validate
