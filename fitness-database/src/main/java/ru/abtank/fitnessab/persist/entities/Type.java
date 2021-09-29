@@ -25,4 +25,34 @@ public class Type implements Serializable {
 
     @Column(name = "descr")
     private String descr;
+
+    public Type(String name) {
+        this.name = name;
+    }
+
+    public static TypeBuilder builder(String name){
+        return new TypeBuilder(name);
+    }
+
+    public static class TypeBuilder {
+        private final Type type;
+
+        private TypeBuilder(String name){
+            type = new Type(name);
+        }
+
+        public TypeBuilder withDescr(String descr){
+            type.descr = descr;
+            return this;
+        }
+
+        public TypeBuilder withId(Integer id){
+            type.id = id;
+            return this;
+        }
+
+        public Type build(){
+            return type;
+        }
+    }
 }
