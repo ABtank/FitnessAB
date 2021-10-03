@@ -25,4 +25,10 @@ public class Type implements Serializable {
 
     @Column(name = "descr")
     private String descr;
+
+    public Type(Integer id, @NotBlank String name, String descr) {
+        this.id = id;
+        this.name = name;
+        this.descr = descr;
+    }
 }

@@ -14,8 +14,13 @@ public class WorkoutExerciseId implements Serializable {
     private static final long SerialVersionUID = -8265327880991001253L;
 
     @Column(name = "workout_id", nullable = false)
-    private Long workoutId;
+    private Integer workoutId;
 
     @Column (name = "exercise_id", nullable = false)
     private Integer exerciseId;
+
+    public WorkoutExerciseId(Integer workoutId, Integer exerciseId) {
+        this.workoutId = workoutId;
+        this.exerciseId = exerciseId;
+    }
 }

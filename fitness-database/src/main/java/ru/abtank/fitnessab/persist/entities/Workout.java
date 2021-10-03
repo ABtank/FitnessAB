@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "workouts")
@@ -34,6 +35,14 @@ public class Workout implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dt_create", updatable = false)
     private Date createDate;
+
+
+    public Workout(Integer id, String name, String descr, User creator) {
+        this.id = id;
+        this.name = name;
+        this.descr = descr;
+        this.creator = creator;
+    }
 
     public Date getCreateDate() {
         return createDate;

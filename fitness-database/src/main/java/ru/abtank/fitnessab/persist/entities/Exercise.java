@@ -56,6 +56,19 @@ public class Exercise implements Serializable {
     private Date createDate;
 
 
+    public Exercise(Integer id, String name, String descr, Boolean isCardio, String cardioName1, String cardioName2, String cardioName3, Category category, Type type, User creator) {
+        this.id = id;
+        this.name = name;
+        this.descr = descr;
+        this.isCardio = isCardio;
+        this.cardioName1 = cardioName1;
+        this.cardioName2 = cardioName2;
+        this.cardioName3 = cardioName3;
+        this.category = category;
+        this.type = type;
+        this.creator = creator;
+    }
+
     public Date getCreateDate() {
         return createDate;
     }

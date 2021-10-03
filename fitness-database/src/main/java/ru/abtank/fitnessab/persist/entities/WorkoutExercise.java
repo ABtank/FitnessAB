@@ -37,6 +37,13 @@ public class WorkoutExercise implements Serializable {
     @Column(name = "dt_create", updatable = false)
     private Date createDate;
 
+    public WorkoutExercise(WorkoutExerciseId id, Mode mode, Integer ordinal, String descr, User creator) {
+        this.id = id;
+        this.mode = mode;
+        this.ordinal = ordinal;
+        this.descr = descr;
+        this.creator = creator;
+    }
 
     public Date getCreateDate() {
         return createDate;

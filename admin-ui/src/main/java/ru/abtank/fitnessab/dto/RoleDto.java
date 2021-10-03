@@ -14,4 +14,9 @@ public class RoleDto {
         this.id = role.getId();
         this.name = role.getName();
     }
+
+    public RoleDto(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

@@ -1,0 +1,306 @@
+### -=USER=-
+GET http://localhost:8189/fitnessab/api/v1/user
+Authorization: Basic in_user 123
+###
+GET http://localhost:8189/fitnessab/api/v1/user/4
+Authorization: Basic in_user 123
+###
+POST http://localhost:8189/fitnessab/api/v1/user
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 1,
+  "login": "POST_Abramovich",
+  "password": "123",
+  "matchingPassword": "123",
+  "email": "1233@bk.ru",
+  "roles": [
+    "ROLE_USER",
+    "ROLE_ADMIN"
+  ]
+}
+###
+PUT http://localhost:8189/fitnessab/api/v1/user
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 3,
+  "login": "PUT_Abramovich",
+  "password": "123",
+  "matchingPassword": "123",
+  "email": "1233@bk.ru",
+  "roles": [
+    "ROLE_USER",
+    "ROLE_ADMIN"
+  ]
+}
+###
+DELETE http://localhost:8189/fitnessab/api/v1/user/2
+Authorization: Basic in_user 123
+Content-Type: application/json
+###
+DELETE http://localhost:8189/fitnessab/api/v1/user
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+### -=ROLE=-
+GET http://localhost:8189/fitnessab/api/v1/role
+Authorization: Basic in_user 123
+###
+GET http://localhost:8189/fitnessab/api/v1/role/1
+Authorization: Basic in_user 123
+###
+POST http://localhost:8189/fitnessab/api/v1/role
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 123,
+  "name": "ROLE_POST"
+}
+###
+PUT http://localhost:8189/fitnessab/api/v1/role
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "ROLE_POST_PUT"
+}
+###
+DELETE http://localhost:8189/fitnessab/api/v1/role/3
+Authorization: Basic in_user 123
+Content-Type: application/json
+###
+DELETE http://localhost:8189/fitnessab/api/v1/role
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+
+###  -=MODE=-
+GET http://localhost:8189/fitnessab/api/v1/mode
+Authorization: Basic in_user 123
+###
+GET http://localhost:8189/fitnessab/api/v1/mode/1
+Authorization: Basic in_user 123
+###
+POST http://localhost:8189/fitnessab/api/v1/mode
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 5,
+  "name": "Дополнительное2",
+  "isStart": true,
+  "descr": ""
+}
+###
+PUT http://localhost:8189/fitnessab/api/v1/mode
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 8,
+  "name": "PUT_Дополнительное2",
+  "isStart": true,
+  "descr": ""
+}
+###
+DELETE http://localhost:8189/fitnessab/api/v1/mode/7
+Authorization: Basic in_user 123
+Content-Type: application/json
+###
+DELETE http://localhost:8189/fitnessab/api/v1/mode
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+###  -=CATEGORY=-
+GET http://localhost:8189/fitnessab/api/v1/category
+Authorization: Basic in_user 123
+###
+GET http://localhost:8189/fitnessab/api/v1/category/1
+Authorization: Basic in_user 123
+###
+POST http://localhost:8189/fitnessab/api/v1/category
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Test",
+  "descr": "",
+  "creator": {
+    "id": 1,
+    "login": "abtank",
+    "email": "abtank@bk.ru"
+  }
+}
+###
+PUT http://localhost:8189/fitnessab/api/v1/category
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 10,
+  "name": "Test23",
+  "descr": "",
+  "creator": {
+    "id": 1
+  }
+}
+###
+DELETE http://localhost:8189/fitnessab/api/v1/category/10
+Authorization: Basic in_user 123
+Content-Type: application/json
+###
+DELETE http://localhost:8189/fitnessab/api/v1/category
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+###  -=EXERSISE=-
+GET http://localhost:8189/fitnessab/api/v1/exercise
+Authorization: Basic in_user 123
+###
+GET http://localhost:8189/fitnessab/api/v1/exercise/1
+Authorization: Basic in_user 123
+###
+POST http://localhost:8189/fitnessab/api/v1/exercise
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Test",
+  "descr": "",
+  "creator": {
+    "id": 1,
+    "login": "abtank",
+    "email": "abtank@bk.ru"
+  }
+}
+###
+PUT http://localhost:8189/fitnessab/api/v1/exercise
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 10,
+  "name": "Test23",
+  "descr": "",
+  "creator": {
+    "id": 1
+  }
+}
+###
+DELETE http://localhost:8189/fitnessab/api/v1/exercise/10
+Authorization: Basic in_user 123
+Content-Type: application/json
+###
+DELETE http://localhost:8189/fitnessab/api/v1/exercise
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+###  -=WORKOUT=-
+GET http://localhost:8189/fitnessab/api/v1/workout
+Authorization: Basic in_user 123
+###
+GET http://localhost:8189/fitnessab/api/v1/workout/1
+Authorization: Basic in_user 123
+###
+POST http://localhost:8189/fitnessab/api/v1/workout
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "name": "Test workout 3",
+  "descr": "",
+  "creator": {
+    "id": 1
+  }
+}
+###
+PUT http://localhost:8189/fitnessab/api/v1/workout
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 10,
+  "name": "Test23",
+  "descr": "",
+  "creator": {
+    "id": 1
+  }
+}
+###
+DELETE http://localhost:8189/fitnessab/api/v1/workout/10
+Authorization: Basic in_user 123
+Content-Type: application/json
+###
+DELETE http://localhost:8189/fitnessab/api/v1/workout
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+###  -=WORKOUT_EXERSICE=-
+GET http://localhost:8189/fitnessab/api/v1/workout_exercise
+Authorization: Basic in_user 123
+###
+GET http://localhost:8189/fitnessab/api/v1/workout_exercise/1/1
+Authorization: Basic in_user 123
+###
+POST http://localhost:8189/fitnessab/api/v1/workout_exercise
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "mode": {
+    "id": 1,
+    "name": "Регулярное",
+    "isStart": true,
+    "descr": ""
+  },
+  "ordinal": 1,
+  "descr": null,
+  "creator": {
+    "id": 1,
+    "login": "abtank",
+    "email": "abtank@bk.ru"
+  },
+  "id": {
+    "workoutId": 1,
+    "exerciseId": 1
+  }
+}
+###
+PUT http://localhost:8189/fitnessab/api/v1/workout_exercise/1/1
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "mode": {
+    "id": 1,
+    "name": "Регулярное",
+    "isStart": true,
+    "descr": ""
+  },
+  "ordinal": 1,
+  "descr": "eeee",
+  "creator": {
+    "id": 1,
+    "login": "abtank",
+    "email": "abtank@bk.ru"
+  },
+  "id": {
+    "workoutId": 1,
+    "exerciseId": 1
+  }
+}
+###
+DELETE http://localhost:8189/fitnessab/api/v1/workout_exercise/2/2
+Authorization: Basic in_user 123
+Content-Type: application/json
+###
+DELETE http://localhost:8189/fitnessab/api/v1/workout_exercise
+Authorization: Basic in_user 123
+Content-Type: application/json
