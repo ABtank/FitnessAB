@@ -255,21 +255,16 @@ Content-Type: application/json
 
 {
   "mode": {
-    "id": 1,
-    "name": "Регулярное",
-    "isStart": true,
-    "descr": ""
+    "id": 1
   },
-  "ordinal": 1,
-  "descr": null,
+  "ordinal": 7,
+  "descr": "post",
   "creator": {
-    "id": 1,
-    "login": "abtank",
-    "email": "abtank@bk.ru"
+    "id": 1
   },
   "id": {
     "workoutId": 1,
-    "exerciseId": 1
+    "exerciseId": 12
   }
 }
 ###
@@ -279,25 +274,20 @@ Content-Type: application/json
 
 {
   "mode": {
-    "id": 1,
-    "name": "Регулярное",
-    "isStart": true,
-    "descr": ""
+    "id": 1
   },
-  "ordinal": 1,
+  "ordinal": 6,
   "descr": "eeee",
   "creator": {
-    "id": 1,
-    "login": "abtank",
-    "email": "abtank@bk.ru"
+    "id": 1
   },
   "id": {
     "workoutId": 1,
-    "exerciseId": 1
+    "exerciseId": 19
   }
 }
 ###
-DELETE http://localhost:8189/fitnessab/api/v1/workout_exercise/2/2
+DELETE http://localhost:8189/fitnessab/api/v1/workout_exercise/1/12
 Authorization: Basic in_user 123
 Content-Type: application/json
 ###
