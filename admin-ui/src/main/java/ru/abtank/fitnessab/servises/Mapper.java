@@ -177,7 +177,6 @@ public class Mapper {
                 modeToDto(we.getMode()),
                 we.getOrdinal(),
                 we.getDescr(),
-                userToCreatorDto(we.getCreator()),
                 new WorkoutDtoId(we.getWorkout().getId()),
                 new ExerciseDtoId(we.getExercise().getId()));
     }
@@ -190,8 +189,37 @@ public class Mapper {
                 new Exercise(we.getExercise().getId()),
                 modeDtoToMode(we.getMode()),
                 we.getOrdinal(),
-                we.getDescr(),
-                creatorDtoToUser(we.getCreator()));
+                we.getDescr());
+    }
+
+    public RoundDto roundToDto(Round round){
+        LOGGER.info("-=roundToDto(Round round)=-");
+        return new RoundDto(
+                round.getId(),
+                new WorkoutDtoId(round.getWorkout().getId()),
+                new ExerciseDtoId(round.getExercise().getId()),
+                round.getWeight(),
+                round.getReps(),
+                round.getDescr(),
+                round.getCardio1(),
+                round.getCardio2(),
+                round.getCardio3()
+        );
+    }
+
+    public Round roundDtoToRound(RoundDto roundDto){
+        LOGGER.info("-=roundDtotoRound(RoundDto roundDto)=-");
+        return new Round(
+                roundDto.getId(),
+                new Workout(roundDto.getWorkout().getId()),
+                new Exercise(roundDto.getExercise().getId()),
+                roundDto.getWeight(),
+                roundDto.getReps(),
+                roundDto.getDescr(),
+                roundDto.getCardio1(),
+                roundDto.getCardio2(),
+                roundDto.getCardio3()
+        );
     }
 
 

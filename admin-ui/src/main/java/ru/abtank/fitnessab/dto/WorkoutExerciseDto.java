@@ -12,16 +12,14 @@ public class WorkoutExerciseDto {
     private ModeDto mode;
     private Integer ordinal;
     private String descr;
-    private CreatorDto creator;
 
 
     public WorkoutExerciseDto(Integer id, ModeDto mode, Integer ordinal, String descr,
-                              CreatorDto creator, WorkoutDtoId workout, ExerciseDtoId exercise) {
+                              WorkoutDtoId workout, ExerciseDtoId exercise) {
         this.id = id;
         this.mode = mode;
         this.ordinal = ordinal;
         this.descr = descr;
-        this.creator = creator;
         this.workout = workout;
         this.exercise = exercise;
     }

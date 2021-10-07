@@ -40,7 +40,6 @@ public class WorkoutExerciseController {
     @ResponseStatus(HttpStatus.CREATED)
     public WorkoutExerciseDto create(@RequestBody WorkoutExerciseDto workoutExerciseDto) {
         LOGGER.info("-=create(@RequestBody WorkoutExerciseDto WorkoutExerciseDto)=-");
-        System.out.println(workoutExerciseDto);
         workoutExerciseDto.setId(null);
         return workoutExerciseService.save(workoutExerciseDto);
     }

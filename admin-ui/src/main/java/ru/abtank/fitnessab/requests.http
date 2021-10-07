@@ -301,3 +301,61 @@ Content-Type: application/json
 DELETE http://localhost:8189/fitnessab/api/v1/workout_exercise
 Authorization: Basic in_user 123
 Content-Type: application/json
+
+###  -=ROUND=-
+GET http://localhost:8189/fitnessab/api/v1/round
+Authorization: Basic in_user 123
+###
+GET http://localhost:8189/fitnessab/api/v1/round/2
+Authorization: Basic in_user 123
+###
+POST http://localhost:8189/fitnessab/api/v1/round
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 0,
+  "workout": {
+    "id": 1
+  },
+  "exercise": {
+    "id": 1
+  },
+  "weight": "50",
+  "reps": 15,
+  "descr": "wow",
+  "cardio1": "km",
+  "cardio2": "string",
+  "cardio3": "string"
+}
+###
+PUT http://localhost:8189/fitnessab/api/v1/round
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 3,
+  "workout": {
+    "id": 1
+  },
+  "exercise": {
+    "id": 1
+  },
+  "mode": {
+    "id": 2
+  },
+  "ordinal": 6,
+  "descr": "put round",
+  "creator": {
+    "id": 1
+  }
+}
+
+###
+DELETE http://localhost:8189/fitnessab/api/v1/round/3
+Authorization: Basic in_user 123
+Content-Type: application/json
+###
+DELETE http://localhost:8189/fitnessab/api/v1/round
+Authorization: Basic in_user 123
+Content-Type: application/json

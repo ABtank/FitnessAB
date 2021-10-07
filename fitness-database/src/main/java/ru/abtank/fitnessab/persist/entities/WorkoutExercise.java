@@ -38,23 +38,18 @@ public class WorkoutExercise implements Serializable {
     @Column(name = "descr")
     private String descr;
 
-    @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false)
-    private User creator;
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dt_create", updatable = false)
     private Date createDate;
 
-    public WorkoutExercise(Integer id,Workout workout, Exercise exercise, Mode mode, Integer ordinal, String descr, User creator) {
+    public WorkoutExercise(Integer id, Workout workout, Exercise exercise, Mode mode, Integer ordinal, String descr) {
         this.id = id;
         this.workout = workout;
         this.exercise = exercise;
         this.mode = mode;
         this.ordinal = ordinal;
         this.descr = descr;
-        this.creator = creator;
     }
 
     public Date getCreateDate() {
