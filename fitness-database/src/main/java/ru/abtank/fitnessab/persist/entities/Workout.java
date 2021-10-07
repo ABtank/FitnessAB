@@ -27,6 +27,9 @@ public class Workout implements Serializable {
     @Column(name = "descr")
     private String descr;
 
+    @OneToMany (mappedBy = "workout" )
+    private List<WorkoutExercise> workoutExercises;
+
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
@@ -42,6 +45,10 @@ public class Workout implements Serializable {
         this.name = name;
         this.descr = descr;
         this.creator = creator;
+    }
+
+    public Workout(Integer id) {
+        this.id = id;
     }
 
     public Date getCreateDate() {

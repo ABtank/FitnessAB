@@ -15,8 +15,18 @@ import java.util.Date;
 public class WorkoutExercise implements Serializable {
     private static final long SerialVersionUID = -4929812469346284072L;
 
-    @EmbeddedId
-    private WorkoutExerciseId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "workout_exercise_id")
+    private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "workout_id", nullable = false)
+    private Workout workout;
+
+    @ManyToOne
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private Exercise exercise;
 
     @ManyToOne
     @JoinColumn(name = "mode_id", nullable = false)
@@ -37,8 +47,10 @@ public class WorkoutExercise implements Serializable {
     @Column(name = "dt_create", updatable = false)
     private Date createDate;
 
-    public WorkoutExercise(WorkoutExerciseId id, Mode mode, Integer ordinal, String descr, User creator) {
+    public WorkoutExercise(Integer id,Workout workout, Exercise exercise, Mode mode, Integer ordinal, String descr, User creator) {
         this.id = id;
+        this.workout = workout;
+        this.exercise = exercise;
         this.mode = mode;
         this.ordinal = ordinal;
         this.descr = descr;

@@ -2,25 +2,28 @@ package ru.abtank.fitnessab.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.abtank.fitnessab.persist.entities.WorkoutExerciseId;
 
 @Data
 @NoArgsConstructor
 public class WorkoutExerciseDto {
+    private Integer id;
+    private WorkoutDtoId workout;
+    private ExerciseDtoId exercise;
     private ModeDto mode;
     private Integer ordinal;
     private String descr;
     private CreatorDto creator;
-    private WorkoutExerciseId id;
 
 
-    public WorkoutExerciseDto(WorkoutExerciseId id, ModeDto mode, Integer ordinal, String descr,
-                              CreatorDto creator) {
-        this.id= id;
+    public WorkoutExerciseDto(Integer id, ModeDto mode, Integer ordinal, String descr,
+                              CreatorDto creator, WorkoutDtoId workout, ExerciseDtoId exercise) {
+        this.id = id;
         this.mode = mode;
         this.ordinal = ordinal;
         this.descr = descr;
         this.creator = creator;
+        this.workout = workout;
+        this.exercise = exercise;
     }
 
 }

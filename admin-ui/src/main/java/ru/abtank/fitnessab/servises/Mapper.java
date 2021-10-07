@@ -1,13 +1,12 @@
 package ru.abtank.fitnessab.servises;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.abtank.fitnessab.dto.*;
 import ru.abtank.fitnessab.persist.entities.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -15,6 +14,7 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class Mapper {
     private PasswordEncoder passwordEncoder;
+    private final static Logger LOGGER = LoggerFactory.getLogger(Mapper.class);
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -22,6 +22,7 @@ public class Mapper {
     }
 
     public UserDto userToDto(User user) {
+        LOGGER.info("-=userToDto(User user)=-");
         return new UserDto(user.getId(),
                 user.getLogin(),
                 user.getEmail(),
@@ -34,14 +35,16 @@ public class Mapper {
     }
 
     public User userCreationDTOtoUser(UserCreationDto userCreationDTO) {
+        LOGGER.info("-=userCreationDTOtoUser(UserCreationDto userCreationDTO)=-");
         return new User(userCreationDTO.getId(),
                 userCreationDTO.getLogin(),
                 passwordEncoder.encode(userCreationDTO.getPassword()),
                 userCreationDTO.getEmail()
-                );
+        );
     }
 
-    public User userDtoToCreator(CreatorDto creatorDto){
+    public User userDtoToCreator(CreatorDto creatorDto) {
+        LOGGER.info("-=userDtoToCreator(CreatorDto creatorDto)=-");
         return new User(
                 creatorDto.getId(),
                 creatorDto.getLogin(),
@@ -49,14 +52,16 @@ public class Mapper {
         );
     }
 
-    public User creatorDtoToUser(CreatorDto creatorDto){
+    public User creatorDtoToUser(CreatorDto creatorDto) {
+        LOGGER.info("-=creatorDtoToUser(CreatorDto creatorDto)=-");
         return new User(
                 creatorDto.getId(),
                 creatorDto.getLogin(),
                 creatorDto.getEmail());
     }
 
-    public CreatorDto userToCreatorDto(User user){
+    public CreatorDto userToCreatorDto(User user) {
+        LOGGER.info("-=userToCreatorDto(User user)=-");
         return new CreatorDto(
                 user.getId(),
                 user.getLogin(),
@@ -65,31 +70,38 @@ public class Mapper {
     }
 
     public Role roleDtoToRole(RoleDto roleDto) {
+        LOGGER.info("-=roleDtoToRole(RoleDto roleDto)=-");
         return new Role(roleDto.getId(), roleDto.getName());
     }
 
     public RoleDto roleToDto(Role role) {
+        LOGGER.info("-=roleToDto(Role role)=-");
         return new RoleDto(role.getId(), role.getName());
     }
 
     public Type typeDtoToType(TypeDto typeDto) {
+        LOGGER.info("-=typeDtoToType(TypeDto typeDto)=-");
         return new Type(typeDto.getId(), typeDto.getName(), typeDto.getDescr());
     }
 
     public TypeDto typeToDto(Type type) {
+        LOGGER.info("-=typeToDto(Type type)=-");
         return new TypeDto(type.getId(), type.getName(), type.getDescr());
     }
 
     public Mode modeDtoToMode(ModeDto modeDto) {
+        LOGGER.info("-=odeDtoToMode(ModeDto modeDto)=-");
         return new Mode(modeDto.getId(), modeDto.getName(), modeDto.getIsStart(), modeDto.getDescr());
     }
 
     public ModeDto modeToDto(Mode mode) {
+        LOGGER.info("-=modeToDto(Mode mode)=-");
         return new ModeDto(mode.getId(), mode.getName(), mode.getIsStart(), mode.getDescr());
     }
 
 
     public Category categoryDtoToCategory(CategoryDto categoryDto) {
+        LOGGER.info("-=categoryDtoToCategory(CategoryDto categoryDto)=-");
         return new Category(categoryDto.getId(),
                 categoryDto.getName(),
                 categoryDto.getDescr(),
@@ -97,6 +109,7 @@ public class Mapper {
     }
 
     public CategoryDto categoryToDto(Category category) {
+        LOGGER.info("-=categoryToDto(Category category)=-");
         return new CategoryDto(
                 category.getId(),
                 category.getName(),
@@ -106,6 +119,7 @@ public class Mapper {
     }
 
     public ExerciseDto exerciseToDto(Exercise exercise) {
+        LOGGER.info("-=exerciseToDto(Exercise exercise)=-");
         return new ExerciseDto(
                 exercise.getId(),
                 exercise.getName(),
@@ -121,6 +135,7 @@ public class Mapper {
     }
 
     public Exercise exerciseDtoToExercise(ExerciseDto exerciseDto) {
+        LOGGER.info("-=exerciseDtoToExercise(ExerciseDto exerciseDto)=-");
         return new Exercise(
                 exerciseDto.getId(),
                 exerciseDto.getName(),
@@ -132,10 +147,11 @@ public class Mapper {
                 categoryDtoToCategory(exerciseDto.getCategory()),
                 typeDtoToType(exerciseDto.getType()),
                 userDtoToCreator(exerciseDto.getCreator())
-                );
+        );
     }
 
-    public WorkoutDto workoutToDto(Workout workout){
+    public WorkoutDto workoutToDto(Workout workout) {
+        LOGGER.info("-=workoutToDto(Workout workout) =-");
         return new WorkoutDto(
                 workout.getId(),
                 workout.getName(),
@@ -143,7 +159,9 @@ public class Mapper {
                 userToCreatorDto(workout.getCreator())
         );
     }
-    public Workout workoutDtoToWorkout(WorkoutDto w){
+
+    public Workout workoutDtoToWorkout(WorkoutDto w) {
+        LOGGER.info("-=workoutDtoToWorkout(WorkoutDto w)=-");
         return new Workout(
                 w.getId(),
                 w.getName(),
@@ -152,23 +170,28 @@ public class Mapper {
         );
     }
 
-    public WorkoutExerciseDto workoutExerciseToDto (WorkoutExercise we){
+    public WorkoutExerciseDto workoutExerciseToDto(WorkoutExercise we){
+        LOGGER.info("-=workoutExerciseToDto(WorkoutExercise we)=-");
         return new WorkoutExerciseDto(
                 we.getId(),
                 modeToDto(we.getMode()),
                 we.getOrdinal(),
                 we.getDescr(),
-                userToCreatorDto(we.getCreator()));
+                userToCreatorDto(we.getCreator()),
+                new WorkoutDtoId(we.getWorkout().getId()),
+                new ExerciseDtoId(we.getExercise().getId()));
     }
 
-    public WorkoutExercise workoutExerciseDtoToWorkoutExercise (WorkoutExerciseDto we){
+    public WorkoutExercise workoutExerciseDtoToWorkoutExercise(WorkoutExerciseDto we) {
+        LOGGER.info("-=workoutExerciseDtoToWorkoutExercise(WorkoutExerciseDto we)=-");
         return new WorkoutExercise(
                 we.getId(),
+                new Workout(we.getWorkout().getId()),
+                new Exercise(we.getExercise().getId()),
                 modeDtoToMode(we.getMode()),
                 we.getOrdinal(),
                 we.getDescr(),
-                creatorDtoToUser(we.getCreator())
-        );
+                creatorDtoToUser(we.getCreator()));
     }
 
 

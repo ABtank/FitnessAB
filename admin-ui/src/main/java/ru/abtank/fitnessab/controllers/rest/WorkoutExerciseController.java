@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.abtank.fitnessab.dto.WorkoutExerciseDto;
 import ru.abtank.fitnessab.exception.NotFoundException;
-import ru.abtank.fitnessab.persist.entities.WorkoutExerciseId;
 import ru.abtank.fitnessab.servises.WorkoutExerciseService;
 
 import java.util.List;
@@ -32,9 +31,9 @@ public class WorkoutExerciseController {
         return workoutExerciseService.findAll();
     }
 
-    @GetMapping(value = "/{w_id}/{e_id}")
-    public WorkoutExerciseDto findById(@PathVariable("w_id") Integer wId, @PathVariable("e_id") Integer eId) {
-        return workoutExerciseService.findById(new WorkoutExerciseId(wId,eId)).orElseThrow(NotFoundException::new);
+    @GetMapping("/{id}")
+    public WorkoutExerciseDto findById(@PathVariable("id") Integer id) {
+        return workoutExerciseService.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @PostMapping
@@ -42,7 +41,7 @@ public class WorkoutExerciseController {
     public WorkoutExerciseDto create(@RequestBody WorkoutExerciseDto workoutExerciseDto) {
         LOGGER.info("-=create(@RequestBody WorkoutExerciseDto WorkoutExerciseDto)=-");
         System.out.println(workoutExerciseDto);
-            workoutExerciseDto.setId(null);
+        workoutExerciseDto.setId(null);
         return workoutExerciseService.save(workoutExerciseDto);
     }
 
@@ -62,10 +61,10 @@ public class WorkoutExerciseController {
         return new ResponseEntity<>("-=You cannot delete all WorkoutExercises=-", HttpStatus.BAD_REQUEST);
     }
     
-    @DeleteMapping("/{w_id}/{e_id}")
-    public ResponseEntity<String> delete(@PathVariable("w_id") Integer wId, @PathVariable("e_id") Integer eId) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
         LOGGER.info("-=delete(@PathVariable Integer id)=-");
-        workoutExerciseService.deleteById(new WorkoutExerciseId(wId,eId));
+        workoutExerciseService.deleteById(id);
         return new ResponseEntity<>("WorkoutExercise deleted", HttpStatus.OK);
     }
 }

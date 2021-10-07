@@ -253,6 +253,7 @@ DROP TABLE IF EXISTS workouts_exercises CASCADE;
 -- упражнения в тренеровке (комплекс)
 CREATE TABLE workouts_exercises
 (
+    workout_exercise_id  bigserial PRIMARY KEY,
     workout_id  bigint    NOT NULL,
     exercise_id int       NOT NULL,
     mode_id     int       NOT NULL DEFAULT 1,
@@ -260,7 +261,7 @@ CREATE TABLE workouts_exercises
     descr       text,
     creator_id  bigint    NOT NULL,
     dt_create   timestamp NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (workout_id, exercise_id),
+    UNIQUE (workout_id, exercise_id),
     FOREIGN KEY (creator_id) references users (id),
     FOREIGN KEY (workout_id) references workouts (workout_id),
     FOREIGN KEY (exercise_id) references exercises (exercise_id),

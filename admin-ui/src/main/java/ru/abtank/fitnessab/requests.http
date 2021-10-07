@@ -2,7 +2,7 @@
 GET http://localhost:8189/fitnessab/api/v1/user
 Authorization: Basic in_user 123
 ###
-GET http://localhost:8189/fitnessab/api/v1/user/4
+GET http://localhost:8189/fitnessab/api/v1/user/1
 Authorization: Basic in_user 123
 ###
 POST http://localhost:8189/fitnessab/api/v1/user
@@ -226,15 +226,15 @@ Authorization: Basic in_user 123
 Content-Type: application/json
 
 {
-  "id": 10,
-  "name": "Test23",
+  "id": 5,
+  "name": "Test5",
   "descr": "",
   "creator": {
     "id": 1
   }
 }
 ###
-DELETE http://localhost:8189/fitnessab/api/v1/workout/10
+DELETE http://localhost:8189/fitnessab/api/v1/workout/5
 Authorization: Basic in_user 123
 Content-Type: application/json
 ###
@@ -246,7 +246,7 @@ Content-Type: application/json
 GET http://localhost:8189/fitnessab/api/v1/workout_exercise
 Authorization: Basic in_user 123
 ###
-GET http://localhost:8189/fitnessab/api/v1/workout_exercise/1/1
+GET http://localhost:8189/fitnessab/api/v1/workout_exercise/6
 Authorization: Basic in_user 123
 ###
 POST http://localhost:8189/fitnessab/api/v1/workout_exercise
@@ -254,40 +254,47 @@ Authorization: Basic in_user 123
 Content-Type: application/json
 
 {
-  "mode": {
+  "id": 0,
+  "workout": {
     "id": 1
   },
-  "ordinal": 7,
-  "descr": "post",
-  "creator": {
-    "id": 1
+  "exercise": {
+    "id": 12
   },
-  "id": {
-    "workoutId": 1,
-    "exerciseId": 12
-  }
-}
-###
-PUT http://localhost:8189/fitnessab/api/v1/workout_exercise/1/1
-Authorization: Basic in_user 123
-Content-Type: application/json
-
-{
   "mode": {
     "id": 1
   },
   "ordinal": 6,
-  "descr": "eeee",
+  "descr": "POST workout_exercise ",
   "creator": {
     "id": 1
-  },
-  "id": {
-    "workoutId": 1,
-    "exerciseId": 19
   }
 }
 ###
-DELETE http://localhost:8189/fitnessab/api/v1/workout_exercise/1/12
+PUT http://localhost:8189/fitnessab/api/v1/workout_exercise
+Authorization: Basic in_user 123
+Content-Type: application/json
+
+{
+  "id": 6,
+  "workout": {
+    "id": 1
+  },
+  "exercise": {
+    "id": 12
+  },
+  "mode": {
+    "id": 2
+  },
+  "ordinal": 6,
+  "descr": "put workout_exercise",
+  "creator": {
+    "id": 1
+  }
+}
+
+###
+DELETE http://localhost:8189/fitnessab/api/v1/workout_exercise/6
 Authorization: Basic in_user 123
 Content-Type: application/json
 ###

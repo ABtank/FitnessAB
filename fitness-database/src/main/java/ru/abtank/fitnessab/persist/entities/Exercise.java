@@ -69,6 +69,10 @@ public class Exercise implements Serializable {
         this.creator = creator;
     }
 
+    public Exercise(Integer id) {
+        this.id = id;
+    }
+
     public Date getCreateDate() {
         return createDate;
     }

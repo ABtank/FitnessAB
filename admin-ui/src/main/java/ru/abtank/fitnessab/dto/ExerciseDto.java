@@ -31,4 +31,8 @@ public class ExerciseDto {
         this.creator = creator;
         this.category = category;
     }
+
+    public ExerciseDto(Integer id) {
+        this.id = id;
+    }
 }
