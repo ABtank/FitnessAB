@@ -6,12 +6,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -42,7 +42,7 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    private List<Role> roles;
 
     //добавляем самого себя в entity
 //    @ManyToOne(fetch = FetchType.LAZY)
@@ -62,6 +62,13 @@ public class User implements Serializable {
         this.id = id;
         this.login = login;
         this.password = password;
+        this.email = email;
+        this.roles = new ArrayList<>();
+    }
+
+    public User(Integer id, @NotBlank(message = "Укажите Login") String login, @Email(message = "Укажите корректный Email") @NotBlank(message = "Укажите Email") String email) {
+        this.id = id;
+        this.login = login;
         this.email = email;
     }
 
@@ -100,5 +107,9 @@ public class User implements Serializable {
         cb.append("}\n");
 
         return cb.toString();
+    }
+
+    public void addRole(Role role){
+        this.roles.add(role);
     }
 }

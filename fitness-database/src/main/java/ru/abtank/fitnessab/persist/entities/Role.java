@@ -26,6 +26,10 @@ public class Role implements Serializable {
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
+    public Role(Integer id, @NotBlank String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Override
     public String toString() {

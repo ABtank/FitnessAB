@@ -29,4 +29,11 @@ public class Category implements Serializable {
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
+
+    public Category(Integer id, @NotBlank(message = "Укажите категорию") String name, String descr, User creator) {
+        this.id = id;
+        this.name = name;
+        this.descr = descr;
+        this.creator = creator;
+    }
 }

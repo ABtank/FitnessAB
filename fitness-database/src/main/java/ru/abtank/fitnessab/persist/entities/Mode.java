@@ -26,4 +26,11 @@ public class Mode implements Serializable {
 
     @Column(name = "descr")
     private String descr;
+
+    public Mode(Integer id, String name, Boolean isStart, String descr) {
+        this.id = id;
+        this.name = name;
+        this.isStart = isStart;
+        this.descr = descr;
+    }
 }
