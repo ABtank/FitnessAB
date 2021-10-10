@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -17,7 +18,7 @@ public class Round implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "set_id")
+    @Column(name = "round_id")
     private Integer id;
 
     @ManyToOne
@@ -50,15 +51,23 @@ public class Round implements Serializable {
     @Column(name = "dt_session")
     private Date sessionDate;
 
-    @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false)
-    private User creator;
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dt_create", updatable = false)
     private Date createDate;
 
+
+    public Round(Integer id, Workout workout, Exercise exercise, String weight, Integer reps, String descr, String cardio1, String cardio2, String cardio3) {
+        this.id = id;
+        this.workout = workout;
+        this.exercise = exercise;
+        this.weight = weight;
+        this.reps = reps;
+        this.descr = descr;
+        this.cardio1 = cardio1;
+        this.cardio2 = cardio2;
+        this.cardio3 = cardio3;
+    }
 
     public Date getCreateDate() {
         return createDate;

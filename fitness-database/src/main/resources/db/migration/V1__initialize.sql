@@ -253,26 +253,25 @@ DROP TABLE IF EXISTS workouts_exercises CASCADE;
 -- упражнения в тренеровке (комплекс)
 CREATE TABLE workouts_exercises
 (
+    workout_exercise_id  bigserial PRIMARY KEY,
     workout_id  bigint    NOT NULL,
     exercise_id int       NOT NULL,
     mode_id     int       NOT NULL DEFAULT 1,
     ordinal     int       NOT NULL,
     descr       text,
-    creator_id  bigint    NOT NULL,
     dt_create   timestamp NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (workout_id, exercise_id),
-    FOREIGN KEY (creator_id) references users (id),
+    UNIQUE (workout_id, exercise_id),
     FOREIGN KEY (workout_id) references workouts (workout_id),
     FOREIGN KEY (exercise_id) references exercises (exercise_id),
     FOREIGN KEY (mode_id) references modes (mode_id)
 );
 
-INSERT INTO workouts_exercises (workout_id, exercise_id, ordinal, creator_id)
-VALUES (1, 1, 1, 1),
-       (1, 20, 2, 1),
-       (1, 30, 3, 1),
-       (1, 40, 4, 1),
-       (1, 50, 5, 1);
+INSERT INTO workouts_exercises (workout_id, exercise_id, ordinal)
+VALUES (1, 1, 1),
+       (1, 20, 2),
+       (1, 30, 3),
+       (1, 40, 4),
+       (1, 50, 5);
 
 DROP TABLE IF EXISTS rounds CASCADE;
 -- подход (имя set как-то не хорошо зайдет)
@@ -281,7 +280,6 @@ CREATE TABLE rounds
     round_id      bigserial PRIMARY KEY,
     workout_id  bigint NOT NULL,
     exercise_id bigint NOT NULL,
-    creator_id  bigint NOT NULL,
     dt_session  timestamp DEFAULT NOW(),
     weight      varchar(10),
     reps        varchar(10),
@@ -290,7 +288,6 @@ CREATE TABLE rounds
     cardio_2    varchar(10),
     cardio_3    varchar(10),
     dt_create   timestamp DEFAULT NOW(),
-    FOREIGN KEY (creator_id) references users (id),
     FOREIGN KEY (workout_id) references workouts (workout_id),
     FOREIGN KEY (exercise_id) references exercises (exercise_id)
 );

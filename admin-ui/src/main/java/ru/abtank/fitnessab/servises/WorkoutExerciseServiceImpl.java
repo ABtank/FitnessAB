@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.WorkoutExerciseDto;
 import ru.abtank.fitnessab.persist.entities.WorkoutExercise;
-import ru.abtank.fitnessab.persist.entities.WorkoutExerciseId;
 import ru.abtank.fitnessab.persist.repositories.WorkoutExerciseRepository;
 
 import java.util.List;
@@ -38,12 +37,18 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
     }
 
     @Override
-    public Optional<WorkoutExerciseDto> findById(WorkoutExerciseId id) {
+    public Optional<WorkoutExerciseDto> findById(Integer id) {
         return workoutExerciseRepository.findById(id).map(mapper::workoutExerciseToDto);
     }
 
     @Override
-    public void deleteById(WorkoutExerciseId id) {
+    @Deprecated
+    public Optional<WorkoutExerciseDto> findByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void deleteById(Integer id) {
         workoutExerciseRepository.deleteById(id);
     }
 
