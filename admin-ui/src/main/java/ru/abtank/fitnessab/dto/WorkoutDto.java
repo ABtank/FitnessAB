@@ -3,6 +3,8 @@ package ru.abtank.fitnessab.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class WorkoutDto {
@@ -16,5 +18,9 @@ public class WorkoutDto {
         this.name = name;
         this.descr = descr;
         this.creator = creator;
+    }
+
+    public WorkoutDto(Integer id) {
+        this.id = id;
     }
 }
