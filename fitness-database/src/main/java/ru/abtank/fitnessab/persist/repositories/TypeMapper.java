@@ -14,8 +14,8 @@ public class TypeMapper {
     private JdbcTemplate jdbcTemplate;
     private static final String QUERY_FIND_BY_ID = "SELECT type_id, name, descr FROM types WHERE type_id=?";
     private static final String QUERY_INSERT = "INSERT INTO types(name, descr) values (?, ?)";
-    private static final String QUERY_UPDATE = "UPDATE types SET name=?, descr=? WHERE id=?";
-    private static final String QUERY_DELETE = "insert into type(id, name, latitude, longitude) values (?, ?, ?, ?)";
+    private static final String QUERY_UPDATE = "UPDATE types SET name=?, descr=? WHERE type_id=?";
+    private static final String QUERY_DELETE = "DELETE FROM types WHERE type_id=?";
 
     @Autowired
     public TypeMapper(JdbcTemplate jdbcTemplate) {
@@ -25,21 +25,20 @@ public class TypeMapper {
     public Type findById(Integer id) {
         Type type = Registry.getInstance().getIdentityMap().find(id);
         if (type == null) {
-            return jdbcTemplate.query(
+            type = jdbcTemplate.query(
                     QUERY_FIND_BY_ID,
                     (r, i) -> Type.builder()
                             .id(r.getInt(1))
                             .name(r.getString(2))
                             .descr(r.getString(3))
                             .build(), id).stream().findAny().orElse(null);
-
-        } else {
-            return type;
+            Registry.getInstance().getIdentityMap().add(type);
         }
+        return type;
     }
 
-    public void insert(List<Type> types) {
-        jdbcTemplate.batchUpdate(
+    public int [] insert(List<Type> types) {
+        int[] typeIds = jdbcTemplate.batchUpdate(
                 QUERY_INSERT,
                 new BatchPreparedStatementSetter() {
                     @Override
@@ -55,12 +54,19 @@ public class TypeMapper {
                     }
                 }
         );
+        types.stream().forEach(type -> Registry.getInstance().getIdentityMap().remove(type));
+        return typeIds;
     }
 
-    public void update (Type type){
+    public void update(Type type) {
+        jdbcTemplate.update(
+                QUERY_UPDATE,
+                type.getName(), type.getDescr());
+        Registry.getInstance().getIdentityMap().add(type);
     }
 
-    public void delete (Type type){
-
+    public void delete(Type type) {
+        jdbcTemplate.update(QUERY_DELETE, type.getId());
+        Registry.getInstance().getIdentityMap().remove(type);
     }
 }

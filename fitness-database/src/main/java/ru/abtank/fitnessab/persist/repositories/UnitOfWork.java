@@ -54,7 +54,7 @@ public class UnitOfWork {
      * @param entity новая созданная сущность
      */
     public void registerNew(Type entity){
-        identityMap.add((Type)entity);
+        identityMap.add(entity);
         if(!newTypes.contains(entity)){
             newTypes.add(entity);
         }
