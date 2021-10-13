@@ -66,9 +66,10 @@ public class RoleController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id) {
         LOGGER.info("-=delete(@PathVariable Integer id)=-");
         roleService.deleteById(id);
-        return new ResponseEntity<>("Role deleted", HttpStatus.OK);
+        LOGGER.info("-=OK=-");
     }
 }

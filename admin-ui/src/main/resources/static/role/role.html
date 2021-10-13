@@ -1,0 +1,41 @@
+<div>
+    <h3>Роли</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>#</td>
+            <td>Имя</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="role in Roles">
+            <td>{{role.id}}</td>
+            <td>{{role.name}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
+
+
+    <h3>Удалить роль</h3>
+    <form ng-submit="submitDeleteRole()">
+        <div class="form-group col-md-6">
+            <label for="elementId">Role</label>
+            <div class="input-group mb-3">
+                <select class="form-control" required ng-model="delRole.id" id="elementId">
+                    <option ng-repeat="role in Roles" value="{{role.id}}">{{role.name}}</option>
+                </select>
+                <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+    </form>
+
+    <h3>Добавить новую роль</h3>
+    <form novalidate ng-submit="submitCreateNewRole()">
+        <div class="form-group col-md-6">
+            <label for="elementName">Имя</label>
+            <input class="form-control" type="text" ng-model="newRole.name" id="elementName">
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Сохранить</button>
+        </div>
+    </form>
+</div>

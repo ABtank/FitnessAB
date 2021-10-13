@@ -259,12 +259,12 @@ Content-Type: application/json
     "id": 1
   },
   "exercise": {
-    "id": 12
+    "id": 13
   },
   "mode": {
     "id": 1
   },
-  "ordinal": 6,
+  "ordinal": 7,
   "descr": "POST workout_exercise ",
   "creator": {
     "id": 1

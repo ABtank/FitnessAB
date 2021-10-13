@@ -78,7 +78,8 @@ public class SecurityConfiguration {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()  //начинаем описывать конфогурацию
-                    .antMatchers("/api/**").hasRole("ADMIN")  // доступ для всех
+                    .antMatchers("/api/**").permitAll() // доступ для всех
+//                    .antMatchers("/api/**").hasRole("ADMIN")  // доступ для всех
                     .and()
                     .httpBasic()//базовая авторизация
                     .authenticationEntryPoint((httpServletRequest, httpServletResponse, exception) -> {  // обработчик ошибок при авторизации
