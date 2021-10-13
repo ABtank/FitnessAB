@@ -1,5 +1,6 @@
 package ru.abtank.fitnessab.persist.entities;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "types")
 @Data
+@Builder
 @NoArgsConstructor
 public class Type implements Serializable {
     private static final long SerialVersionUID = -9165236563057600523L;
