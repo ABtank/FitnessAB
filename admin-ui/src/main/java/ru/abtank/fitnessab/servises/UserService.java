@@ -1,9 +1,14 @@
 package ru.abtank.fitnessab.servises;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import ru.abtank.fitnessab.dto.UserCreationDto;
 import ru.abtank.fitnessab.dto.UserDto;
+import ru.abtank.fitnessab.persist.entities.User;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
@@ -13,4 +18,9 @@ public interface UserService {
     void deleteById(Integer id);
     UserDto save(UserCreationDto userCreationDTO);
     void deleteAll();
+    Optional<UserCreationDto> findByIdForUpdate(Integer id);
+
+    Page<UserDto> findAll(Map<String, String> params, PageRequest pageRequest);
+
+    List<User> findAll(Specification<User> spec);
 }

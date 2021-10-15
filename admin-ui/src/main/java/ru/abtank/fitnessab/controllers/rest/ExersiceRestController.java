@@ -16,8 +16,8 @@ import java.util.List;
 @Tag(name = "Exercise resource API", description = "API to operate Exercise resource ...")
 @RequestMapping("/api/v1/exercise")
 @RestController
-public class ExersiceController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ExersiceController.class);
+public class ExersiceRestController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ExersiceRestController.class);
     private ExerciseService exerciseService;
 
     @Autowired

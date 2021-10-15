@@ -17,8 +17,8 @@ import java.util.List;
 @Tag(name = "User resource API", description = "API to operate User resource ...")
 @RequestMapping("/api/v1/user")
 @RestController
-public class UserController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+public class UserRestController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserRestController.class);
     private UserService userService;
 
     @Autowired

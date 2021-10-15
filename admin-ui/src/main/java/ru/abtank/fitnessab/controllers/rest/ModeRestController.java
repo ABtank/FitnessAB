@@ -16,8 +16,8 @@ import java.util.List;
 @Tag(name = "Mode resource API", description = "API to operate Mode resource ...")
 @RequestMapping("/api/v1/mode")
 @RestController
-public class ModeController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ModeController.class);
+public class ModeRestController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ModeRestController.class);
     private ModeService modeService;
 
     @Autowired

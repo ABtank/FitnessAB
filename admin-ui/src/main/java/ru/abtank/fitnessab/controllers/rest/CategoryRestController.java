@@ -16,8 +16,8 @@ import java.util.List;
 @Tag(name = "Category resource API", description = "API to operate Category resource ...")
 @RequestMapping("/api/v1/category")
 @RestController
-public class CategoryController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
+public class CategoryRestController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(CategoryRestController.class);
     private CategoryService categoryService;
 
     @Autowired

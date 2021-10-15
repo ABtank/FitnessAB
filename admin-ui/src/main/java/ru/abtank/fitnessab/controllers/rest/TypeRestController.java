@@ -16,8 +16,8 @@ import java.util.List;
 @Tag(name = "Type resource API", description = "API to operate Type resource ...")
 @RequestMapping("/api/v1/type")
 @RestController
-public class TypeController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(TypeController.class);
+public class TypeRestController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(TypeRestController.class);
     private TypeService typeService;
 
     @Autowired

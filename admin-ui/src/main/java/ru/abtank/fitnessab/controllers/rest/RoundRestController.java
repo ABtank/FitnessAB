@@ -11,15 +11,14 @@ import ru.abtank.fitnessab.dto.RoundDto;
 import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.servises.RoundService;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 @Tag(name = "Round resource API", description = "API to operate Round resource ...")
 @RequestMapping("/api/v1/round")
 @RestController
-public class RoundController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(RoundController.class);
+public class RoundRestController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(RoundRestController.class);
     private RoundService roundService;
 
     @Autowired

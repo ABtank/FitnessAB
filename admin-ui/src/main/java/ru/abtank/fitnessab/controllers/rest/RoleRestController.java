@@ -16,8 +16,8 @@ import java.util.List;
 @Tag(name = "Role resource API", description = "API to operate Role resource ...")
 @RequestMapping("/api/v1/role")
 @RestController
-public class RoleController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(RoleController.class);
+public class RoleRestController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(RoleRestController.class);
     private RoleService roleService;
 
     @Autowired

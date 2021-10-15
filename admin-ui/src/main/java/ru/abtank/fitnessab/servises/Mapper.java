@@ -43,6 +43,20 @@ public class Mapper {
         );
     }
 
+    public UserCreationDto userToUserCreationDto(User user) {
+        LOGGER.info("-=userCreationDTOtoUser(UserCreationDto userCreationDTO)=-");
+        return new UserCreationDto(user.getId(),
+                user.getLogin(),
+                null,
+                null,
+                user.getEmail(),
+                user.getRoles()
+                .stream()
+                .map(Role::getName)
+                .collect(toList())
+        );
+    }
+
     public User userDtoToCreator(CreatorDto creatorDto) {
         LOGGER.info("-=userDtoToCreator(CreatorDto creatorDto)=-");
         return new User(
