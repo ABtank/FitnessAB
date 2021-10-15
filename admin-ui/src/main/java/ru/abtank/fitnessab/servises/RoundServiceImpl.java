@@ -64,4 +64,9 @@ public class RoundServiceImpl implements RoundService {
         roundRepository.save(round);
         return mapper.roundToDto(round);
     }
+
+    @Override
+    public long count() {
+        return roundRepository.count();
+    }
 }

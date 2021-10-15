@@ -61,4 +61,9 @@ public class ExerciseServiceImpl implements ExerciseService {
         Exercise exercise = exerciseRepository.save(mapper.exerciseDtoToExercise(o));
         return mapper.exerciseToDto(exercise);
     }
+
+    @Override
+    public long count() {
+        return exerciseRepository.count();
+    }
 }

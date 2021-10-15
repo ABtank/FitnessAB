@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +19,14 @@ import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.persist.entities.User;
 import ru.abtank.fitnessab.servises.RoleService;
 import ru.abtank.fitnessab.servises.UserService;
-import ru.abtank.fitnessab.persist.repositories.specifications.UserSpecification;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,18 +35,13 @@ public class UserController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private UserService userService;
-    private PasswordEncoder passwordEncoder;
     private RoleService roleService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-    @Autowired
+   @Autowired
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
     }
@@ -98,24 +93,15 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return (user.getId() != null) ? "redirect:/user/" + user.getId() : "users";
         }
-        Specification<User> spec = UserSpecification.trueLiteral();
-        spec = spec.and(UserSpecification.findBylogin(user.getLogin()));
-        spec = spec.or(UserSpecification.findByEmail(user.getEmail()));
-        if(user.getId() != null){
-            spec = spec.and(UserSpecification.idNotEqual(user.getId()));
-        }
-        List<User> chekEquals = userService.findAll(spec);
-        LOGGER.info("!chekEquals.isEmpty() {}", !chekEquals.isEmpty());
-        if (!chekEquals.isEmpty()) {
-            msg = "Login or email already exists";
-            redirectAttributes.addFlashAttribute("exception", msg);
-            return (user.getId() != null) ? "redirect:/user/" + user.getId() : "redirect:/user";
-        }
         if (!user.getPassword().equals(user.getMatchingPassword())) {
             bindingResult.rejectValue("matchingPassword", "error.matchingPassword", "пароль не совпал");
             return (user.getId() != null) ? "redirect:/user/" + user.getId() : "redirect:/user";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (!userService.checkIsUnique(user.getLogin(),user.getEmail(),user.getId())) {
+            msg = "Login or email already exists";
+            redirectAttributes.addFlashAttribute("exception", msg);
+            return (user.getId() != null) ? "redirect:/user/" + user.getId() : "redirect:/user";
+        }
         msg = (user.getId() != null) ? " Success update User " : " Success create User ";
         userService.save(user);
         LOGGER.info("SAVE SAVE SAVE");

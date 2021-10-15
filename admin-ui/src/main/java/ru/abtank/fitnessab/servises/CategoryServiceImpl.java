@@ -61,4 +61,9 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.save(mapper.categoryDtoToCategory(o));
         return mapper.categoryToDto(category);
     }
+
+    @Override
+    public long count() {
+        return categoryRepository.count();
+    }
 }

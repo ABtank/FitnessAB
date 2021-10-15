@@ -22,5 +22,7 @@ public interface UserService {
 
     Page<UserDto> findAll(Map<String, String> params, PageRequest pageRequest);
 
-    List<User> findAll(Specification<User> spec);
+    List<UserDto> findAll(Specification<User> spec);
+    boolean checkIsUnique(String login, String email, Integer id);
+    long count();
 }

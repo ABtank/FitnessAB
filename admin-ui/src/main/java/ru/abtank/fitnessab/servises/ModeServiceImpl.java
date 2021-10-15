@@ -64,4 +64,9 @@ public class ModeServiceImpl implements ModeService {
         Mode mode = modeRepository.save(mapper.modeDtoToMode(modeDto));
         return mapper.modeToDto(mode);
     }
+
+    @Override
+    public long count() {
+        return modeRepository.count();
+    }
 }

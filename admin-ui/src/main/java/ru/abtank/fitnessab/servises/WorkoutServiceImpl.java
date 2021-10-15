@@ -61,4 +61,9 @@ public class WorkoutServiceImpl implements WorkoutService {
         Workout workout = workoutRepository.save(mapper.workoutDtoToWorkout(o));
         return mapper.workoutToDto(workout);
     }
+
+    @Override
+    public long count() {
+        return workoutRepository.count();
+    }
 }

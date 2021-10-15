@@ -62,4 +62,9 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
         WorkoutExercise we = workoutExerciseRepository.save(mapper.workoutExerciseDtoToWorkoutExercise(o));
         return mapper.workoutExerciseToDto(we);
     }
+
+    @Override
+    public long count() {
+        return workoutExerciseRepository.count();
+    }
 }

@@ -100,7 +100,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll(Specification<User> spec) {
-        return userRepository.findAll(spec);
+    public List<UserDto> findAll(Specification<User> spec) {
+        return userRepository.findAll(spec).stream().map(mapper::userToDto).collect(toList());
+    }
+
+    @Override
+    public boolean checkIsUnique(String login, String email, Integer id) {
+        Specification<User> spec = UserSpecification.trueLiteral();
+        spec = spec.and(UserSpecification.findBylogin(login));
+        spec = spec.or(UserSpecification.findByEmail(email));
+        if(id != null){
+            spec = spec.and(UserSpecification.idNotEqual(id));
+        }
+        List<UserDto> chekEquals = findAll(spec);
+        return chekEquals.isEmpty();
+    }
+
+    @Override
+    public long count() {
+        return userRepository.count();
     }
 }

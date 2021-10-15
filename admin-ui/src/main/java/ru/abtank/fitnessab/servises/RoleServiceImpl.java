@@ -58,6 +58,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public long count() {
+        return roleRepository.count();
+    }
+
+    @Override
     public void deleteAll() {
         LOGGER.error("Someone decided to delete all roles");
     }

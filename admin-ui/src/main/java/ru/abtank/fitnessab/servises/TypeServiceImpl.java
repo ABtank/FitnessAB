@@ -61,4 +61,9 @@ public class TypeServiceImpl implements TypeService {
         Type type = typeRepository.save(mapper.typeDtoToType(o));
         return mapper.typeToDto(type);
     }
+
+    @Override
+    public long count() {
+        return typeRepository.count();
+    }
 }

@@ -10,4 +10,5 @@ public interface BasicService<E> {
     void deleteById(Integer id);
     void deleteAll();
     E save(E o);
+    long count();
 }
