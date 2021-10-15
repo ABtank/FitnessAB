@@ -61,8 +61,8 @@ public class SecurityConfiguration {
                     .antMatchers("/font-awesome/*").permitAll()
                     .antMatchers("/plugins/*").permitAll()
                     .antMatchers("/exercise/**").authenticated()
-//                    .antMatchers("/role/**").hasRole("ADMIN")  // ограничение по роли
-//                    .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")  // ограничение по роли
+                    .antMatchers("/role/**").hasRole("ADMIN")  // ограничение по роли
+                    .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")  // ограничение по роли
                     .and()
                     .formLogin();
         }
