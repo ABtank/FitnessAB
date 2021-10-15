@@ -9,15 +9,15 @@
     function config($routeProvider, $httpProvider) {
         $routeProvider
             .when('/', { //    http://localhost:8189/fitnessab/index.html#!/
-                templateUrl: 'main/main.html'
+                templateUrl: 'angular_page/main/main.html'
             })
 
             .when('/role', { //    http://localhost:8189/fitnessab/index.html#!/role
-                templateUrl: 'role/role.html',
+                templateUrl: 'angular_page/role/role.html',
                 controller: 'roleController'
             })
             .when('/user', {
-                templateUrl: 'user/user.html',
+                templateUrl: 'angular_page/user/user.html',
                 controller: 'userController'
             });
     }
