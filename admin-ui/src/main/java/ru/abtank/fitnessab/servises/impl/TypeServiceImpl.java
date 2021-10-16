@@ -1,4 +1,4 @@
-package ru.abtank.fitnessab.servises;
+package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.TypeDto;
 import ru.abtank.fitnessab.persist.entities.Type;
 import ru.abtank.fitnessab.persist.repositories.TypeRepository;
+import ru.abtank.fitnessab.servises.Mapper;
+import ru.abtank.fitnessab.servises.TypeService;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,9 +59,9 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public TypeDto save(TypeDto o) {
+    public Optional<TypeDto> save(TypeDto o) {
         Type type = typeRepository.save(mapper.typeDtoToType(o));
-        return mapper.typeToDto(type);
+        return findById(type.getId());
     }
 
     @Override

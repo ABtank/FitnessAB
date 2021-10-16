@@ -1,4 +1,4 @@
-package ru.abtank.fitnessab.servises;
+package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -14,6 +14,8 @@ import ru.abtank.fitnessab.persist.entities.User;
 import ru.abtank.fitnessab.persist.repositories.RoleRepository;
 import ru.abtank.fitnessab.persist.repositories.UserRepository;
 import ru.abtank.fitnessab.persist.repositories.specifications.UserSpecification;
+import ru.abtank.fitnessab.servises.Mapper;
+import ru.abtank.fitnessab.servises.UserService;
 
 import java.util.List;
 import java.util.Map;
@@ -73,17 +75,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto save(UserCreationDto userCreationDTO) {
+    public Optional<UserDto> save(UserCreationDto userCreationDTO) {
         User user = mapper.userCreationDTOtoUser(userCreationDTO);
         userCreationDTO.getRoles()
                 .stream()
                 .map(role -> roleRepository.findByName(role).get())
                 .forEach(user.getRoles()::add);
-        return mapper.userToDto(userRepository.save(user));
+        return findById(userRepository.save(user).getId());
     }
 
     @Override
-    public void deleteAll(){
+    public void deleteAll() {
         LOGGER.error("Someone decided to delete all Users");
     }
 
@@ -109,7 +111,7 @@ public class UserServiceImpl implements UserService {
         Specification<User> spec = UserSpecification.trueLiteral();
         spec = spec.and(UserSpecification.findBylogin(login));
         spec = spec.or(UserSpecification.findByEmail(email));
-        if(id != null){
+        if (id != null) {
             spec = spec.and(UserSpecification.idNotEqual(id));
         }
         List<UserDto> chekEquals = findAll(spec);

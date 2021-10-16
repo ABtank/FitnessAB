@@ -41,7 +41,7 @@ public class WorkoutExerciseRestController {
     public WorkoutExerciseDto create(@RequestBody WorkoutExerciseDto workoutExerciseDto) {
         LOGGER.info("-=create(@RequestBody WorkoutExerciseDto WorkoutExerciseDto)=-");
         workoutExerciseDto.setId(null);
-        return workoutExerciseService.save(workoutExerciseDto);
+        return workoutExerciseService.save(workoutExerciseDto).orElseThrow(NotFoundException::new);
     }
 
     @PutMapping
@@ -50,7 +50,7 @@ public class WorkoutExerciseRestController {
         if (workoutExerciseDto.getId() == null) {
             throw new IllegalArgumentException("Id not found in the update request");
         }
-        return workoutExerciseService.save(workoutExerciseDto);
+        return workoutExerciseService.save(workoutExerciseDto).orElseThrow(NotFoundException::new);
     }
 
     @DeleteMapping

@@ -1,4 +1,4 @@
-package ru.abtank.fitnessab.servises;
+package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.RoundDto;
 import ru.abtank.fitnessab.persist.entities.Round;
 import ru.abtank.fitnessab.persist.repositories.RoundRepository;
+import ru.abtank.fitnessab.servises.Mapper;
+import ru.abtank.fitnessab.servises.RoundService;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,11 +60,11 @@ public class RoundServiceImpl implements RoundService {
     }
 
     @Override
-    public RoundDto save(RoundDto o) {
+    public Optional<RoundDto> save(RoundDto o) {
         Round round = mapper.roundDtoToRound(o);
         round.setSessionDate(o.getSessionDate());
         roundRepository.save(round);
-        return mapper.roundToDto(round);
+        return findById(round.getId());
     }
 
     @Override

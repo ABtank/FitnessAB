@@ -46,7 +46,7 @@ public class ModeRestController {
         }else{
             modeDto.setId(null);
         }
-        return modeService.save(modeDto);
+        return modeService.save(modeDto).orElseThrow(NotFoundException::new);
     }
 
     @PutMapping
@@ -55,7 +55,7 @@ public class ModeRestController {
         if (modeDto.getId() == null) {
             throw new IllegalArgumentException("Id not found in the update request");
         }
-        return modeService.save(modeDto);
+        return modeService.save(modeDto).orElseThrow(NotFoundException::new);
     }
 
     @DeleteMapping

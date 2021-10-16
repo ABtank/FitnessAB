@@ -16,7 +16,7 @@ public interface UserService {
     Optional<UserDto> findById(Integer id);
     Optional<UserDto> findByLogin(String login);
     void deleteById(Integer id);
-    UserDto save(UserCreationDto userCreationDTO);
+    Optional<UserDto> save(UserCreationDto userCreationDTO);
     void deleteAll();
     Optional<UserCreationDto> findByIdForUpdate(Integer id);
 

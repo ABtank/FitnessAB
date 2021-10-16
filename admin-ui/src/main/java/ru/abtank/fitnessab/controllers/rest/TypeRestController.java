@@ -46,7 +46,7 @@ public class TypeRestController {
         }else{
             typeDto.setId(null);
         }
-        return typeService.save(typeDto);
+        return typeService.save(typeDto).orElseThrow(NotFoundException::new);
     }
 
     @PutMapping
@@ -55,7 +55,7 @@ public class TypeRestController {
         if (typeDto.getId() == null) {
             throw new IllegalArgumentException("Id not found in the update request");
         }
-        return typeService.save(typeDto);
+        return typeService.save(typeDto).orElseThrow(NotFoundException::new);
     }
 
     @DeleteMapping

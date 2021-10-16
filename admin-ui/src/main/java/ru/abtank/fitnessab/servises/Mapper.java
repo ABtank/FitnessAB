@@ -57,30 +57,24 @@ public class Mapper {
         );
     }
 
-    public User userDtoToCreator(CreatorDto creatorDto) {
-        LOGGER.info("-=userDtoToCreator(CreatorDto creatorDto)=-");
-        return new User(
+    public User creatorDtoToUser(CreatorDto creatorDto) {
+        LOGGER.info("-=creatorDtoToUser(CreatorDto creatorDto)=-");
+        return (creatorDto != null)? new User(
                 creatorDto.getId(),
                 creatorDto.getLogin(),
                 creatorDto.getEmail()
-        );
-    }
-
-    public User creatorDtoToUser(CreatorDto creatorDto) {
-        LOGGER.info("-=creatorDtoToUser(CreatorDto creatorDto)=-");
-        return new User(
-                creatorDto.getId(),
-                creatorDto.getLogin(),
-                creatorDto.getEmail());
+        )
+                :null;
     }
 
     public CreatorDto userToCreatorDto(User user) {
         LOGGER.info("-=userToCreatorDto(User user)=-");
-        return new CreatorDto(
+        return (user != null)? new CreatorDto(
                 user.getId(),
                 user.getLogin(),
                 user.getEmail()
-        );
+        )
+                :null;
     }
 
     public Role roleDtoToRole(RoleDto roleDto) {
@@ -119,7 +113,7 @@ public class Mapper {
         return new Category(categoryDto.getId(),
                 categoryDto.getName(),
                 categoryDto.getDescr(),
-                userDtoToCreator(categoryDto.getCreator()));
+                creatorDtoToUser(categoryDto.getCreator()));
     }
 
     public CategoryDto categoryToDto(Category category) {
@@ -160,7 +154,7 @@ public class Mapper {
                 exerciseDto.getCardioName3(),
                 categoryDtoToCategory(exerciseDto.getCategory()),
                 typeDtoToType(exerciseDto.getType()),
-                userDtoToCreator(exerciseDto.getCreator())
+                creatorDtoToUser(exerciseDto.getCreator())
         );
     }
 

@@ -1,4 +1,4 @@
-package ru.abtank.fitnessab.servises;
+package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.WorkoutDto;
 import ru.abtank.fitnessab.persist.entities.Workout;
 import ru.abtank.fitnessab.persist.repositories.WorkoutRepository;
+import ru.abtank.fitnessab.servises.Mapper;
+import ru.abtank.fitnessab.servises.WorkoutService;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,9 +59,9 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     @Override
-    public WorkoutDto save(WorkoutDto o) {
+    public Optional<WorkoutDto> save(WorkoutDto o) {
         Workout workout = workoutRepository.save(mapper.workoutDtoToWorkout(o));
-        return mapper.workoutToDto(workout);
+        return findById(workout.getId());
     }
 
     @Override

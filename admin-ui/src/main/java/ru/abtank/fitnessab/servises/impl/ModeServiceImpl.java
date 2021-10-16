@@ -1,4 +1,4 @@
-package ru.abtank.fitnessab.servises;
+package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -8,14 +8,13 @@ import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.ModeDto;
 import ru.abtank.fitnessab.persist.entities.Mode;
 import ru.abtank.fitnessab.persist.repositories.ModeRepository;
+import ru.abtank.fitnessab.servises.Mapper;
+import ru.abtank.fitnessab.servises.ModeService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 @Service
 @NoArgsConstructor
@@ -60,9 +59,9 @@ public class ModeServiceImpl implements ModeService {
     }
 
     @Override
-    public ModeDto save(ModeDto modeDto) {
+    public Optional<ModeDto> save(ModeDto modeDto) {
         Mode mode = modeRepository.save(mapper.modeDtoToMode(modeDto));
-        return mapper.modeToDto(mode);
+        return findById(mode.getId());
     }
 
     @Override

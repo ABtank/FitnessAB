@@ -1,4 +1,4 @@
-package ru.abtank.fitnessab.servises;
+package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.RoleDto;
 import ru.abtank.fitnessab.persist.entities.Role;
 import ru.abtank.fitnessab.persist.repositories.RoleRepository;
+import ru.abtank.fitnessab.servises.Mapper;
+import ru.abtank.fitnessab.servises.RoleService;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,9 +54,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleDto save(RoleDto roleDto) {
+    public Optional<RoleDto> save(RoleDto roleDto) {
         Role role = roleRepository.save(mapper.roleDtoToRole(roleDto));
-        return mapper.roleToDto(role);
+        return findById(role.getId());
     }
 
     @Override

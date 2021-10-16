@@ -46,7 +46,7 @@ public class CategoryRestController {
         }else{
             categoryDto.setId(null);
         }
-        return categoryService.save(categoryDto);
+        return categoryService.save(categoryDto).orElseThrow(NotFoundException::new);
     }
 
     @PutMapping
@@ -55,7 +55,7 @@ public class CategoryRestController {
         if (categoryDto.getId() == null) {
             throw new IllegalArgumentException("Id not found in the update request");
         }
-        return categoryService.save(categoryDto);
+        return categoryService.save(categoryDto).orElseThrow(NotFoundException::new);
     }
 
     @DeleteMapping

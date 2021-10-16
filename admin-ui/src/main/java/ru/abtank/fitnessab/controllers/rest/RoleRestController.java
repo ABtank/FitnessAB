@@ -46,7 +46,7 @@ public class RoleRestController {
         }else{
             roleDto.setId(null);
         }
-        return roleService.save(roleDto);
+        return roleService.save(roleDto).orElseThrow(NotFoundException::new);
     }
 
     @PutMapping
@@ -55,7 +55,7 @@ public class RoleRestController {
         if (roleDto.getId() == null) {
             throw new IllegalArgumentException("Id not found in the update request");
         }
-        return roleService.save(roleDto);
+        return roleService.save(roleDto).orElseThrow(NotFoundException::new);
     }
 
     @DeleteMapping

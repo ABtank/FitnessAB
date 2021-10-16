@@ -47,7 +47,7 @@ public class RoundRestController {
             roundDto.setId(null);
             roundDto.setSessionDate(new Date());
         }
-        return roundService.save(roundDto);
+        return roundService.save(roundDto).orElseThrow(NotFoundException::new);
     }
 
     @PutMapping
@@ -56,7 +56,7 @@ public class RoundRestController {
         if (roundDto.getId() == null) {
             throw new IllegalArgumentException("Id not found in the update request");
         }
-        return roundService.save(roundDto);
+        return roundService.save(roundDto).orElseThrow(NotFoundException::new);
     }
 
     @DeleteMapping

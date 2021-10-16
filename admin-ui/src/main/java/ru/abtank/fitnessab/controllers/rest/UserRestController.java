@@ -47,7 +47,7 @@ public class UserRestController {
         }else{
             userDTO.setId(null);
         }
-        return userService.save(userDTO);
+        return userService.save(userDTO).orElseThrow(NotFoundException::new);
     }
 
     @PutMapping
@@ -56,7 +56,7 @@ public class UserRestController {
         if (userDTO.getId() == null) {
             throw new IllegalArgumentException("Id not found in the update request");
         }
-        return userService.save(userDTO);
+        return userService.save(userDTO).orElseThrow(NotFoundException::new);
     }
 
     @DeleteMapping

@@ -1,4 +1,4 @@
-package ru.abtank.fitnessab.servises;
+package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -6,8 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.ExerciseDto;
+import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.persist.entities.Exercise;
 import ru.abtank.fitnessab.persist.repositories.ExerciseRepository;
+import ru.abtank.fitnessab.servises.ExerciseService;
+import ru.abtank.fitnessab.servises.Mapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,9 +60,9 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public ExerciseDto save(ExerciseDto o) {
+    public Optional<ExerciseDto> save(ExerciseDto o) {
         Exercise exercise = exerciseRepository.save(mapper.exerciseDtoToExercise(o));
-        return mapper.exerciseToDto(exercise);
+        return findById(exercise.getId());
     }
 
     @Override

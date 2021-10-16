@@ -46,7 +46,7 @@ public class WorkoutRestController {
         }else{
             workoutDto.setId(null);
         }
-        return workoutService.save(workoutDto);
+        return workoutService.save(workoutDto).orElseThrow(NotFoundException::new);
     }
 
     @PutMapping
@@ -55,7 +55,7 @@ public class WorkoutRestController {
         if (workoutDto.getId() == null) {
             throw new IllegalArgumentException("Id not found in the update request");
         }
-        return workoutService.save(workoutDto);
+        return workoutService.save(workoutDto).orElseThrow(NotFoundException::new);
     }
 
     @DeleteMapping

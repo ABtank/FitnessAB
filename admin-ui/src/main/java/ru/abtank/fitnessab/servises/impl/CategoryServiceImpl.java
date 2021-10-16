@@ -1,4 +1,4 @@
-package ru.abtank.fitnessab.servises;
+package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.CategoryDto;
 import ru.abtank.fitnessab.persist.entities.Category;
 import ru.abtank.fitnessab.persist.repositories.CategoryRepository;
+import ru.abtank.fitnessab.servises.CategoryService;
+import ru.abtank.fitnessab.servises.Mapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,9 +59,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto save(CategoryDto o) {
+    public Optional<CategoryDto> save(CategoryDto o) {
         Category category = categoryRepository.save(mapper.categoryDtoToCategory(o));
-        return mapper.categoryToDto(category);
+        return findById(category.getId());
     }
 
     @Override
