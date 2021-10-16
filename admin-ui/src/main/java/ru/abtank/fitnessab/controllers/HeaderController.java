@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.abtank.fitnessab.dto.UserDto;
 import ru.abtank.fitnessab.exception.NotFoundException;
-import ru.abtank.fitnessab.servises.ExerciseService;
-import ru.abtank.fitnessab.servises.ModeService;
-import ru.abtank.fitnessab.servises.RoleService;
-import ru.abtank.fitnessab.servises.UserService;
+import ru.abtank.fitnessab.servises.*;
 
 import java.security.Principal;
 
@@ -20,6 +17,9 @@ public class HeaderController {
     private ExerciseService exerciseService;
     private RoleService roleService;
     private ModeService modeService;
+    private TypeService typeService;
+    private CategoryService categoryService;
+    private RoundService roundService;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -39,6 +39,18 @@ public class HeaderController {
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
     }
+    @Autowired
+    public void setTypeService(TypeService typeService) {
+        this.typeService = typeService;
+    }
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+    @Autowired
+    public void setRoundService(RoundService roundService) {
+        this.roundService = roundService;
+    }
 
     @ModelAttribute
     public void nav(Principal principal, Model model ) {
@@ -49,6 +61,9 @@ public class HeaderController {
             model.addAttribute("users_count", userService.count());
             model.addAttribute("roles_count", roleService.count());
             model.addAttribute("modes_count", modeService.count());
+            model.addAttribute("types_count", typeService.count());
+            model.addAttribute("categories_count", categoryService.count());
+            model.addAttribute("rounds_count", roundService.count());
         }
     }
 }
