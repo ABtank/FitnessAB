@@ -1,0 +1,97 @@
+<div>
+    <div class="table-responsive">
+        <div class="row justify-content-start">
+            <div class="col-1">
+                <h3>Упражнения</h3>
+            </div>
+            <div class="col">
+                <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
+            </div>
+        </div>
+        <table id="exerciseTable" class="table table-bordered table-hover display">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>Имя</td>
+                <td>Category</td>
+                <td>Descr</td>
+                <td>isCardio</td>
+                <td>cardioNames</td>
+                <td>type</td>
+                <td>creator</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="exercise in Exercises">
+                <td>{{exercise.id}}</td>
+                <td>{{exercise.name}}</td>
+                <td>{{exercise.category.name}}</td>
+                <td>{{exercise.descr}}</td>
+                <td>{{(exercise.isCardio)?"да":"нет"}}</td>
+                <td>
+                    <p>{{exercise.cardioName1}}</p>
+                    <p>{{exercise.cardioName2}}</p>
+                    <p>{{exercise.cardioName3}}</p>
+                </td>
+                <td>{{exercise.type.name}}</td>
+                <td>{{exercise.creator.login}}</td>
+                <td scope="row" class="text-center" style="width: 10px;">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <a class="btn btn-success" href="!#/exercise/{{exercise.id}}">
+                            <i class="bi bi-pencil-square"></i></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Удалить упражнние</h3>
+    <form ng-submit="submitDeleteExercise()">
+        <div class="form-group col-md-6">
+            <label for="elementId">Name</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i class="bi bi-trash"></i></button>
+                </div>
+                <select class="custom-select" required ng-model="delExercise.id" id="elementId">
+                    <option ng-repeat="exercise in Exercises" value="{{exercise.id}}">{{exercise.name}}</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <h3>Добавить новое упражнение</h3>
+    <form novalidate ng-submit="submitCreateNewExercise()">
+        <div class="form-group col-md-6">
+            <label for="elementName">Name</label>
+            <input class="form-control" required type="text" ng-model="newExercise.name" id="elementName">
+            <label for="elementDescr">Description</label>
+            <textarea class="form-control" rows="5" type="text" ng-model="newExercise.descr" id="elementDescr"></textarea>
+            <label for="elementCardio">IsCardio</label>
+            <select class="custom-select" ng-model="newExercise.isCardio" required id="elementCardio">
+                <option value=""></option>
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+            </select>
+            <label for="cardioName1">cardioName1</label>
+            <input class="form-control" type="text" ng-model="newExercise.cardioName1" id="cardioName1">
+            <label for="cardioName2">cardioName2</label>
+            <input class="form-control" type="text" ng-model="newExercise.cardioName2" id="cardioName2">
+            <label for="cardioName3">cardioName3</label>
+            <input class="form-control" type="text" ng-model="newExercise.cardioName3" id="cardioName3">
+            <label for="elementType">Types</label>
+            <select class="custom-select" ng-model="newExercise.type" required id="elementType">
+                <option ng-repeat="type in Types" value="{{type.id}}">{{type.name}}</option>
+            </select>
+            <label for="elementCategory">Categories</label>
+            <select class="custom-select" ng-model="newExercise.category" required id="elementCategory">
+                <option ng-repeat="category in Categories" value="{{category.id}}">{{category.name}}</option>
+            </select>
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Сохранить</button>
+        </div>
+    </form>
+</div>

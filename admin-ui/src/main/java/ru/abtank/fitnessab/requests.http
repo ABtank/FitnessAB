@@ -171,13 +171,32 @@ Authorization: Basic in_user 123
 Content-Type: application/json
 
 {
-  "id": 1,
-  "name": "Test",
-  "descr": "",
+  "id": 0,
+  "name": "string",
+  "descr": "string",
+  "isCardio": true,
+  "cardioName1": "string",
+  "cardioName2": "string",
+  "cardioName3": "string",
+  "type": {
+    "id": 1,
+    "name": "string",
+    "descr": "string"
+  },
   "creator": {
     "id": 1,
-    "login": "abtank",
-    "email": "abtank@bk.ru"
+    "login": "string",
+    "email": "string"
+  },
+  "category": {
+    "id": 1,
+    "name": "string",
+    "descr": "string",
+    "creator": {
+      "id": 1,
+      "login": "string",
+      "email": "string"
+    }
   }
 }
 ###
