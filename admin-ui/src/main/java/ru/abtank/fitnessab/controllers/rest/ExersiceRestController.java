@@ -38,6 +38,7 @@ public class ExersiceRestController {
             @RequestParam("direction") Optional<String> direction
     ) {
         LOGGER.info("-=getAllexercises()=-");
+        if(page.isPresent() && page.get() < 1) page = Optional.of(1);
         PageRequest pageRequest = PageRequest.of(page.orElse(1) - 1, size.orElse(10), direction.isEmpty() ? Sort.Direction.ASC : Sort.Direction.DESC, sort.orElse("id"));
         return exerciseService.findAll(params, pageRequest);
     }

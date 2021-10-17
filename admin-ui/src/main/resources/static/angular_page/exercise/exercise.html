@@ -75,11 +75,9 @@
                 <li class="page-item">
                     <a class="page-link" ng-click="fillTable(Exercises.number)" tabindex="-1">Previous</a>
                 </li>
-                <!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-                <li class="page-item" ng-repeat="pageIndex in PaginationArray">
+                <li class="page-item" ng-class="{active : pageIndex == (Exercises.number+1)}" ng-repeat="pageIndex in PaginationArray">
                     <a class="page-link" ng-click="fillTable(pageIndex)">{{pageIndex}}</a>
                 </li>
-                <!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
                 <li class="page-item">
                     <a class="page-link" ng-click="fillTable(Exercises.number+2)">Next</a>
                 </li>

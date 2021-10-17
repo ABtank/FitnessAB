@@ -1,8 +1,8 @@
 angular.module('app').controller('exerciseController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/fitnessab';
 
-    $scope.fillTable = function (pageIndex=1) {
-        console.log("pageIndex="+pageIndex);
+    $scope.fillTable = function (pageIndex = 1) {
+        console.log("pageIndex=" + pageIndex);
         $http({
             url: contextPath + '/api/v1/exercise',
             method: 'GET',
@@ -13,7 +13,9 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
         })
             .then(function (response) {
                 $scope.Exercises = response.data;
-                $scope.PaginationArray=$scope.generatePageIndex(1,$scope.Exercises.totalPages);
+                const previous = ($scope.Exercises.number < 1) ? 1 : $scope.Exercises.number;
+                const next = ($scope.Exercises.number + 2 > $scope.Exercises.totalPages) ? $scope.Exercises.totalPages : $scope.Exercises.number + 2;
+                $scope.PaginationArray = generatePageIndex(previous, next);
                 console.log(response.data);
                 console.log($scope.PaginationArray);
             });
@@ -24,7 +26,7 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
         $scope.fillTable();
     };
 
-    $scope.generatePageIndex = function (startPage, endPage) {
+    function generatePageIndex(startPage, endPage) {
         let arr = [];
         for (let i = startPage; i < endPage + 1; i++) {
             arr.push(i);
