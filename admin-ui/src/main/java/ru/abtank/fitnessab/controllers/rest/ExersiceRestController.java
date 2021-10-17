@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,8 @@ import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.servises.ExerciseService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Tag(name = "Exercise resource API", description = "API to operate Exercise resource ...")
 @RequestMapping("/api/v1/exercise")
@@ -26,9 +31,16 @@ public class ExersiceRestController {
     }
 
     @GetMapping
-    public List<ExerciseDto> getAllExercises() {
+    public Page<ExerciseDto> getAllExercises(
+            @RequestParam Map<String,String> params,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam("sort") Optional<String> sort,
+            @RequestParam("direction") Optional<String> direction
+    ) {
         LOGGER.info("-=getAllexercises()=-");
-        return exerciseService.findAll();
+        PageRequest pageRequest = PageRequest.of(page.orElse(1) - 1, size.orElse(10), direction.isEmpty() ? Sort.Direction.ASC : Sort.Direction.DESC, sort.orElse("id"));
+        return exerciseService.findAll(params,pageRequest);
     }
 
     @GetMapping(value = "/{id}")
@@ -66,9 +78,11 @@ public class ExersiceRestController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id) {
         LOGGER.info("-=delete(@PathVariable Integer id)=-");
         exerciseService.deleteById(id);
-        return new ResponseEntity<>("Exercise deleted", HttpStatus.OK);
+//        return new ResponseEntity<>("Exercise deleted", HttpStatus.OK);
+        LOGGER.info("-=Exercise deleted OK=-");
     }
 }

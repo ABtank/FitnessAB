@@ -2,13 +2,24 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
     const contextPath = 'http://localhost:8189/fitnessab';
 
     $scope.fillTable = function () {
-
-        $http.get(contextPath + '/api/v1/exercise')
+        $http({
+            url:contextPath + '/api/v1/exercise',
+            method: 'GET',
+            params:{
+                name_filter:$scope.filter ? $scope.filter.name_filter: null
+            }
+        })
             .then(function (response) {
                 $scope.Exercises = response.data;
                 console.log(response.data);
             });
     };
+
+    $scope.clearFilter = function () {
+        $scope.filter = null;
+        $scope.fillTable();
+    };
+
     $scope.fillSelectTypes = function () {
 
         $http.get(contextPath + '/api/v1/type')
@@ -28,8 +39,8 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
 
     $scope.submitCreateNewExercise = function () {
         console.log($scope.newExercise);
-        $scope.newExercise.type={"id":$scope.newExercise.type};
-        $scope.newExercise.category={"id":$scope.newExercise.category};
+        $scope.newExercise.type=JSON.parse($scope.newExercise.type);
+        $scope.newExercise.category=JSON.parse($scope.newExercise.category);
         $scope.newExercise['creator']={"id":1};
         console.log($scope.newExercise);
         $http.post(contextPath + '/api/v1/exercise', $scope.newExercise)
