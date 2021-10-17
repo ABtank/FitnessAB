@@ -1,23 +1,35 @@
 angular.module('app').controller('exerciseController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/fitnessab';
 
-    $scope.fillTable = function () {
+    $scope.fillTable = function (pageIndex=1) {
+        console.log("pageIndex="+pageIndex);
         $http({
-            url:contextPath + '/api/v1/exercise',
+            url: contextPath + '/api/v1/exercise',
             method: 'GET',
-            params:{
-                name_filter:$scope.filter ? $scope.filter.name_filter: null
+            params: {
+                name_filter: $scope.filter ? $scope.filter.name_filter : null,
+                page: pageIndex
             }
         })
             .then(function (response) {
                 $scope.Exercises = response.data;
+                $scope.PaginationArray=$scope.generatePageIndex(1,$scope.Exercises.totalPages);
                 console.log(response.data);
+                console.log($scope.PaginationArray);
             });
     };
 
     $scope.clearFilter = function () {
         $scope.filter = null;
         $scope.fillTable();
+    };
+
+    $scope.generatePageIndex = function (startPage, endPage) {
+        let arr = [];
+        for (let i = startPage; i < endPage + 1; i++) {
+            arr.push(i);
+        }
+        return arr;
     };
 
     $scope.fillSelectTypes = function () {
@@ -39,9 +51,9 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
 
     $scope.submitCreateNewExercise = function () {
         console.log($scope.newExercise);
-        $scope.newExercise.type=JSON.parse($scope.newExercise.type);
-        $scope.newExercise.category=JSON.parse($scope.newExercise.category);
-        $scope.newExercise['creator']={"id":1};
+        $scope.newExercise.type = JSON.parse($scope.newExercise.type);
+        $scope.newExercise.category = JSON.parse($scope.newExercise.category);
+        $scope.newExercise['creator'] = {"id": 1};
         console.log($scope.newExercise);
         $http.post(contextPath + '/api/v1/exercise', $scope.newExercise)
             .then(function (response) {
@@ -51,8 +63,8 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
     };
 
     $scope.submitDeleteExercise = function () {
-        console.log(contextPath + '/api/v1/exercise/'+ $scope.delExercise.id);
-        $http.delete(contextPath + '/api/v1/exercise/'+ $scope.delExercise.id)
+        console.log(contextPath + '/api/v1/exercise/' + $scope.delExercise.id);
+        $http.delete(contextPath + '/api/v1/exercise/' + $scope.delExercise.id)
             .then(function (response) {
                 $scope.fillTable();
             });

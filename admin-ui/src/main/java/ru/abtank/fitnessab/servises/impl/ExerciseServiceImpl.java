@@ -80,9 +80,9 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public Page<ExerciseDto> findAll(Map<String, String> params, PageRequest pageRequest) {
         Specification<Exercise> spec = ExerciseSpecification.trueLiteral();
-        if (!params.isEmpty() && !params.get("name_filter").isBlank()) {
+        if (!params.isEmpty() && params.containsKey("name_filter") && !params.get("name_filter").isBlank()) {
             spec = spec.and(ExerciseSpecification.nameContains(params.get("name_filter")));
         }
-        return exerciseRepository.findAll(spec,pageRequest).map(mapper::exerciseToDto);
+        return exerciseRepository.findAll(spec, pageRequest).map(mapper::exerciseToDto);
     }
 }

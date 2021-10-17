@@ -15,8 +15,10 @@
                 <label for="elementId">Name</label>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <button class="btn btn-outline-danger" type="button" id="button-clear_filter" ng-click="clearFilter()"><i class="bi bi-trash"></i></button>
-                        <button class="btn btn-outline-success" type="submit" id="button-filter"><i class="bi bi-filter"></i></button>
+                        <button class="btn btn-outline-danger" type="button" id="button-clear_filter"
+                                ng-click="clearFilter()"><i class="bi bi-trash"></i></button>
+                        <button class="btn btn-outline-success" type="submit" id="button-filter"><i
+                                class="bi bi-filter"></i></button>
                     </div>
                     <input class="custom-select" ng-model="filter.name_filter" id="name_filter">
                 </div>
@@ -63,13 +65,39 @@
         </table>
     </div>
 
+
+    <div>
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" ng-click="fillTable()" tabindex="-1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" ng-click="fillTable(Exercises.number)" tabindex="-1">Previous</a>
+                </li>
+                <!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+                <li class="page-item" ng-repeat="pageIndex in PaginationArray">
+                    <a class="page-link" ng-click="fillTable(pageIndex)">{{pageIndex}}</a>
+                </li>
+                <!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+                <li class="page-item">
+                    <a class="page-link" ng-click="fillTable(Exercises.number+2)">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" ng-click="fillTable(Exercises.totalPages)">Last</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
     <h3>Удалить упражнние</h3>
     <form ng-submit="submitDeleteExercise()">
         <div class="form-group col-md-6">
             <label for="elementId">Name</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i class="bi bi-trash"></i>
+                    </button>
                 </div>
                 <select class="custom-select" required ng-model="delExercise.id" id="elementId">
                     <option ng-repeat="exercise in Exercises.content" value="{{exercise.id}}">{{exercise.name}}</option>
@@ -84,7 +112,8 @@
             <label for="elementName">Name</label>
             <input class="form-control" required type="text" ng-model="newExercise.name" id="elementName">
             <label for="elementDescr">Description</label>
-            <textarea class="form-control" rows="5" type="text" ng-model="newExercise.descr" id="elementDescr"></textarea>
+            <textarea class="form-control" rows="5" type="text" ng-model="newExercise.descr"
+                      id="elementDescr"></textarea>
             <label for="elementCardio">IsCardio</label>
             <select class="custom-select" ng-model="newExercise.isCardio" required id="elementCardio">
                 <option value=""></option>

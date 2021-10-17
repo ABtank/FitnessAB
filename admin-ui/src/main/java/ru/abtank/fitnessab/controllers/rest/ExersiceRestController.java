@@ -14,7 +14,6 @@ import ru.abtank.fitnessab.dto.ExerciseDto;
 import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.servises.ExerciseService;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,7 +31,7 @@ public class ExersiceRestController {
 
     @GetMapping
     public Page<ExerciseDto> getAllExercises(
-            @RequestParam Map<String,String> params,
+            @RequestParam Map<String, String> params,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size,
             @RequestParam("sort") Optional<String> sort,
@@ -40,7 +39,7 @@ public class ExersiceRestController {
     ) {
         LOGGER.info("-=getAllexercises()=-");
         PageRequest pageRequest = PageRequest.of(page.orElse(1) - 1, size.orElse(10), direction.isEmpty() ? Sort.Direction.ASC : Sort.Direction.DESC, sort.orElse("id"));
-        return exerciseService.findAll(params,pageRequest);
+        return exerciseService.findAll(params, pageRequest);
     }
 
     @GetMapping(value = "/{id}")
@@ -53,9 +52,9 @@ public class ExersiceRestController {
     public ExerciseDto create(@RequestBody ExerciseDto exerciseDto) {
         LOGGER.info("-=create(@RequestBody ExerciseDto exerciseDto)=-");
         System.out.println(exerciseDto);
-        if(exerciseDto.getName() == null){
+        if (exerciseDto.getName() == null) {
             throw new IllegalArgumentException("ERROR: must specify the name of the Exercise");
-        }else{
+        } else {
             exerciseDto.setId(null);
         }
         return exerciseService.save(exerciseDto).orElseThrow(NotFoundException::new);
@@ -76,7 +75,7 @@ public class ExersiceRestController {
         exerciseService.deleteAll();
         return new ResponseEntity<>("-=You cannot delete all Exercises=-", HttpStatus.BAD_REQUEST);
     }
-    
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Integer id) {
