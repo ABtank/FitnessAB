@@ -12,7 +12,7 @@
 
         <form ng-submit="fillTable()">
             <div class="form-group col-md-6">
-                <label for="elementId">Name</label>
+                <label for="elementId">Filter</label>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-danger" type="button" id="button-clear_filter"
@@ -58,6 +58,8 @@
                     <div class="btn-group me-2" role="group" aria-label="First group">
                         <a class="btn btn-success" href="!#/exercise/{{exercise.id}}">
                             <i class="bi bi-pencil-square"></i></a>
+                        <a class="btn btn-danger" ng-click="deleteExercise(exercise.id)">
+                            <i class="bi bi-trash"></i></a>
                     </div>
                 </td>
             </tr>
