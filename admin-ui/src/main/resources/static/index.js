@@ -9,7 +9,8 @@
     function config($routeProvider, $httpProvider) {
         $routeProvider
             .when('/', { //    http://localhost:8189/fitnessab/index.html#!/
-                templateUrl: 'angular_page/main/main.html'
+                templateUrl: 'angular_page/main/main.html',
+                controller: 'mainController'
             })
             .when('/role', { //    http://localhost:8189/fitnessab/index.html#!/role
                 templateUrl: 'angular_page/role/role.html',

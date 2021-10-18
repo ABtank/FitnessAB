@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.abtank.fitnessab.persist.repositories.UserRepository;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 //@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(securedEnabled = true)  //включаем защиту на уровне метод

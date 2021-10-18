@@ -26,5 +26,7 @@ angular.module('app').controller('roleController', function ($scope, $http) {
             });
     };
 
+    $('#nav_header').find('li').removeClass('active');
+    $('#nav_role').addClass('active');
     $scope.fillTable();
 });

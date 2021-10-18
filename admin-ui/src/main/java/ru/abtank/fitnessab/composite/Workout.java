@@ -1,13 +1,29 @@
 package ru.abtank.fitnessab.composite;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-
+//@Component
+//@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+//@NoArgsConstructor
+//@Data
 public class Workout extends WorkoutComponent {
     private String workout;
     private List<WorkoutComponent> exercises;
+
+//    @PostConstruct
+//    public void init() {
+//        exercises = new ArrayList<>();
+//    }
 
     public Workout(String workout) {
         this.workout = workout;
@@ -71,5 +87,10 @@ public class Workout extends WorkoutComponent {
         sb.setLength(sb.length() - 2);
         sb.append("}");
         return sb.toString();
+    }
+
+    public void clear() {
+        exercises.clear();
+        workout="";
     }
 }

@@ -35,6 +35,8 @@ angular.module('app').controller('userController', function ($scope, $http) {
             });
     };
 
+    $('#nav_header').find('li').removeClass('active');
+    $('#nav_user').addClass('active');
     $scope.fillTable();
     $scope.fillSelectRoles();
 });

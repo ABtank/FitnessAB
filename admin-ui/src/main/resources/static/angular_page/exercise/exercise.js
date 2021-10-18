@@ -79,6 +79,8 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
             });
     }
 
+    $('#nav_header').find('li').removeClass('active');
+    $('#nav_exercise').addClass('active');
     $scope.fillTable();
     $scope.fillSelectTypes();
     $scope.fillSelectCategories();
