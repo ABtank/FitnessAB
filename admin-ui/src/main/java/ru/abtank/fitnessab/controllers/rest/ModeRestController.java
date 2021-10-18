@@ -66,9 +66,10 @@ public class ModeRestController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id) {
         LOGGER.info("-=delete(@PathVariable Integer id)=-");
         modeService.deleteById(id);
-        return new ResponseEntity<>("Mode deleted", HttpStatus.OK);
+        LOGGER.info("-=Mode deleted OK=-");
     }
 }

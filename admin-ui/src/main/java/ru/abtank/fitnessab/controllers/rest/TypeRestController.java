@@ -66,9 +66,10 @@ public class TypeRestController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id) {
         LOGGER.info("-=delete(@PathVariable Integer id)=-");
         typeService.deleteById(id);
-        return new ResponseEntity<>("Type deleted", HttpStatus.OK);
+        LOGGER.info("-=Type deleted OK=-");
     }
 }
