@@ -34,30 +34,43 @@ public class RoleController {
     //весь список юзеров
     @GetMapping
     public String allRoles(Model model) {
-
+        LOGGER.info("-=allRoles(Model model)=-");
         model.addAttribute("roles", roleService.findAll());
         model.addAttribute("role", new RoleDto());
-
         model.addAttribute("time", getDate());
         model.addAttribute("nav_selected", "nav_roles");
-        LOGGER.info("GET ALL roleS: ");
         return "roles";
     }
 
 
     @GetMapping("/{id}")
     public String editRole(@PathVariable("id") Integer id, Model model) throws SQLException {
+        LOGGER.info("-=editRole(@PathVariable(\"id\") Integer id, Model model)=-");
         RoleDto roleDto = roleService.findById(id).orElseThrow(()->new NotFoundException("Role", id," not Found!"));
-        LOGGER.info("EDIT ROLE: " + roleDto.toString());
         model.addAttribute("role", roleDto);
         model.addAttribute("nav_selected", "nav_roles");
         return "role";
     }
 
+    @GetMapping("/create")
+    public String createRole(Model model) {
+        LOGGER.info("-=createRole(Model model)=-");
+        model.addAttribute("role", new RoleDto());
+        model.addAttribute("nav_selected", "ADD_NEW");
+        return "role";
+    }
+
+    @DeleteMapping("{id}/delete")
+    public String deleteRole(@PathVariable("id") Integer id) {
+        LOGGER.info("-=deleteRole(@PathVariable(\"id\") Integer id)=-");
+        roleService.deleteById(id);
+        return "redirect:/role";
+    }
+
     @PostMapping("/update")
     @Secured("ROLE_ADMIN")
     public String updateRole(@ModelAttribute("role") @Valid RoleDto roleDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        LOGGER.info("START UPDATE OR INSERT ROLE: " + roleDto.toString());
+        LOGGER.info("-=updateRole(@ModelAttribute(\"role\") @Valid RoleDto roleDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes)=-");
         if (bindingResult.hasErrors()) {
             model.addAttribute("role", roleDto);
             return "role";
@@ -74,22 +87,8 @@ public class RoleController {
         return "redirect:/role";
     }
 
-    @GetMapping("/create")
-    public String createRole(Model model) {
-        LOGGER.info("CREATE ROLE: ");
-        model.addAttribute("role", new RoleDto());
-        model.addAttribute("nav_selected", "ADD_NEW");
-        return "role";
-    }
-
-    @DeleteMapping("{id}/delete")
-    public String deleteRole(@PathVariable("id") Integer id) {
-        LOGGER.info("DELETE ROLE id=" + id);
-        roleService.deleteById(id);
-        return "redirect:/role";
-    }
-
     public String getDate() {
+        LOGGER.info("-=getDate()=-");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());

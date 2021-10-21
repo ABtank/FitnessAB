@@ -1,5 +1,7 @@
 package ru.abtank.fitnessab.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,6 +14,7 @@ import java.security.Principal;
 
 @ControllerAdvice
 public class HeaderController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(HeaderController.class);
 
     private UserService userService;
     private ExerciseService exerciseService;
@@ -54,9 +57,11 @@ public class HeaderController {
 
     @ModelAttribute
     public void nav(Principal principal, Model model ) {
+        LOGGER.info("-=nav(Principal principal, Model model )=-");
         if (principal != null) {
             UserDto userDto = userService.findByLogin(principal.getName()).orElseThrow(NotFoundException::new);
             model.addAttribute("usr", userDto);
+        }
             model.addAttribute("exercises_count", exerciseService.count());
             model.addAttribute("users_count", userService.count());
             model.addAttribute("roles_count", roleService.count());
@@ -64,6 +69,5 @@ public class HeaderController {
             model.addAttribute("types_count", typeService.count());
             model.addAttribute("categories_count", categoryService.count());
             model.addAttribute("rounds_count", roundService.count());
-        }
     }
 }

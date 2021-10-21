@@ -4,10 +4,15 @@ import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.abtank.fitnessab.dto.ModeDto;
 import ru.abtank.fitnessab.dto.TypeDto;
+import ru.abtank.fitnessab.persist.entities.Mode;
 import ru.abtank.fitnessab.persist.entities.Type;
 import ru.abtank.fitnessab.persist.repositories.TypeRepository;
+import ru.abtank.fitnessab.persist.repositories.specifications.ModeSpecification;
+import ru.abtank.fitnessab.persist.repositories.specifications.TypeSpecification;
 import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.TypeService;
 
@@ -62,6 +67,22 @@ public class TypeServiceImpl implements TypeService {
     public Optional<TypeDto> save(TypeDto o) {
         Type type = typeRepository.save(mapper.typeDtoToType(o));
         return findById(type.getId());
+    }
+
+    @Override
+    public boolean checkIsUnique(String name, Integer id) {
+        Specification<Type> spec = TypeSpecification.trueLiteral();
+        spec = spec.and(TypeSpecification.findByName(name));
+        if (id != null) {
+            spec = spec.and(TypeSpecification.idNotEqual(id));
+        }
+        List<TypeDto> chekEquals = findAll(spec);
+        return chekEquals.isEmpty();
+    }
+
+    @Override
+    public List<TypeDto> findAll(Specification<Type> spec) {
+        return typeRepository.findAll(spec).stream().map(mapper::typeToDto).collect(toList());
     }
 
     @Override

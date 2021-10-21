@@ -4,10 +4,15 @@ import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.ModeDto;
+import ru.abtank.fitnessab.dto.UserDto;
 import ru.abtank.fitnessab.persist.entities.Mode;
+import ru.abtank.fitnessab.persist.entities.User;
 import ru.abtank.fitnessab.persist.repositories.ModeRepository;
+import ru.abtank.fitnessab.persist.repositories.specifications.ModeSpecification;
+import ru.abtank.fitnessab.persist.repositories.specifications.UserSpecification;
 import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.ModeService;
 
@@ -62,6 +67,22 @@ public class ModeServiceImpl implements ModeService {
     public Optional<ModeDto> save(ModeDto modeDto) {
         Mode mode = modeRepository.save(mapper.modeDtoToMode(modeDto));
         return findById(mode.getId());
+    }
+
+    @Override
+    public List<ModeDto> findAll(Specification<Mode> spec) {
+        return modeRepository.findAll(spec).stream().map(mapper::modeToDto).collect(toList());
+    }
+
+    @Override
+    public boolean checkIsUnique(String name, Integer id) {
+        Specification<Mode> spec = ModeSpecification.trueLiteral();
+        spec = spec.and(ModeSpecification.findByName(name));
+        if (id != null) {
+            spec = spec.and(ModeSpecification.idNotEqual(id));
+        }
+        List<ModeDto> chekEquals = findAll(spec);
+        return chekEquals.isEmpty();
     }
 
     @Override

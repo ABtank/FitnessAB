@@ -70,21 +70,21 @@
                         <li th:classappend="${nav_selected} == 'nav_types' ? active :' '">
                             <a th:classappend="${nav_selected} == 'nav_types' ? active :' '"
                                th:selected="${nav_selected} == 'nav_types'"
-                               th:href="@{/mode}">
+                               th:href="@{/type}">
                                 <span class="label radius-circle bg-primary float-right" th:text="${types_count}">9</span>
                                 Характер упражнения</a>
                         </li>
                         <li th:classappend="${nav_selected} == 'nav_categories' ? active :' '">
                             <a th:classappend="${nav_selected} == 'nav_categories' ? active :' '"
                                th:selected="${nav_selected} == 'nav_categories'"
-                               th:href="@{/mode}">
+                               th:href="@{/category}">
                                 <span class="label radius-circle bg-primary float-right" th:text="${categories_count}">9</span>
-                                Характер упражнения</a>
+                                Категории упражнений</a>
                         </li>
                         <li th:classappend="${nav_selected} == 'nav_rounds' ? active :' '">
                             <a th:classappend="${nav_selected} == 'nav_rounds' ? active :' '"
                                th:selected="${nav_selected} == 'nav_rounds'"
-                               th:href="@{/mode}">
+                               th:href="@{/round}">
                                 <span class="label radius-circle bg-primary float-right" th:text="${rounds_count}">9</span>
                                 Подходы</a>
                         </li>
