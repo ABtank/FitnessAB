@@ -19,4 +19,10 @@ public class CreatorDto {
         this.login = login;
         this.email = email;
     }
+
+    public CreatorDto(UserDto user){
+        this.id = user.getId();
+        this.login = user.getLogin();
+        this.email = user.getLogin();
+    }
 }

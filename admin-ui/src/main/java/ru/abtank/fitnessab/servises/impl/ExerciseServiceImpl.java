@@ -43,42 +43,50 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public List<ExerciseDto> findAll() {
+        LOGGER.info("-=findAll()=-");
         return exerciseRepository.findAll().stream().map(mapper::exerciseToDto).collect(toList());
     }
 
     @Override
     public Optional<ExerciseDto> findById(Integer id) {
+        LOGGER.info("-=findById(Integer id)=-");
         return exerciseRepository.findById(id).map(mapper::exerciseToDto);
     }
 
     @Override
     public Optional<ExerciseDto> findByName(String name) {
+        LOGGER.info("-=findByName(String name)=-");
         return exerciseRepository.findByName(name).map(mapper::exerciseToDto);
     }
 
     @Override
     public void deleteById(Integer id) {
+        LOGGER.info("-=deleteById(Integer id)=-");
         exerciseRepository.deleteById(id);
     }
 
     @Override
     public void deleteAll() {
+        LOGGER.info("-=deleteAll()=-");
         LOGGER.error("Someone decided to delete all Exercises");
     }
 
     @Override
     public Optional<ExerciseDto> save(ExerciseDto o) {
+        LOGGER.info("-=save(ExerciseDto o)=-");
         Exercise exercise = exerciseRepository.save(mapper.exerciseDtoToExercise(o));
         return findById(exercise.getId());
     }
 
     @Override
     public long count() {
+        LOGGER.info("-=count()=-");
         return exerciseRepository.count();
     }
 
     @Override
     public Page<ExerciseDto> findAll(Map<String, String> params, PageRequest pageRequest) {
+        LOGGER.info("-=Page<ExerciseDto> findAll(Map<String, String> params, PageRequest pageRequest)=-");
         Specification<Exercise> spec = ExerciseSpecification.trueLiteral();
         if (!params.isEmpty() && params.containsKey("name_filter") && !params.get("name_filter").isBlank()) {
             spec = spec.and(ExerciseSpecification.nameContains(params.get("name_filter")));
