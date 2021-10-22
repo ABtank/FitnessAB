@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:replace="fragments/head :: head"></div>
@@ -60,8 +60,8 @@
                                             <optgroup label="Category">
                                                 <option th:each="category : ${categories}"
                                                         th:text="${category.name}"
-                                                        th:value="${category}" th:title="${category.descr}"
-                                                        th:selected="${exercise.category.id?.equals(category.id)}"></option>
+                                                        th:value="${category}"
+                                                        th:selected="${exercise.category?.equals(category)}"></option>
                                             </optgroup>
                                         </select>
                                     </div>
@@ -90,7 +90,7 @@
                                                 <option th:each="type : ${types}"
                                                         th:text="${type.name}"
                                                         th:value="${type}" th:title="${type.descr}"
-                                                        th:selected="${exercise.type.id?.equals(type.id)}"></option>
+                                                        th:selected="${exercise.type?.equals(type)}"></option>
                                             </optgroup>
                                         </select>
                                     </div>
