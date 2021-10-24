@@ -68,10 +68,6 @@ public class Mapper {
     public Exercise exerciseDtoToExercise(ExerciseDto exerciseDto) {
         LOGGER.info("-=exerciseDtoToExercise(ExerciseDto exerciseDto)=-");
 //        return modelMapper.map(exerciseDto, Exercise.class);
-        Category category = new Category();
-        category.setId(Integer.valueOf(exerciseDto.getCategoryId()));
-        Type type = new Type();
-        type.setId(Integer.valueOf(exerciseDto.getTypeId()));
         return new Exercise(
                 exerciseDto.getId(),
                 exerciseDto.getName(),
@@ -80,8 +76,8 @@ public class Mapper {
                 exerciseDto.getCardioName1(),
                 exerciseDto.getCardioName2(),
                 exerciseDto.getCardioName3(),
-                category,
-                type,
+                new Category(),
+                new Type(),
                 modelMapper.map(exerciseDto.getCreator(), User.class)
         );
     }

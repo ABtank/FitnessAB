@@ -93,8 +93,11 @@ public class ExerciseServiceImpl implements ExerciseService {
     public Optional<ExerciseDto> save(ExerciseDto o) {
         LOGGER.info("-=save(ExerciseDto o)=-");
         Exercise exercise = mapper.exerciseDtoToExercise(o);
+        exercise.setCategory(categoryRepository.getById(o.getCategoryId()));
+        exercise.setType(typeRepository.getById(o.getTypeId()));
         exerciseRepository.save(exercise);
-        return findById(exercise.getId());
+        LOGGER.info("-=save(ExerciseDto o)=-"+exercise);
+        return exerciseRepository.findById(exercise.getId()).map(obj -> modelMapper.map(obj, ExerciseDto.class));
     }
 
     @Override

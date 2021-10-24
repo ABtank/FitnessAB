@@ -20,11 +20,11 @@ public class ExerciseDto {
     private String cardioName3;
     private TypeDto type;
     @NonNull
-    private String typeId;
+    private Integer typeId;
     private CreatorDto creator;
     private CategoryDto category;
     @NonNull
-    private String categoryId;
+    private Integer categoryId;
 
     public ExerciseDto(Integer id, String name, String descr, Boolean isCardio, String cardioName1, String cardioName2, String cardioName3, TypeDto type, CreatorDto creator, CategoryDto category) {
         this.id = id;
