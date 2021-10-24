@@ -2,13 +2,16 @@ package ru.abtank.fitnessab.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import ru.abtank.fitnessab.persist.entities.Mode;
 
 @Data
 @NoArgsConstructor
 public class ModeDto {
     private Integer id;
+    @NonNull
     private String name;
+    @NonNull
     private Boolean isStart;
     private String descr;
 

@@ -62,8 +62,8 @@ public class HeaderController {
     }
 
     @ModelAttribute
-    public void nav(Principal principal, Model model) {
-        LOGGER.info("-=nav(Principal principal, Model model )=-");
+    public void navCount(Principal principal, Model model) {
+        LOGGER.info("-=navCount(Principal principal, Model model )=-");
         if (principal != null) {
             UserDto userDto = userService.findByLogin(principal.getName()).orElseThrow(NotFoundException::new);
             model.addAttribute("usr", userDto);

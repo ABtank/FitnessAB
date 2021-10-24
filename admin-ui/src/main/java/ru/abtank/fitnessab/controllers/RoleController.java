@@ -73,6 +73,7 @@ public class RoleController {
         LOGGER.info("-=updateRole(@ModelAttribute(\"role\") @Valid RoleDto roleDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes)=-");
         if (bindingResult.hasErrors()) {
             model.addAttribute("role", roleDto);
+            model.addAttribute("exception", bindingResult.toString());
             return "role";
         }
         if (!roleService.findByName(roleDto.getName()).isEmpty()) {

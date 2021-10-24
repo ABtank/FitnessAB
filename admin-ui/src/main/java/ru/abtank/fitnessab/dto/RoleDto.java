@@ -2,12 +2,14 @@ package ru.abtank.fitnessab.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import ru.abtank.fitnessab.persist.entities.Role;
 
 @Data
 @NoArgsConstructor
 public class RoleDto {
     private Integer id;
+    @NonNull
     private String name;
 
     public RoleDto(Role role) {

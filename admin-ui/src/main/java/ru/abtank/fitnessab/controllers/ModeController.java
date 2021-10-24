@@ -56,6 +56,7 @@ public class ModeController {
     public String updateMode(@ModelAttribute("mode") @Valid ModeDto mode, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         LOGGER.info("-=updateMode(@ModelAttribute(\"mode\") @Valid ModeDto mode, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes)=-");
         if (bindingResult.hasErrors()) {
+            model.addAttribute("exception", bindingResult.toString());
             return "mode";
         }
         if (!modeService.checkIsUnique(mode.getName(), mode.getId())) {

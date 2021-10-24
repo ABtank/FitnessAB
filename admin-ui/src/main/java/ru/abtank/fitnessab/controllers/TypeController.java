@@ -56,6 +56,7 @@ public class TypeController {
     public String updateType(@ModelAttribute("type") @Valid TypeDto type, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         LOGGER.info("START UPDATE OR INSERT MODE: " + type.getName());
         if (bindingResult.hasErrors()) {
+            model.addAttribute("exception", bindingResult.toString());
             return "type";
         }
         if (!typeService.checkIsUnique(type.getName(), type.getId())) {

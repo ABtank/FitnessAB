@@ -15,6 +15,7 @@ import ru.abtank.fitnessab.servises.ExerciseService;
 import ru.abtank.fitnessab.servises.TypeService;
 import ru.abtank.fitnessab.servises.UserService;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -51,14 +52,10 @@ public class ExerciseController {
     public String allExercise(Model model) {
         LOGGER.info("-=allExercise(Model model)=-");
         List<ExerciseDto> exercises = exerciseService.findAll();
-        List<CategoryDto> categories = categoryService.findAll();
-        List<TypeDto> types = typeService.findAll();
         LOGGER.info("//////////////" + exercises.get(0));
         model.addAttribute("nav_selected", "nav_exercises");
         model.addAttribute("exercise", new ExerciseDto());
         model.addAttribute("exercises", exercises);
-        model.addAttribute("categories", categories);
-        model.addAttribute("types", types);
         return "exercises";
     }
 
@@ -66,42 +63,30 @@ public class ExerciseController {
     public String editExercise(@PathVariable("id") Integer id, Model model) {
         LOGGER.info("-=editExercise(@PathVariable(\"id\") Integer id, Model model)=-");
         ExerciseDto exercise = exerciseService.findById(id).orElseThrow(NotFoundException::new);
-        List<CategoryDto> categories = categoryService.findAll();
-        List<TypeDto> types = typeService.findAll();
-        LOGGER.info("EDIT CategoryDto: " + exercise.getCategory());
-        LOGGER.info("EDIT CategoryDto equals: " + exercise.getCategory().getId().equals(exercise.getCategoryId()));
-        LOGGER.info("EDIT Exercise: " + exercise);
         LOGGER.info("CREATOR Exercise: " + exercise.getCreator().getLogin());
         model.addAttribute("exercise", exercise);
-        model.addAttribute("categories", categories);
-        model.addAttribute("types", types);
         model.addAttribute("nav_selected", "nav_exercises");
         return "exercise";
     }
 
     @DeleteMapping("{id}/delete")
     public String deleteExercise(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-        LOGGER.info("-=deleteExercise(@PathVariable(\"id\") Integer id, RedirectAttributes redirectAttributes)=-");
-        LOGGER.info("@DeleteMapping id{}", id);
+        LOGGER.info("-=deleteExercise(@PathVariable("+id+") Integer id, RedirectAttributes redirectAttributes)=-");
         exerciseService.deleteById(id);
         redirectAttributes.addFlashAttribute("msg", "Success DELETE Exercise");
         return "redirect:/exercise";
     }
 
     @PostMapping("/update")
-    public String updateExercise(@ModelAttribute("exercise") ExerciseDto exercise, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
+    public String updateExercise(Model model, @ModelAttribute("exercise") @Valid ExerciseDto exercise, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
         LOGGER.info("-=updateExercise(@ModelAttribute(\"exercise\") ExerciseDto exercise, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes)=-");
         String msg;
-        LOGGER.info(principal.getName() + " START UPDATE OR INSERT EXERCISE: " + exercise.toString());
-        LOGGER.info(principal.getName() + " START UPDATE getCategory(): " + exercise.getCategory());
-        LOGGER.info(principal.getName() + " START UPDATE exercise.getName(): " + exercise.getName());
-        LOGGER.info(principal.getName() + " START UPDATE exercise.getType(): " + exercise.getType());
-        LOGGER.info(principal.getName() + " START UPDATE exercise.getIsCardio(): " + exercise.getIsCardio());
         UserDto creator = userService.findByLogin(principal.getName()).orElseThrow(NotFoundException::new);
-        LOGGER.info(bindingResult.toString());
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("exception", bindingResult.toString());
-            return (exercise.getId() != null) ? "redirect:/exercise/" + exercise.getId() : "redirect:/exercise";
+            LOGGER.info(bindingResult.toString());
+            model.addAttribute("exception", bindingResult.toString());
+            model.addAttribute("exercise", exercise);
+            return "exercise";
         }
         msg = (exercise.getId() != null) ? creator.getLogin() + " " + creator.getId() + " Susses update Exercise " : creator.getLogin() + " " + creator.getId() + " Susses create exercise ";
         exercise.setCreator(new CreatorDto(creator));
@@ -109,5 +94,15 @@ public class ExerciseController {
         msg += exercise.getName();
         redirectAttributes.addFlashAttribute("msg", msg);
         return "redirect:/exercise";
+    }
+
+    @ModelAttribute("types")
+    public List<TypeDto> types(){
+        return typeService.findAll();
+    }
+
+    @ModelAttribute("categories")
+    public List<CategoryDto> categories(){
+        return categoryService.findAll();
     }
 }
