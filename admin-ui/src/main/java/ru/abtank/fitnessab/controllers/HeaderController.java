@@ -11,6 +11,8 @@ import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.servises.*;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @ControllerAdvice
 public class HeaderController {
@@ -33,6 +35,7 @@ public class HeaderController {
     public void setExerciseService(ExerciseService exerciseService) {
         this.exerciseService = exerciseService;
     }
+
     @Autowired
     public void setModeService(ModeService modeService) {
         this.modeService = modeService;
@@ -42,32 +45,37 @@ public class HeaderController {
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
     }
+
     @Autowired
     public void setTypeService(TypeService typeService) {
         this.typeService = typeService;
     }
+
     @Autowired
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
+
     @Autowired
     public void setRoundService(RoundService roundService) {
         this.roundService = roundService;
     }
 
     @ModelAttribute
-    public void nav(Principal principal, Model model ) {
+    public void nav(Principal principal, Model model) {
         LOGGER.info("-=nav(Principal principal, Model model )=-");
         if (principal != null) {
             UserDto userDto = userService.findByLogin(principal.getName()).orElseThrow(NotFoundException::new);
             model.addAttribute("usr", userDto);
         }
-            model.addAttribute("exercises_count", exerciseService.count());
-            model.addAttribute("users_count", userService.count());
-            model.addAttribute("roles_count", roleService.count());
-            model.addAttribute("modes_count", modeService.count());
-            model.addAttribute("types_count", typeService.count());
-            model.addAttribute("categories_count", categoryService.count());
-            model.addAttribute("rounds_count", roundService.count());
+        model.addAttribute("exercises_count", exerciseService.count());
+        model.addAttribute("users_count", userService.count());
+        model.addAttribute("roles_count", roleService.count());
+        model.addAttribute("modes_count", modeService.count());
+        model.addAttribute("types_count", typeService.count());
+        model.addAttribute("categories_count", categoryService.count());
+        model.addAttribute("rounds_count", roundService.count());
+
+        model.addAttribute("today", Calendar.getInstance());
     }
 }

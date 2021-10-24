@@ -39,7 +39,7 @@
                         <form th:action="@{/user/update}" method="post" th:object="${user}" enctype="multipart/form-data">
                             <input th:type="hidden" th:field="*{id}" th:errorclass="is-invalid" >
                             <div class="modal-header">
-                                <h5 class="modal-title">Add new user</h5>
+                                <h5 class="modal-title" th:text="${user.id != null}?'Update User '+*{login}:'Add new User'">Add new user</h5>
                                 <button type="button" class="close" data-dismiss="modal">
                                     <span aria-hidden="true">&times;</span>
                                     <span class="sr-only">Close</span>

@@ -68,11 +68,9 @@ public class ExerciseController {
         ExerciseDto exercise = exerciseService.findById(id).orElseThrow(NotFoundException::new);
         List<CategoryDto> categories = categoryService.findAll();
         List<TypeDto> types = typeService.findAll();
-        LOGGER.info("EDIT TypeDto: " + types.get(0).toString());
-        LOGGER.info("EDIT CategoryDto: " + categories.get(6));
         LOGGER.info("EDIT CategoryDto: " + exercise.getCategory());
-        LOGGER.info("EDIT CategoryDto equals: " + exercise.getCategory().equals(categories.get(6)));
-        LOGGER.info("EDIT Exercise: " + exercise.toString());
+        LOGGER.info("EDIT CategoryDto equals: " + exercise.getCategory().getId().equals(exercise.getCategoryId()));
+        LOGGER.info("EDIT Exercise: " + exercise);
         LOGGER.info("CREATOR Exercise: " + exercise.getCreator().getLogin());
         model.addAttribute("exercise", exercise);
         model.addAttribute("categories", categories);

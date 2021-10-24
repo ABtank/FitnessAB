@@ -40,7 +40,8 @@ public class UserController {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-   @Autowired
+
+    @Autowired
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
     }
@@ -48,7 +49,7 @@ public class UserController {
     //весь список юзеров
     @GetMapping
     public String allUsers(Model model,
-                           @RequestParam Map <String,String> params,
+                           @RequestParam Map<String, String> params,
                            @RequestParam("page") Optional<Integer> page,
                            @RequestParam("size") Optional<Integer> size,
                            @RequestParam("sort") Optional<String> sort,
@@ -62,9 +63,7 @@ public class UserController {
 
         List<UserDto> userList = userService.findAll();
         model.addAttribute("userList", userList);
-        List<RoleDto> roles = roleService.findAll();
         model.addAttribute("user", new UserCreationDto());
-        model.addAttribute("roles", roles);
 
         model.addAttribute("time", getDate());
         model.addAttribute("nav_selected", "nav_users");
@@ -78,8 +77,6 @@ public class UserController {
     public String editUser(@PathVariable("id") Integer id, Model model) {
         UserCreationDto user = userService.findByIdForUpdate(id).orElseThrow(() -> new NotFoundException(User.class.getSimpleName(), id, "not Found!"));
         LOGGER.info("EDIT USER: " + user.toString());
-        List<RoleDto> roles = roleService.findAll();
-        model.addAttribute("roles", roles);
         model.addAttribute("user", user);
         model.addAttribute("nav_selected", "nav_users");
         return "user";
@@ -90,20 +87,23 @@ public class UserController {
         String msg;
         LOGGER.info(" START UPDATE OR INSERT USER: " + user.toString());
         if (bindingResult.hasErrors()) {
-            return (user.getId() != null) ? "redirect:/user/" + user.getId() : "users";
+            return "user";
         }
         if (!user.getPassword().equals(user.getMatchingPassword())) {
-            bindingResult.rejectValue("matchingPassword", "error.matchingPassword", "пароль не совпал");
-            return (user.getId() != null) ? "redirect:/user/" + user.getId() : "redirect:/user";
-        }
-        if (!userService.checkIsUnique(user.getLogin(),user.getEmail(),user.getId())) {
-            msg = "Login or email already exists";
+            msg = "passwords not equals";
             redirectAttributes.addFlashAttribute("exception", msg);
-            return (user.getId() != null) ? "redirect:/user/" + user.getId() : "redirect:/user";
+            bindingResult.rejectValue("matchingPassword", "error.matchingPassword", "пароль не совпал");
+            model.addAttribute("user", user);
+            return "user";
+        }
+        if (!userService.checkIsUnique(user.getLogin(), user.getEmail(), user.getId())) {
+            bindingResult.rejectValue("login", "error.login", "login error");
+            bindingResult.rejectValue("email", "error.email", "email error");
+            model.addAttribute("user", user);
+            return "user";
         }
         msg = (user.getId() != null) ? " Success update User " : " Success create User ";
         userService.save(user);
-        LOGGER.info("SAVE SAVE SAVE");
         msg += user.getLogin();
         redirectAttributes.addFlashAttribute("msg", msg);
         return "redirect:/user";
@@ -113,7 +113,6 @@ public class UserController {
     public String createUser(Model model) {
         LOGGER.info("CREATE USER");
         model.addAttribute("user", new UserCreationDto());
-        model.addAttribute("roles", roleService.findAll());
         model.addAttribute("nav_selected", "ADD_NEW");
         return "user";
     }
@@ -130,6 +129,11 @@ public class UserController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
+    }
+
+    @ModelAttribute("roles")
+    public List<RoleDto> roles(){
+        return roleService.findAll();
     }
 
 }

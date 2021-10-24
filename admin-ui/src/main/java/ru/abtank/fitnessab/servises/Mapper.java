@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.abtank.fitnessab.dto.*;
+import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.persist.entities.*;
 
 import static java.util.stream.Collectors.toList;
@@ -30,16 +31,15 @@ public class Mapper {
 
     public UserDto userToDto(User user) {
         LOGGER.info("-=userToDto(User user)=-");
-        return modelMapper.map(user, UserDto.class);
-//        return new UserDto(user.getId(),
-//                user.getLogin(),
-//                user.getEmail(),
-//                user.getRoles()
-//                        .stream()
-//                        .map(Role::getName)
-//                        .collect(toList()),
-//                user.getCreateDate(),
-//                user.getModifyDate());
+        return new UserDto(user.getId(),
+                user.getLogin(),
+                user.getEmail(),
+                user.getRoles()
+                        .stream()
+                        .map(Role::getName)
+                        .collect(toList()),
+                user.getCreateDate(),
+                user.getModifyDate());
     }
 
     public User userCreationDTOtoUser(UserCreationDto userCreationDTO) {
@@ -53,130 +53,37 @@ public class Mapper {
 
     public UserCreationDto userToUserCreationDto(User user) {
         LOGGER.info("-=userCreationDTOtoUser(UserCreationDto userCreationDTO)=-");
-        return modelMapper.map(user, UserCreationDto.class);
-//        return new UserCreationDto(user.getId(),
-//                user.getLogin(),
-//                null,
-//                null,
-//                user.getEmail(),
-//                user.getRoles()
-//                .stream()
-//                .map(Role::getName)
-//                .collect(toList())
-//        );
-    }
-
-    public User creatorDtoToUser(CreatorDto creatorDto) {
-        LOGGER.info("-=creatorDtoToUser(CreatorDto creatorDto)=-");
-        return modelMapper.map(creatorDto, User.class);
-//        return (creatorDto != null)? new User(
-//                creatorDto.getId(),
-//                creatorDto.getLogin(),
-//                creatorDto.getEmail()
-//        )
-//                :null;
-    }
-
-    public CreatorDto userToCreatorDto(User user) {
-        LOGGER.info("-=userToCreatorDto(User user)=-");
-        return modelMapper.map(user, CreatorDto.class);
-//        return (user != null)? new CreatorDto(
-//                user.getId(),
-//                user.getLogin(),
-//                user.getEmail()
-//        )
-//                :null;
-    }
-
-    public Role roleDtoToRole(RoleDto roleDto) {
-        LOGGER.info("-=roleDtoToRole(RoleDto roleDto)=-");
-        return modelMapper.map(roleDto, Role.class);
-//        return new Role(roleDto.getId(), roleDto.getName());
-    }
-
-    public RoleDto roleToDto(Role role) {
-        LOGGER.info("-=roleToDto(Role role)=-");
-        return modelMapper.map(role, RoleDto.class);
-//        return new RoleDto(role.getId(), role.getName());
-    }
-
-    public Type typeDtoToType(TypeDto typeDto) {
-        LOGGER.info("-=typeDtoToType(TypeDto typeDto)=-");
-        return   modelMapper.map(typeDto, Type.class);
-//        return new Type(typeDto.getId(), typeDto.getName(), typeDto.getDescr());
-    }
-
-    public TypeDto typeToDto(Type type) {
-        LOGGER.info("-=typeToDto(Type type)=-");
-        return   modelMapper.map(type, TypeDto.class);
-//        return new TypeDto(type.getId(), type.getName(), type.getDescr());
-    }
-
-    public Mode modeDtoToMode(ModeDto modeDto) {
-        LOGGER.info("-=odeDtoToMode(ModeDto modeDto)=-");
-        return   modelMapper.map(modeDto, Mode.class);
-//        return new Mode(modeDto.getId(), modeDto.getName(), modeDto.getIsStart(), modeDto.getDescr());
-    }
-
-    public ModeDto modeToDto(Mode mode) {
-        LOGGER.info("-=modeToDto(Mode mode)=-");
-        return   modelMapper.map(mode, ModeDto.class);
-//        return new ModeDto(mode.getId(), mode.getName(), mode.getIsStart(), mode.getDescr());
-    }
-
-
-    public Category categoryDtoToCategory(CategoryDto categoryDto) {
-        LOGGER.info("-=categoryDtoToCategory(CategoryDto categoryDto)=-");
-        return modelMapper.map(categoryDto, Category.class);
-//        return new Category(categoryDto.getId(),
-//                categoryDto.getName(),
-//                categoryDto.getDescr(),
-//                creatorDtoToUser(categoryDto.getCreator()));
-    }
-
-    public CategoryDto categoryToDto(Category category) {
-        LOGGER.info("-=categoryToDto(Category category)=-");
-        return modelMapper.map(category, CategoryDto.class);
-//        return new CategoryDto(
-//                category.getId(),
-//                category.getName(),
-//                category.getDescr(),
-//                userToCreatorDto(category.getCreator())
-//        );
-    }
-
-    public ExerciseDto exerciseToDto(Exercise exercise) {
-        LOGGER.info("-=exerciseToDto(Exercise exercise)=-");
-        return modelMapper.map(exercise, ExerciseDto.class);
-//        return new ExerciseDto(
-//                exercise.getId(),
-//                exercise.getName(),
-//                exercise.getDescr(),
-//                exercise.getIsCardio(),
-//                exercise.getCardioName1(),
-//                exercise.getCardioName2(),
-//                exercise.getCardioName3(),
-//                typeToDto(exercise.getType()),
-//                userToCreatorDto(exercise.getCreator()),
-//                categoryToDto(exercise.getCategory())
-//        );
+        return new UserCreationDto(user.getId(),
+                user.getLogin(),
+                null,
+                null,
+                user.getEmail(),
+                user.getRoles()
+                .stream()
+                .map(Role::getName)
+                .collect(toList())
+        );
     }
 
     public Exercise exerciseDtoToExercise(ExerciseDto exerciseDto) {
         LOGGER.info("-=exerciseDtoToExercise(ExerciseDto exerciseDto)=-");
-        return modelMapper.map(exerciseDto, Exercise.class);
-//        return new Exercise(
-//                exerciseDto.getId(),
-//                exerciseDto.getName(),
-//                exerciseDto.getDescr(),
-//                exerciseDto.getIsCardio(),
-//                exerciseDto.getCardioName1(),
-//                exerciseDto.getCardioName2(),
-//                exerciseDto.getCardioName3(),
-//                categoryDtoToCategory(exerciseDto.getCategory()),
-//                typeDtoToType(exerciseDto.getType()),
-//                creatorDtoToUser(exerciseDto.getCreator())
-//        );
+//        return modelMapper.map(exerciseDto, Exercise.class);
+        Category category = new Category();
+        category.setId(Integer.valueOf(exerciseDto.getCategoryId()));
+        Type type = new Type();
+        type.setId(Integer.valueOf(exerciseDto.getTypeId()));
+        return new Exercise(
+                exerciseDto.getId(),
+                exerciseDto.getName(),
+                exerciseDto.getDescr(),
+                exerciseDto.getIsCardio(),
+                exerciseDto.getCardioName1(),
+                exerciseDto.getCardioName2(),
+                exerciseDto.getCardioName3(),
+                category,
+                type,
+                modelMapper.map(exerciseDto.getCreator(), User.class)
+        );
     }
 
     public WorkoutDto workoutToDto(Workout workout) {

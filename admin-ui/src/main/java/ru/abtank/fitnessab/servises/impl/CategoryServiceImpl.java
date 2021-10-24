@@ -1,6 +1,7 @@
 package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import ru.abtank.fitnessab.dto.CategoryDto;
 import ru.abtank.fitnessab.persist.entities.Category;
 import ru.abtank.fitnessab.persist.repositories.CategoryRepository;
 import ru.abtank.fitnessab.servises.CategoryService;
-import ru.abtank.fitnessab.servises.Mapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +20,12 @@ import static java.util.stream.Collectors.toList;
 @NoArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final static Logger LOGGER = LoggerFactory.getLogger(CategoryServiceImpl.class);
-    private Mapper mapper;
     private CategoryRepository categoryRepository;
+    private ModelMapper modelMapper;
 
     @Autowired
-    public void setMapper(Mapper mapper) {
-        this.mapper = mapper;
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
     }
 
     @Autowired
@@ -35,17 +35,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> findAll() {
-        return categoryRepository.findAll().stream().map(mapper::categoryToDto).collect(toList());
+        return categoryRepository.findAll().stream().map(obj -> modelMapper.map(obj, CategoryDto.class)).collect(toList());
     }
 
     @Override
     public Optional<CategoryDto> findById(Integer id) {
-        return categoryRepository.findById(id).map(mapper::categoryToDto);
+        return categoryRepository.findById(id).map(obj -> modelMapper.map(obj, CategoryDto.class));
     }
 
     @Override
     public Optional<CategoryDto> findByName(String name) {
-        return categoryRepository.findByName(name).map(mapper::categoryToDto);
+        return categoryRepository.findByName(name).map(obj -> modelMapper.map(obj, CategoryDto.class));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Optional<CategoryDto> save(CategoryDto o) {
-        Category category = categoryRepository.save(mapper.categoryDtoToCategory(o));
+        Category category = categoryRepository.save(modelMapper.map(o, Category.class));
         return findById(category.getId());
     }
 

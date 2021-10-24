@@ -16,8 +16,10 @@ public class ExerciseDto {
     private String cardioName2;
     private String cardioName3;
     private TypeDto type;
+    private String typeId;
     private CreatorDto creator;
     private CategoryDto category;
+    private String categoryId;
 
     public ExerciseDto(Integer id, String name, String descr, Boolean isCardio, String cardioName1, String cardioName2, String cardioName3, TypeDto type, CreatorDto creator, CategoryDto category) {
         this.id = id;

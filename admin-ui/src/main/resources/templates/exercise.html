@@ -54,14 +54,14 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Category (required)</label>
-                                        <select th:field="*{category}"
+                                        <select th:field="*{categoryId}" id="category" name="category"
                                                 class="form-control" required>
                                             <option value=""></option>
                                             <optgroup label="Category">
                                                 <option th:each="category : ${categories}"
                                                         th:text="${category.name}"
-                                                        th:value="${category}"
-                                                        th:selected="${exercise.category?.equals(category)}"></option>
+                                                        th:value="${category.id}"
+                                                        th:selected="${exercise.categoryId?.equals(category.Id)}"></option>
                                             </optgroup>
                                         </select>
                                     </div>
@@ -83,14 +83,14 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Type</label>
-                                        <select th:field="*{type}"
+                                        <select th:field="*{typeId}" id="type" name="type"
                                                 class="form-control" required>
                                             <option value=""></option>
                                             <optgroup label="Type">
                                                 <option th:each="type : ${types}"
                                                         th:text="${type.name}"
-                                                        th:value="${type}" th:title="${type.descr}"
-                                                        th:selected="${exercise.type?.equals(type)}"></option>
+                                                        th:value="${type.id}" th:title="${type.descr}"
+                                                        th:selected="${exercise.typeId?.equals(type.id)}"></option>
                                             </optgroup>
                                         </select>
                                     </div>
@@ -160,7 +160,7 @@
     $(document).on('ready', function () {
 
         $('#isCardio').on('change', function () {
-            if (!$(this).val() === 'false') {
+            if ($(this).val() === 'false') {
                 $('#CardioNames input').prop('disabled', true);
             } else {
                 $('#CardioNames input').prop('disabled', false);

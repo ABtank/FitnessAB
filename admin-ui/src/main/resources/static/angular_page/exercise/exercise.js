@@ -53,8 +53,8 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
 
     $scope.submitCreateNewExercise = function () {
         console.log($scope.newExercise);
-        $scope.newExercise.type = JSON.parse($scope.newExercise.type);
-        $scope.newExercise.category = JSON.parse($scope.newExercise.category);
+        // $scope.newExercise.type = JSON.parse($scope.newExercise.type);
+        // $scope.newExercise.category = JSON.parse($scope.newExercise.category);
         $scope.newExercise['creator'] = {"id": 1};
         console.log($scope.newExercise);
         $http.post(contextPath + '/api/v1/exercise', $scope.newExercise)

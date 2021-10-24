@@ -1,19 +1,16 @@
 package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.abtank.fitnessab.dto.ModeDto;
 import ru.abtank.fitnessab.dto.TypeDto;
-import ru.abtank.fitnessab.persist.entities.Mode;
 import ru.abtank.fitnessab.persist.entities.Type;
 import ru.abtank.fitnessab.persist.repositories.TypeRepository;
-import ru.abtank.fitnessab.persist.repositories.specifications.ModeSpecification;
 import ru.abtank.fitnessab.persist.repositories.specifications.TypeSpecification;
-import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.TypeService;
 
 import java.util.List;
@@ -26,31 +23,31 @@ import static java.util.stream.Collectors.toList;
 public class TypeServiceImpl implements TypeService {
     private final static Logger LOGGER = LoggerFactory.getLogger(TypeServiceImpl.class);
     private TypeRepository typeRepository;
-    private Mapper mapper;
+    private ModelMapper modelMapper;
+
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     @Autowired
     public void setTypeRepository(TypeRepository typeRepository) {
         this.typeRepository = typeRepository;
     }
 
-    @Autowired
-    public void setMapper(Mapper mapper) {
-        this.mapper = mapper;
-    }
-
     @Override
     public List<TypeDto> findAll() {
-        return typeRepository.findAll().stream().map(mapper::typeToDto).collect(toList());
+        return typeRepository.findAll().stream().map(obj -> modelMapper.map(obj, TypeDto.class)).collect(toList());
     }
 
     @Override
     public Optional<TypeDto> findById(Integer id) {
-        return typeRepository.findById(id).map(mapper::typeToDto);
+        return typeRepository.findById(id).map(obj -> modelMapper.map(obj, TypeDto.class));
     }
 
     @Override
     public Optional<TypeDto> findByName(String name) {
-        return typeRepository.findByName(name).map(mapper::typeToDto);
+        return typeRepository.findByName(name).map(obj -> modelMapper.map(obj, TypeDto.class));
     }
 
     @Override
@@ -65,7 +62,7 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public Optional<TypeDto> save(TypeDto o) {
-        Type type = typeRepository.save(mapper.typeDtoToType(o));
+        Type type = typeRepository.save(modelMapper.map(o, Type.class));
         return findById(type.getId());
     }
 
@@ -82,7 +79,7 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public List<TypeDto> findAll(Specification<Type> spec) {
-        return typeRepository.findAll(spec).stream().map(mapper::typeToDto).collect(toList());
+        return typeRepository.findAll(spec).stream().map(obj -> modelMapper.map(obj, TypeDto.class)).collect(toList());
     }
 
     @Override

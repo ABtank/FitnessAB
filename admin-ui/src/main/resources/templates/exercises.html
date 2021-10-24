@@ -76,13 +76,13 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label>Category (required)</label>
-                                                                <select th:field="*{category}"
+                                                                <select th:field="*{categoryId}"
                                                                         class="form-control" required>
                                                                     <option value=""></option>
                                                                     <optgroup label="Category">
                                                                         <option th:each="category : ${categories}"
                                                                                 th:text="${category.name}"
-                                                                                th:value="${category}"
+                                                                                th:value="${category.id}"
                                                                                 ></option>
                                                                     </optgroup>
                                                                 </select>
@@ -105,13 +105,13 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label>Type</label>
-                                                                <select th:field="*{type}"
+                                                                <select th:field="*{typeId}"
                                                                         class="form-control" required>
                                                                     <option value=""></option>
                                                                     <optgroup label="Character">
                                                                         <option th:each="type : ${types}"
                                                                                 th:text="${type.name}"
-                                                                                th:value="${type}"
+                                                                                th:value="${type.id}"
                                                                                 ></option>
                                                                     </optgroup>
                                                                 </select>
@@ -257,8 +257,6 @@
         $('#exerciseTable').DataTable();
 
         $('#isCardio').on('change', function () {
-            console.log($(this).val());
-            console.log(!$(this).val());
             if($(this).val() === 'false') {
                 $('#CardioNames input').prop('disabled', true);
             }else{

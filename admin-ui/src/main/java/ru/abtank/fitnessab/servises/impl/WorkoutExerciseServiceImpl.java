@@ -1,6 +1,7 @@
 package ru.abtank.fitnessab.servises.impl;
 
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.WorkoutExerciseDto;
 import ru.abtank.fitnessab.persist.entities.WorkoutExercise;
 import ru.abtank.fitnessab.persist.repositories.WorkoutExerciseRepository;
-import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.WorkoutExerciseService;
 
 import java.util.List;
@@ -20,12 +20,12 @@ import static java.util.stream.Collectors.toList;
 @NoArgsConstructor
 public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
     private final static Logger LOGGER = LoggerFactory.getLogger(WorkoutExerciseServiceImpl.class);
-    private Mapper mapper;
     private WorkoutExerciseRepository workoutExerciseRepository;
+    private ModelMapper modelMapper;
 
     @Autowired
-    public void setMapper(Mapper mapper) {
-        this.mapper = mapper;
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
     }
 
     @Autowired
@@ -35,12 +35,12 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
 
     @Override
     public List<WorkoutExerciseDto> findAll() {
-        return workoutExerciseRepository.findAll().stream().map(mapper::workoutExerciseToDto).collect(toList());
+        return workoutExerciseRepository.findAll().stream().map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class)).collect(toList());
     }
 
     @Override
     public Optional<WorkoutExerciseDto> findById(Integer id) {
-        return workoutExerciseRepository.findById(id).map(mapper::workoutExerciseToDto);
+        return workoutExerciseRepository.findById(id).map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
 
     @Override
     public Optional<WorkoutExerciseDto> save(WorkoutExerciseDto o) {
-        WorkoutExercise workoutExercise = workoutExerciseRepository.save(mapper.workoutExerciseDtoToWorkoutExercise(o));
+        WorkoutExercise workoutExercise = workoutExerciseRepository.save(modelMapper.map(o, WorkoutExercise.class));
         return findById(workoutExercise.getId());
     }
 

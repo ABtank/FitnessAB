@@ -110,8 +110,7 @@
                                                                         class="form-control" required>
                                                                     <option th:each="role : ${roles}"
                                                                             th:text="${role.name}"
-                                                                            th:value="${role.name}"
-                                                                            th:selected="${user.roles?.contains(role)}"></option>
+                                                                            th:value="${role.name}"></option>
                                                                 </select>
                                                             </div>
                                                         </div>

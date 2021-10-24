@@ -127,12 +127,12 @@
             <label for="cardioName3">cardioName3</label>
             <input class="form-control" type="text" ng-model="newExercise.cardioName3" id="cardioName3">
             <label for="elementType">Types</label>
-            <select class="custom-select" ng-model="newExercise.type" required id="elementType">
-                <option ng-repeat="type in Types" value="{{type}}">{{type.name}}</option>
+            <select class="custom-select" ng-model="newExercise.typeId" required id="elementType">
+                <option ng-repeat="type in Types" value="{{type.id}}">{{type.name}}</option>
             </select>
             <label for="elementCategory">Categories</label>
-            <select class="custom-select" ng-model="newExercise.category" required id="elementCategory">
-                <option ng-repeat="category in Categories" value="{{category}}">{{category.name}}</option>
+            <select class="custom-select" ng-model="newExercise.categoryId" required id="elementCategory">
+                <option ng-repeat="category in Categories" value="{{category.id}}">{{category.name}}</option>
             </select>
         </div>
         <div>

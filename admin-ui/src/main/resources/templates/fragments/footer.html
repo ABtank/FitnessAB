@@ -3,8 +3,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <footer class="footer" th:fragment="footer">
-            <span class="text-right">
+            <span class="text-left">
                 Copyright <a target="_blank" href="#">Abtank Company</a>
+            </span>
+            <span class="text-center">
+  Today is: <span th:text="${#calendars.format(today,'dd MMMM yyyy')}">13 May 2011</span>
             </span>
     <span class="float-right">
                 <!-- Copyright footer link MUST remain intact if you download free version. -->
