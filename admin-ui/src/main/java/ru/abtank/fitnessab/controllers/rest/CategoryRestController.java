@@ -41,9 +41,9 @@ public class CategoryRestController {
     public CategoryDto create(@RequestBody CategoryDto categoryDto) {
         LOGGER.info("-=create(@RequestBody CategoryDto CategoryDto)=-");
         System.out.println(categoryDto);
-        if(categoryDto.getName() == null){
+        if (categoryDto.getName() == null) {
             throw new IllegalArgumentException("ERROR: must specify the name of the Category");
-        }else{
+        } else {
             categoryDto.setId(null);
         }
         return categoryService.save(categoryDto).orElseThrow(NotFoundException::new);
@@ -59,16 +59,16 @@ public class CategoryRestController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteAll() {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void deleteAll() {
         LOGGER.info("-=deleteAll()=-");
         categoryService.deleteAll();
-        return new ResponseEntity<>("-=You cannot delete all Categories=-", HttpStatus.BAD_REQUEST);
     }
-    
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id) {
         LOGGER.info("-=delete(@PathVariable Integer id)=-");
         categoryService.deleteById(id);
-        return new ResponseEntity<>("Category deleted", HttpStatus.OK);
     }
 }

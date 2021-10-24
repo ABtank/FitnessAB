@@ -1,0 +1,78 @@
+<div>
+    <div class="table-responsive">
+        <div class="row justify-content-start">
+            <div class="col">
+                <h3>Категории</h3>
+            </div>
+            <div class="col">
+                <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
+            </div>
+        </div>
+        <table id="categoryTable" class="table table-bordered table-hover display">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>Имя</td>
+                <td>Descr</td>
+                <td>Creator</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="category in Categories">
+                <td>{{category.id}}</td>
+                <td>{{category.name}}</td>
+                <td>{{category.descr}}</td>
+                <td>{{category.creator.login}}</td>
+                <td class="text-center" style="width: 10px;">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <a class="btn btn-success" href="!#/category/{{category.id}}">
+                            <i class="bi bi-pencil-square"></i></a>
+                        <a class="btn btn-danger" ng-click="deleteCategory(category.id)">
+                            <i class="bi bi-trash"></i></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row justify-content-between">
+        <div class="col-md-6">
+            <h3>Удалить категорию</h3>
+            <form ng-submit="submitDeleteCategory()">
+                <div class="form-group">
+<!--                    <label for="elementId">Category</label>-->
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i
+                                    class="bi bi-trash"></i></button>
+                        </div>
+                        <select class="custom-select" required ng-model="delCategory.id" id="elementId">
+                            <option ng-repeat="category in Categories" value="{{category.id}}">{{category.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h3>Добавить новую категорию</h3>
+            <form novalidate ng-submit="submitCreateNewCategory()">
+                <div class="form-group">
+<!--                    <label for="elementName">Имя</label>-->
+                    <div class="form-group">
+                        <label for="elementName">Name</label>
+                        <input class="form-control" type="text" ng-model="newCategory.name" id="elementName">
+                        <label for="elementDescr">Description</label>
+                        <textarea class="form-control" rows="5" type="text" ng-model="newCategory.descr"
+                                  id="elementDescr"></textarea>
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

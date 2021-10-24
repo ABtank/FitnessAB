@@ -66,10 +66,7 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
 
     $scope.submitDeleteExercise = function () {
         console.log(contextPath + '/api/v1/exercise/' + $scope.delExercise.id);
-        $http.delete(contextPath + '/api/v1/exercise/' + $scope.delExercise.id)
-            .then(function (response) {
-                $scope.fillTable();
-            });
+        $scope.deleteCategory($scope.delExercise.id);
     };
 
     $scope.deleteExercise = function (id){
