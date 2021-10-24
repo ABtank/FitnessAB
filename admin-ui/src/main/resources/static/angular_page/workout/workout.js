@@ -29,25 +29,25 @@ angular.module('app').controller('workoutController', function ($scope, $http) {
             });
     };
 
-    $scope.setUpdWorkout = function(id){
+    $scope.setUpdWorkout = function (id) {
         $("#updId").val(id);
         $scope.fillFormUpdate();
     }
 
-    $scope.fillFormUpdate = function (){
-        $http.get(contextPath + '/api/v1/workout/'+ $("#updId").val())
+    $scope.fillFormUpdate = function () {
+        $http.get(contextPath + '/api/v1/workout/' + $("#updId").val())
             .then(function (response) {
                 $scope.updWorkout = response.data;
-                console.log( $scope.updWorkout);
+                console.log($scope.updWorkout);
             });
     }
 
     $scope.submitDeleteWorkout = function () {
-        console.log(contextPath + '/api/v1/workout/'+ $scope.delWorkout.id);
+        console.log(contextPath + '/api/v1/workout/' + $scope.delWorkout.id);
         $scope.deleteWorkout($scope.delWorkout.id);
     };
 
-    $scope.deleteWorkout = function (id){
+    $scope.deleteWorkout = function (id) {
         $http.delete(contextPath + '/api/v1/workout/' + id)
             .then(function (response) {
                 $scope.fillTable();

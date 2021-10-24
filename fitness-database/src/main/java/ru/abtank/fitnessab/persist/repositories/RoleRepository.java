@@ -9,9 +9,11 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role ,Integer>, JpaSpecificationExecutor<Role> {
+public interface RoleRepository extends JpaRepository<Role, Integer>, JpaSpecificationExecutor<Role> {
 
     Optional<Role> findByName(String name);
+
     Optional<Role> findByNameLike(String namePattern);
+
     Set<Role> findByNameIn(Set<String> roles);
 }

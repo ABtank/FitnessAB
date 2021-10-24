@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class UserCreationDto {

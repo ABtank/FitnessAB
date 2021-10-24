@@ -20,11 +20,11 @@ angular.module('app').controller('categoryController', function ($scope, $http) 
             });
     };
     $scope.submitDeleteCategory = function () {
-        console.log(contextPath + '/api/v1/category/'+ $scope.delCategory.id);
+        console.log(contextPath + '/api/v1/category/' + $scope.delCategory.id);
         $scope.deleteCategory($scope.delCategory.id);
     };
 
-    $scope.deleteCategory = function (id){
+    $scope.deleteCategory = function (id) {
         $http.delete(contextPath + '/api/v1/category/' + id)
             .then(function (response) {
                 $scope.fillTable();

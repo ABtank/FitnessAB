@@ -45,7 +45,8 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>type (required)</label>
-                                        <input class="form-control" th:field="*{name}" th:errorclass="is-invalid" type="text"
+                                        <input class="form-control" th:field="*{name}" th:errorclass="is-invalid"
+                                               type="text"
                                                required/>
                                         <small id="nameError" class="form-text alert-danger"
                                                th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Validation error
@@ -63,7 +64,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
 
                             <button type="button" th:type="submit"

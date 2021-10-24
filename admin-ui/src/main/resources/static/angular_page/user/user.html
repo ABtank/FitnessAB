@@ -44,7 +44,8 @@
             <label for="elementId">login</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i class="bi bi-trash"></i>
+                    </button>
                 </div>
                 <select class="custom-select" required ng-model="delUser.id" id="elementId">
                     <option ng-repeat="user in Users" value="{{user.id}}">{{user.login}}</option>

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.abtank.fitnessab.persist.entities.Exercise;
 
 import java.util.Optional;
+
 @Repository
 public interface ExerciseRepository extends JpaRepository<Exercise, Integer>, JpaSpecificationExecutor<Exercise> {
 

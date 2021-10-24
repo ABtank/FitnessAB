@@ -19,8 +19,8 @@ angular.module('app').controller('roleController', function ($scope, $http) {
             });
     };
     $scope.submitDeleteRole = function () {
-        console.log(contextPath + '/api/v1/role/'+ $scope.delRole.id);
-        $http.delete(contextPath + '/api/v1/role/'+ $scope.delRole.id)
+        console.log(contextPath + '/api/v1/role/' + $scope.delRole.id);
+        $http.delete(contextPath + '/api/v1/role/' + $scope.delRole.id)
             .then(function (response) {
                 $scope.fillTable();
             });

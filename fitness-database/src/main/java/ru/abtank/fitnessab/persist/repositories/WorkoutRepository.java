@@ -8,8 +8,9 @@ import ru.abtank.fitnessab.persist.entities.Workout;
 import java.util.Optional;
 
 @Repository
-public interface WorkoutRepository extends JpaRepository<Workout ,Integer>, JpaSpecificationExecutor<Workout> {
+public interface WorkoutRepository extends JpaRepository<Workout, Integer>, JpaSpecificationExecutor<Workout> {
 
     Optional<Workout> findByName(String workout);
+
     Optional<Workout> findByNameLike(String workoutPattern);
 }

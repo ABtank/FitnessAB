@@ -68,7 +68,8 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label>Type (required)</label>
-                                                                <input class="form-control" th:field="*{name}" th:errorclass="is-invalid" type="text"
+                                                                <input class="form-control" th:field="*{name}"
+                                                                       th:errorclass="is-invalid" type="text"
                                                                        required/>
                                                             </div>
                                                         </div>
@@ -77,8 +78,10 @@
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label>Description</label>
-                                                                <textarea class="form-control" rows="5" th:field="*{descr}" th:errorclass="is-invalid" type="text"
-                                                                       />
+                                                                <textarea class="form-control" rows="5"
+                                                                          th:field="*{descr}" th:errorclass="is-invalid"
+                                                                          type="text"
+                                                                />
                                                             </div>
                                                         </div>
 
@@ -96,7 +99,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h3><i class="fas fa-table"></i>Типы упражнения в тренировке  table</h3>
+                                <h3><i class="fas fa-table"></i>Типы упражнения в тренировке table</h3>
                             </div>
 
                             <div class="card-body">
@@ -122,7 +125,8 @@
                                                     <a class="btn btn-success"
                                                        th:href="@{/type/{id}(id = ${type.id})}"><i
                                                             class="bi bi-pencil-square"></i></a>
-                                                    <form th:action="@{/type/{id}/delete (id=*{type.id})}" th:method="delete">
+                                                    <form th:action="@{/type/{id}/delete (id=*{type.id})}"
+                                                          th:method="delete">
                                                         <button class="btn btn-danger" type="Submit"><i
                                                                 class="fas fa-trash"></i></button>
                                                     </form>

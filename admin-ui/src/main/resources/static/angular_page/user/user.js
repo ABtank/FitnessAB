@@ -28,8 +28,8 @@ angular.module('app').controller('userController', function ($scope, $http) {
     };
 
     $scope.submitDeleteUser = function () {
-        console.log(contextPath + '/api/v1/user/'+ $scope.delUser.id);
-        $http.delete(contextPath + '/api/v1/user/'+ $scope.delUser.id)
+        console.log(contextPath + '/api/v1/user/' + $scope.delUser.id);
+        $http.delete(contextPath + '/api/v1/user/' + $scope.delUser.id)
             .then(function (response) {
                 $scope.fillTable();
             });

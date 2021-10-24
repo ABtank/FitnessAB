@@ -69,7 +69,7 @@ angular.module('app').controller('exerciseController', function ($scope, $http) 
         $scope.deleteCategory($scope.delExercise.id);
     };
 
-    $scope.deleteExercise = function (id){
+    $scope.deleteExercise = function (id) {
         $http.delete(contextPath + '/api/v1/exercise/' + id)
             .then(function (response) {
                 $scope.fillTable();

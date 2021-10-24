@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.abtank.fitnessab.dto.*;
-import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.persist.entities.*;
 
 import static java.util.stream.Collectors.toList;
@@ -59,9 +58,9 @@ public class Mapper {
                 null,
                 user.getEmail(),
                 user.getRoles()
-                .stream()
-                .map(Role::getName)
-                .collect(toList())
+                        .stream()
+                        .map(Role::getName)
+                        .collect(toList())
         );
     }
 
@@ -104,7 +103,7 @@ public class Mapper {
 //        );
     }
 
-    public WorkoutExerciseDto workoutExerciseToDto(WorkoutExercise we){
+    public WorkoutExerciseDto workoutExerciseToDto(WorkoutExercise we) {
         LOGGER.info("-=workoutExerciseToDto(WorkoutExercise we)=-");
         return modelMapper.map(we, WorkoutExerciseDto.class);
 //        return new WorkoutExerciseDto(
@@ -128,7 +127,7 @@ public class Mapper {
 //                we.getDescr());
     }
 
-    public RoundDto roundToDto(Round round){
+    public RoundDto roundToDto(Round round) {
         LOGGER.info("-=roundToDto(Round round)=-");
         return modelMapper.map(round, RoundDto.class);
 //        return new RoundDto(
@@ -144,7 +143,7 @@ public class Mapper {
 //        );
     }
 
-    public Round roundDtoToRound(RoundDto roundDto){
+    public Round roundDtoToRound(RoundDto roundDto) {
         LOGGER.info("-=roundDtotoRound(RoundDto roundDto)=-");
         return modelMapper.map(roundDto, Round.class);
 //        return new Round(

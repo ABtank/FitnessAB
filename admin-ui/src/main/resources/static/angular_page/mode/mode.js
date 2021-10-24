@@ -19,8 +19,8 @@ angular.module('app').controller('modeController', function ($scope, $http) {
             });
     };
     $scope.submitDeleteMode = function () {
-        console.log(contextPath + '/api/v1/mode/'+ $scope.delMode.id);
-        $http.delete(contextPath + '/api/v1/mode/'+ $scope.delMode.id)
+        console.log(contextPath + '/api/v1/mode/' + $scope.delMode.id);
+        $http.delete(contextPath + '/api/v1/mode/' + $scope.delMode.id)
             .then(function (response) {
                 $scope.fillTable();
             });

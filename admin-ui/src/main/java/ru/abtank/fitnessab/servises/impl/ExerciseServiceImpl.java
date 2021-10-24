@@ -96,7 +96,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         exercise.setCategory(categoryRepository.getById(o.getCategoryId()));
         exercise.setType(typeRepository.getById(o.getTypeId()));
         exerciseRepository.save(exercise);
-        LOGGER.info("-=save(ExerciseDto o)=-"+exercise);
+        LOGGER.info("-=save(ExerciseDto o)=-" + exercise);
         return exerciseRepository.findById(exercise.getId()).map(obj -> modelMapper.map(obj, ExerciseDto.class));
     }
 

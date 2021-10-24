@@ -18,6 +18,7 @@ angular.module('app').controller('typeController', function ($scope, $http) {
                 $scope.fillTable();
             });
     };
+
     $scope.submitUpdateType = function () {
         console.log($scope.updType);
         $http.put(contextPath + '/api/v1/type', $scope.updType)
@@ -28,25 +29,25 @@ angular.module('app').controller('typeController', function ($scope, $http) {
             });
     };
 
-    $scope.setUpdType = function(id){
+    $scope.setUpdType = function (id) {
         $("#updId").val(id);
         $scope.fillFormUpdate();
     }
 
-    $scope.fillFormUpdate = function (){
-        $http.get(contextPath + '/api/v1/type/'+ $("#updId").val())
+    $scope.fillFormUpdate = function () {
+        $http.get(contextPath + '/api/v1/type/' + $("#updId").val())
             .then(function (response) {
                 $scope.updType = response.data;
-                console.log( $scope.updType);
+                console.log($scope.updType);
             });
     }
 
     $scope.submitDeleteType = function () {
-        console.log(contextPath + '/api/v1/type/'+ $scope.delType.id);
+        console.log(contextPath + '/api/v1/type/' + $scope.delType.id);
         $scope.deleteType($scope.delType.id);
     };
 
-    $scope.deleteType = function (id){
+    $scope.deleteType = function (id) {
         $http.delete(contextPath + '/api/v1/type/' + id)
             .then(function (response) {
                 $scope.fillTable();

@@ -45,7 +45,8 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>mode (required)</label>
-                                        <input class="form-control" th:field="*{name}" th:errorclass="is-invalid" type="text"
+                                        <input class="form-control" th:field="*{name}" th:errorclass="is-invalid"
+                                               type="text"
                                                required/>
                                         <small id="nameError" class="form-text alert-danger"
                                                th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Validation error
@@ -56,7 +57,7 @@
                                     <div class="form-group">
                                         <label>Is Start</label>
                                         <select th:field="*{isStart}"
-                                                class="form-control" >
+                                                class="form-control">
                                             <option value="false">Not</option>
                                             <option value="true">Yes</option>
                                         </select>
@@ -73,7 +74,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
 
                             <button type="button" th:type="submit"
