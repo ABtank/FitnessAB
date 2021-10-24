@@ -32,6 +32,10 @@
                 templateUrl: 'angular_page/category/category.html',
                 controller: 'categoryController'
             })
+            .when('/workout', { //    http://localhost:8189/fitnessab/index.html#!/workout
+                templateUrl: 'angular_page/workout/workout.html',
+                controller: 'workoutController'
+            })
             .when('/user', {
                 templateUrl: 'angular_page/user/user.html',
                 controller: 'userController'

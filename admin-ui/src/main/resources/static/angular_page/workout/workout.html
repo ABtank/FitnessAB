@@ -2,33 +2,37 @@
     <div class="table-responsive">
         <div class="row justify-content-start">
             <div class="col">
-                <h3>Характер упражнения</h3>
+                <h3>План тренировки</h3>
             </div>
             <div class="col">
                 <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
             </div>
         </div>
-        <table id="typeTable" class="table table-bordered table-hover display">
+        <table id="workoutTable" class="table table-bordered table-hover display">
             <thead>
             <tr>
                 <td>#</td>
                 <td>Имя</td>
                 <td>Descr</td>
+                <td>Creator</td>
+                <td>Create date</td>
                 <td>Action</td>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="type in Types">
-                <td>{{type.id}}</td>
-                <td>{{type.name}}</td>
-                <td>{{type.descr}}</td>
+            <tr ng-repeat="workout in Workouts">
+                <td>{{workout.id}}</td>
+                <td>{{workout.name}}</td>
+                <td>{{workout.descr}}</td>
+                <td>{{workout.creator.login}}</td>
+                <td>{{workout.createDate}}</td>
                 <td class="text-center" style="width: 10px;">
                     <div class="btn-group me-2" role="group" aria-label="First group">
-                        <a class="btn btn-success" href="!#/type/{{type.id}}">
+                        <a class="btn btn-success" href="!#/workout/{{workout.id}}">
                             <i class="bi bi-pencil-square"></i></a>
-                        <a class="btn btn-warning" ng-click="setUpdType(type.id)">
+                        <a class="btn btn-warning" ng-click="setUpdWorkout(workout.id)">
                             <i class="bi bi-pencil-square"></i></a>
-                        <a class="btn btn-danger" ng-click="deleteType(type.id)">
+                        <a class="btn btn-danger" ng-click="deleteWorkout(workout.id)">
                             <i class="bi bi-trash"></i></a>
                     </div>
                 </td>
@@ -41,15 +45,15 @@
         <div class="col-md-6">
             <div class="row justify-content-between">
                 <div class="col-md-12">
-                    <h3>Удалить type</h3>
-                    <form ng-submit="submitDeleteType()">
+                    <h3>Удалить workout</h3>
+                    <form ng-submit="submitDeleteWorkout()">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i
                                         class="bi bi-trash"></i></button>
                             </div>
-                            <select class="custom-select" required ng-model="delType.id" id="elementId">
-                                <option ng-repeat="type in Types" value="{{type.id}}">{{type.name}}</option>
+                            <select class="custom-select" required ng-model="delWorkout.id" id="elementId">
+                                <option ng-repeat="workout in Workouts" value="{{workout.id}}">{{workout.name}}</option>
                             </select>
                         </div>
                     </form>
@@ -57,18 +61,18 @@
             </div>
             <div class="row justify-content-between">
                 <div class="col-md-12">
-                    <h3>Обновить type</h3>
-                    <select class="custom-select" ng-model="selectType" id="updId" ng-click="fillFormUpdate()">
+                    <h3>Обновить workout</h3>
+                    <select class="custom-select" ng-model="selectWorkout" id="updId" ng-click="fillFormUpdate()">
                         <option value="" selected></option>
-                        <option ng-repeat="type in Types" value="{{type.id}}">{{type.name}}</option>
+                        <option ng-repeat="workout in Workouts" value="{{workout.id}}">{{workout.name}}</option>
                     </select>
-                    <form ng-submit="submitUpdateType()">
+                    <form ng-submit="submitUpdateWorkout()">
                         <div class="form-group">
-                            <input type="hidden" ng-model="updType.id">
+                            <input type="hidden" ng-model="updWorkout.id">
                             <label for="updElementName">newName</label>
-                            <input class="form-control" type="text" ng-model="updType.name" id="updElementName">
+                            <input class="form-control" type="text" ng-model="updWorkout.name" id="updElementName">
                             <label for="updElementDescr">Description</label>
-                            <textarea class="form-control" rows="5" type="text" ng-model="updType.descr"
+                            <textarea class="form-control" rows="5" type="text" ng-model="updWorkout.descr"
                                       id="updElementDescr"></textarea>
                             <div class="input-group-append">
                                 <button class="btn btn-success" type="submit">Сохранить</button>
@@ -79,13 +83,13 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h3>Добавить новую type</h3>
-            <form novalidate ng-submit="submitCreateNewType()">
+            <h3>Добавить новую workout</h3>
+            <form novalidate ng-submit="submitCreateNewWorkout()">
                 <div class="form-group">
                     <label for="elementName">Name</label>
-                    <input class="form-control" type="text" ng-model="newType.name" id="elementName">
+                    <input class="form-control" type="text" ng-model="newWorkout.name" id="elementName">
                     <label for="elementDescr">Description</label>
-                    <textarea class="form-control" rows="5" type="text" ng-model="newType.descr"
+                    <textarea class="form-control" rows="5" type="text" ng-model="newWorkout.descr"
                               id="elementDescr"></textarea>
                     <div class="input-group-append">
                         <button class="btn btn-success" type="submit">Сохранить</button>
