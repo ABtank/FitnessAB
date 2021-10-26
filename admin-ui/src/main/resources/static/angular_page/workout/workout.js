@@ -1,8 +1,7 @@
 angular.module('app').controller('workoutController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/fitnessab';
-
+// <Table
     $scope.fillTable = function () {
-
         $http.get(contextPath + '/api/v1/workout')
             .then(function (response) {
                 $scope.Workouts = response.data;
@@ -10,6 +9,59 @@ angular.module('app').controller('workoutController', function ($scope, $http) {
             });
     };
 
+    $scope.fillWorkoutExerciseTable = function () {
+        let data= {
+            workoutId: $scope.updWorkout.id ? $scope.updWorkout.id : null
+        };
+        console.log(data);
+        $http({
+            url: contextPath + '/api/v1/workout_exercise',
+            method: 'GET',
+            params: data
+        }).then(function (response) {
+                $scope.WorkoutExercises = response.data;
+                console.log(response.data);
+            });
+    };
+
+    $scope.fillExerciseTable = function (pageIndex = 1) {
+        console.log("pageIndex=" + pageIndex);
+        $http({
+            url: contextPath + '/api/v1/exercise',
+            method: 'GET',
+            params: {
+                name_filter: $scope.filter ? $scope.filter.name_filter : null,
+                page: pageIndex, size: 1000
+            }
+        })
+            .then(function (response) {
+                $scope.Exercises = response.data;
+                const previous = ($scope.Exercises.number < 1) ? 1 : $scope.Exercises.number;
+                const next = ($scope.Exercises.number + 2 > $scope.Exercises.totalPages) ? $scope.Exercises.totalPages : $scope.Exercises.number + 2;
+                $scope.PaginationArray = generatePageIndex(previous, next);
+                console.log(response.data);
+                console.log($scope.PaginationArray);
+            });
+    };
+    function generatePageIndex(startPage, endPage) {
+        let arr = [];
+        for (let i = startPage; i < endPage + 1; i++) {
+            arr.push(i);
+        }
+        return arr;
+    };
+
+    $scope.fillModeTable = function () {
+        $http.get(contextPath + '/api/v1/mode')
+            .then(function (response) {
+                $scope.Modes = response.data;
+                console.log(response.data);
+            });
+    };
+
+// Table/>
+
+// <Workout
     $scope.submitCreateNewWorkout = function () {
         console.log($scope.newWorkout);
         $scope.newWorkout['creator'] = {"id": 1};
@@ -19,6 +71,7 @@ angular.module('app').controller('workoutController', function ($scope, $http) {
                 $scope.fillTable();
             });
     };
+
     $scope.submitUpdateWorkout = function () {
         console.log($scope.updWorkout);
         $http.put(contextPath + '/api/v1/workout', $scope.updWorkout)
@@ -39,6 +92,7 @@ angular.module('app').controller('workoutController', function ($scope, $http) {
             .then(function (response) {
                 $scope.updWorkout = response.data;
                 console.log($scope.updWorkout);
+                $scope.fillWorkoutExerciseTable();
             });
     }
 
@@ -53,8 +107,76 @@ angular.module('app').controller('workoutController', function ($scope, $http) {
                 $scope.fillTable();
             });
     }
+    $scope.delWorkout = function (id) {
+        $scope.deleteWorkout(id);
+        $scope.updWorkout = null;
+    }
+// Workout />
 
+// <WorkoutExercise
+    $scope.fillFormWorkoutExercise = function () {
+        $http.get(contextPath + '/api/v1/workout_exercise/' + $("#saveWorkoutExerciseId").val())
+            .then(function (response) {
+                $scope.saveWorkoutExercise = response.data;
+                console.log('saveWorkoutExercise');
+                console.log($scope.saveWorkoutExercise);
+                console.log($scope.saveWorkoutExercise.modeId);
+                console.log($scope.saveWorkoutExercise.exerciseId);
+            $('#workoutExerciseMode').val($scope.saveWorkoutExercise.modeId);
+            $('#workoutExerciseExercise').val($scope.saveWorkoutExercise.exerciseId);
+            });
+    }
+
+
+    $scope.setSaveWorkoutExercise = function (id) {
+        $("#saveWorkoutExerciseId").val(id);
+        $scope.fillFormWorkoutExercise();
+    }
+
+    $scope.submitSaveWorkoutExercise = function(){
+        if(Boolean($scope.saveWorkoutExercise.id)){
+            $scope.putWorkoutExercise();
+        }else{
+            $scope.postWorkoutExercise();
+        }
+    }
+
+    $scope.postWorkoutExercise = function () {
+        console.log($scope.saveWorkoutExercise);
+        $http.post(contextPath + '/api/v1/workout_exercise', $scope.saveWorkoutExercise)
+            .then(function (response) {
+                $scope.saveWorkoutExercise = null;
+                $scope.fillWorkoutExerciseTable();
+            });
+    };
+
+    $scope.putWorkoutExercise = function () {
+        console.log($scope.saveWorkoutExercise);
+        $http.put(contextPath + '/api/v1/workout_exercise', $scope.saveWorkoutExercise)
+            .then(function (response) {
+                $scope.saveWorkoutExercise = null;
+                $("#saveWorkoutExerciseId").val(null);
+                $scope.fillWorkoutExerciseTable();
+            });
+    };
+
+    $scope.deleteWorkoutExercise = function (id) {
+        $http.delete(contextPath + '/api/v1/workout_exercise/' + id)
+            .then(function (response) {
+                $scope.fillTable();
+            });
+    }
+    $scope.delWorkoutExercise = function (id) {
+        $scope.deleteWorkoutExercise(id);
+        $scope.updWorkout = null;
+    }
+// <WorkoutExercise />
+
+
+// Init
     $('#nav_header').find('li').removeClass('active');
     $('#nav_workout').addClass('active');
     $scope.fillTable();
+    $scope.fillExerciseTable();
+    $scope.fillModeTable();
 });

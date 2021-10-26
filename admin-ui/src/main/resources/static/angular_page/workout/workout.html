@@ -43,6 +43,7 @@
 
     <div class="row justify-content-between">
         <div class="col-md-6">
+            <!--            DELETE WORKOUT-->
             <div class="row justify-content-between">
                 <div class="col-md-12">
                     <h3>Удалить workout</h3>
@@ -59,29 +60,8 @@
                     </form>
                 </div>
             </div>
-            <div class="row justify-content-between">
-                <div class="col-md-12">
-                    <h3>Обновить workout</h3>
-                    <select class="custom-select" ng-model="selectWorkout" id="updId" ng-click="fillFormUpdate()">
-                        <option value="" selected></option>
-                        <option ng-repeat="workout in Workouts" value="{{workout.id}}">{{workout.name}}</option>
-                    </select>
-                    <form ng-submit="submitUpdateWorkout()">
-                        <div class="form-group">
-                            <input type="hidden" ng-model="updWorkout.id">
-                            <label for="updElementName">newName</label>
-                            <input class="form-control" type="text" ng-model="updWorkout.name" id="updElementName">
-                            <label for="updElementDescr">Description</label>
-                            <textarea class="form-control" rows="5" type="text" ng-model="updWorkout.descr"
-                                      id="updElementDescr"></textarea>
-                            <div class="input-group-append">
-                                <button class="btn btn-success" type="submit">Сохранить</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
+        <!--        CREATE WORKOUT-->
         <div class="col-md-6">
             <h3>Добавить новую workout</h3>
             <form novalidate ng-submit="submitCreateNewWorkout()">
@@ -93,6 +73,100 @@
                               id="elementDescr"></textarea>
                     <div class="input-group-append">
                         <button class="btn btn-success" type="submit">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col-md-6">
+            <!--            UPDATE WORKOUT-->
+            <div class="row justify-content-between">
+                <div class="col-md-12">
+                    <h3>Обновить workout</h3>
+                    <select class="custom-select" ng-model="selectWorkout" id="updId" ng-click="fillFormUpdate()">
+                        <option value="" selected></option>
+                        <option ng-repeat="workout in Workouts" value="{{workout.id}}">{{workout.name}}</option>
+                    </select>
+                    <form ng-submit="submitUpdateWorkout()">
+                        <div class="form-group">
+                            <input type="hidden" ng-model="updWorkout.id" value="0">
+                            <label for="updElementName">newName</label>
+                            <input class="form-control" type="text" ng-model="updWorkout.name" id="updElementName">
+                            <label for="updElementDescr">Description</label>
+                            <textarea class="form-control" rows="5" type="text" ng-model="updWorkout.descr"
+                                      id="updElementDescr"></textarea>
+                            <div class="input-group-append">
+                                <button class="btn btn-success" type="submit">Обновить</button>
+                                <a class="btn btn-danger" ng-click="delWorkout(updWorkout.id)">
+                                    <i class="bi bi-trash"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--            TABLE WE-->
+            <div class="row justify-content-between">
+                <div class="col-md-12">
+                    <h3>Упражнения в workout</h3>
+                    <table id="workoutExerciseTable" class="table table-bordered table-hover display">
+                        <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>№</td>
+                            <td>Упражнение</td>
+                            <td>Тип</td>
+                            <td>Descr</td>
+                            <td>Action</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="workoutExercise in WorkoutExercises.content">
+                            <td>{{workoutExercise.id}}</td>
+                            <td>{{workoutExercise.ordinal}}</td>
+                            <td>{{workoutExercise.exerciseName}}</td>
+                            <td>{{workoutExercise.mode}}</td>
+                            <td>{{workoutExercise.descr}}</td>
+                            <td class="text-center" style="width: 10px;">
+                                <div class="btn-group me-2" role="group" aria-label="First group">
+                                    <a class="btn btn-success" href="!#/workout_exercise/{{workoutExercise.id}}">
+                                        <i class="bi bi-pencil-square"></i></a>
+                                    <a class="btn btn-warning" ng-click="setSaveWorkoutExercise(workoutExercise.id)">
+                                        <i class="bi bi-pencil-square"></i></a>
+                                    <a class="btn btn-danger" ng-click="deleteWorkoutExercise(workoutExercise.id)">
+                                        <i class="bi bi-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--        CREATE WORKOUT-EXERCISE-->
+        <div class="col-md-6">
+            <h3>Добавить упражнение в тренировку</h3>
+            <input type="hidden" ng-model="saveWorkoutExerciseId" id="saveWorkoutExerciseId" value="0">
+            <form novalidate ng-submit="submitSaveWorkoutExercise()" id="form_save_w_e">
+                <div class="form-group">
+                    <input type="hidden" ng-model="saveWorkoutExercise.id"  value="0">
+                    <label for="saveWorkoutExerciseOrdinal">Ordinal</label>
+                    <input class="form-control" type="text" ng-model="saveWorkoutExercise.ordinal" id="saveWorkoutExerciseOrdinal">
+                    <label for="workoutExerciseMode">Mode</label>
+                    <select class="custom-select" ng-model="saveWorkoutExercise.modeId" required id="workoutExerciseMode">
+                        <option ng-repeat="mode in Modes" value="{{mode.id}}">{{mode.name}}</option>
+                    </select>
+                    <label for="workoutExerciseExercise">Exercise</label>
+                    <select class="custom-select" ng-model="saveWorkoutExercise.exerciseId" required id="workoutExerciseExercise">
+                        <option ng-repeat="exercise in Exercises.content" value="{{exercise.id}}">{{exercise.name}}</option>
+                    </select>
+                    <label for="workoutExerciseDescr">Description</label>
+                    <textarea class="form-control" rows="5" type="text" ng-model="saveWorkoutExercise.descr"
+                              id="workoutExerciseDescr"></textarea>
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="submit">Сохранить</button>
+                        <a class="btn btn-danger" ng-click="delWorkout(saveWorkoutExercise.id)">
+                            <i class="bi bi-trash"></i></a>
                     </div>
                 </div>
             </form>
