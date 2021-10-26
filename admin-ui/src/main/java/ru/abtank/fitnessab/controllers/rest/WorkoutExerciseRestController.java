@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,8 @@ import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.servises.WorkoutExerciseService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Tag(name = "WorkoutExercise resource API", description = "API to operate WorkoutExercise resource ...")
 @RequestMapping("/api/v1/workout_exercise")
@@ -26,9 +31,21 @@ public class WorkoutExerciseRestController {
     }
 
     @GetMapping
-    public List<WorkoutExerciseDto> getAllWorkoutExercises() {
+    public Page<WorkoutExerciseDto> getAllWorkoutExercises(
+            @RequestParam Map<String, String> params,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam("sort") Optional<String> sort,
+            @RequestParam("direction") Optional<String> direction
+    ) {
         LOGGER.info("-=getAllWorkoutExercises()=-");
-        return workoutExerciseService.findAll();
+        LOGGER.info(String.valueOf(params));
+        if(page.isPresent() && page.get() < 1) page = Optional.of(1);
+        PageRequest pageRequest = PageRequest.of(page.orElse(1) - 1, size.orElse(10), direction.isEmpty() ? Sort.Direction.ASC : Sort.Direction.DESC, sort.orElse("ordinal"));
+        Page<WorkoutExerciseDto> pages = workoutExerciseService.findAll(params, pageRequest);
+        LOGGER.info("pages.isEmpty()="+pages.isEmpty());
+        LOGGER.info(pages.toString());
+        return pages;
     }
 
     @GetMapping("/{id}")

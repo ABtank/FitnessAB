@@ -63,6 +63,16 @@ public class HeaderController {
 
     @ModelAttribute
     public void navCount(Principal principal, Model model) {
+//        Пока не придумал как сделать это одним запросом
+//        SELECT
+//                (select count(*) from categories) as count_category
+//,(select count(*) from exercises) as count_exercise
+//,(select count(*) from modes) as count_mode
+//,(select count(*) from types) as count_type
+//,(select count(*) from roles) as count_role
+//,(select count(*) from rounds) as count_round
+//,(select count(*) from users) as count_user
+//,(select count(*) from workouts) as count_workout
         LOGGER.info("-=navCount(Principal principal, Model model )=-");
         if (principal != null) {
             UserDto userDto = userService.findByLogin(principal.getName()).orElseThrow(NotFoundException::new);

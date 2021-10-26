@@ -273,21 +273,11 @@ Authorization: Basic in_user 123
 Content-Type: application/json
 
 {
-  "id": 0,
-  "workout": {
-    "id": 1
-  },
-  "exercise": {
-    "id": 13
-  },
-  "mode": {
-    "id": 1
-  },
-  "ordinal": 7,
-  "descr": "POST workout_exercise ",
-  "creator": {
-    "id": 1
-  }
+  "workoutId": 0,
+  "exerciseId": 0,
+  "modeId": 0,
+  "ordinal": 0,
+  "descr": "string"
 }
 ###
 PUT http://localhost:8189/fitnessab/api/v1/workout_exercise
@@ -295,21 +285,12 @@ Authorization: Basic in_user 123
 Content-Type: application/json
 
 {
-  "id": 6,
-  "workout": {
-    "id": 1
-  },
-  "exercise": {
-    "id": 12
-  },
-  "mode": {
-    "id": 2
-  },
-  "ordinal": 6,
-  "descr": "put workout_exercise",
-  "creator": {
-    "id": 1
-  }
+  "id": 0,
+  "workoutId": 0,
+  "exerciseId": 0,
+  "modeId": 0,
+  "ordinal": 0,
+  "descr": "string"
 }
 
 ###
