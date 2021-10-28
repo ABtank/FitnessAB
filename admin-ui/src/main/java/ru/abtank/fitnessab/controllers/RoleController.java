@@ -76,7 +76,7 @@ public class RoleController {
             model.addAttribute("exception", bindingResult.toString());
             return "role";
         }
-        if (!roleService.findByName(roleDto.getName()).isEmpty()) {
+        if (roleService.findByName(roleDto.getName()).isPresent()) {
             bindingResult.rejectValue("name", "error.name", "такая роль уже есть");
             model.addAttribute("role", roleDto);
             return "role";

@@ -14,7 +14,6 @@ import ru.abtank.fitnessab.dto.WorkoutExerciseDto;
 import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.servises.WorkoutExerciseService;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 

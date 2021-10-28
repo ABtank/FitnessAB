@@ -41,11 +41,7 @@ public class ModeRestController {
     public ModeDto create(@RequestBody ModeDto modeDto) {
         LOGGER.info("-=create(@RequestBody ModeDto ModeDto)=-");
         System.out.println(modeDto);
-        if(modeDto.getName() == null){
-            throw new IllegalArgumentException("ERROR: must specify the name of the mode");
-        }else{
-            modeDto.setId(null);
-        }
+        modeDto.setId(null);
         return modeService.save(modeDto).orElseThrow(NotFoundException::new);
     }
 

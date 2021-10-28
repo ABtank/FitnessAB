@@ -11,7 +11,6 @@ import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.servises.*;
 
 import java.security.Principal;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @ControllerAdvice

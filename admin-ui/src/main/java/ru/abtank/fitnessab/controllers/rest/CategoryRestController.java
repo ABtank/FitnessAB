@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.abtank.fitnessab.dto.CategoryDto;
 import ru.abtank.fitnessab.exception.NotFoundException;
@@ -41,11 +40,7 @@ public class CategoryRestController {
     public CategoryDto create(@RequestBody CategoryDto categoryDto) {
         LOGGER.info("-=create(@RequestBody CategoryDto CategoryDto)=-");
         System.out.println(categoryDto);
-        if (categoryDto.getName() == null) {
-            throw new IllegalArgumentException("ERROR: must specify the name of the Category");
-        } else {
-            categoryDto.setId(null);
-        }
+        categoryDto.setId(null);
         return categoryService.save(categoryDto).orElseThrow(NotFoundException::new);
     }
 

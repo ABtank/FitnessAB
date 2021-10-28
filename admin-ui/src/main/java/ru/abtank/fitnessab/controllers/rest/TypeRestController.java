@@ -41,11 +41,7 @@ public class TypeRestController {
     public TypeDto create(@RequestBody TypeDto typeDto) {
         LOGGER.info("-=create(@RequestBody TypeDto TypeDto)=-");
         System.out.println(typeDto);
-        if(typeDto.getName() == null){
-            throw new IllegalArgumentException("ERROR: must specify the name of the type");
-        }else{
-            typeDto.setId(null);
-        }
+        typeDto.setId(null);
         return typeService.save(typeDto).orElseThrow(NotFoundException::new);
     }
 

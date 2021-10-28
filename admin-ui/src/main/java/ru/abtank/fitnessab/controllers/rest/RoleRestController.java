@@ -41,11 +41,7 @@ public class RoleRestController {
     public RoleDto create(@RequestBody RoleDto roleDto) {
         LOGGER.info("-=create(@RequestBody RoleDto RoleDto)=-");
         System.out.println(roleDto);
-        if(roleDto.getName() == null){
-            throw new IllegalArgumentException("ERROR: must specify the name of the role");
-        }else{
-            roleDto.setId(null);
-        }
+        roleDto.setId(null);
         return roleService.save(roleDto).orElseThrow(NotFoundException::new);
     }
 

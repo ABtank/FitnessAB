@@ -20,8 +20,8 @@ import java.util.Optional;
 @Tag(name = "Exercise resource API", description = "API to operate Exercise resource ...")
 @RequestMapping("/api/v1/exercise")
 @RestController
-public class ExersiceRestController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ExersiceRestController.class);
+public class ExerciseRestController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ExerciseRestController.class);
     private ExerciseService exerciseService;
 
     @Autowired
@@ -38,7 +38,7 @@ public class ExersiceRestController {
             @RequestParam("all") Optional<String> all,
             @RequestParam("direction") Optional<String> direction
     ) {
-        LOGGER.info("-=getAllexercises()=-");
+        LOGGER.info("-=getAllExercises()=-");
         if(all.isPresent() && all.get().equals("true")) size = Optional.of(((int) exerciseService.count()));
         if(page.isPresent() && page.get() < 1) page = Optional.of(1);
         PageRequest pageRequest = PageRequest.of(page.orElse(1) - 1, size.orElse(10), direction.isEmpty() ? Sort.Direction.ASC : Sort.Direction.DESC, sort.orElse("id"));
@@ -55,11 +55,7 @@ public class ExersiceRestController {
     public ExerciseDto create(@RequestBody ExerciseDto exerciseDto) {
         LOGGER.info("-=create(@RequestBody ExerciseDto exerciseDto)=-");
         System.out.println(exerciseDto);
-        if (exerciseDto.getName() == null) {
-            throw new IllegalArgumentException("ERROR: must specify the name of the Exercise");
-        } else {
-            exerciseDto.setId(null);
-        }
+        exerciseDto.setId(null);
         return exerciseService.save(exerciseDto).orElseThrow(NotFoundException::new);
     }
 
