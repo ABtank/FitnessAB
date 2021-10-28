@@ -9,4 +9,5 @@ import java.util.Map;
 
 public interface WorkoutExerciseService extends BasicService<WorkoutExerciseDto> {
     Page<WorkoutExerciseDto> findAll(Map<String, String> params, PageRequest pageRequest);
+    int count(Integer workoutId);
 }

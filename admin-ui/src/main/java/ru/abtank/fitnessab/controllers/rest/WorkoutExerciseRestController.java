@@ -78,9 +78,10 @@ public class WorkoutExerciseRestController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable("id") Integer id) {
         LOGGER.info("-=delete(@PathVariable Integer id)=-");
         workoutExerciseService.deleteById(id);
-        return new ResponseEntity<>("WorkoutExercise deleted", HttpStatus.OK);
-    }
+        LOGGER.info("-=WorkoutExercise deleted OK=-");
+     }
 }

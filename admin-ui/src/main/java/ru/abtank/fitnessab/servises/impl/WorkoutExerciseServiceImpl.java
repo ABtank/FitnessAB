@@ -15,10 +15,13 @@ import ru.abtank.fitnessab.exception.NotFoundException;
 import ru.abtank.fitnessab.persist.entities.Exercise;
 import ru.abtank.fitnessab.persist.entities.Workout;
 import ru.abtank.fitnessab.persist.entities.WorkoutExercise;
+import ru.abtank.fitnessab.persist.repositories.ExerciseRepository;
+import ru.abtank.fitnessab.persist.repositories.ModeRepository;
 import ru.abtank.fitnessab.persist.repositories.WorkoutExerciseRepository;
 import ru.abtank.fitnessab.persist.repositories.WorkoutRepository;
 import ru.abtank.fitnessab.persist.repositories.specifications.ExerciseSpecification;
 import ru.abtank.fitnessab.persist.repositories.specifications.WorkoutExerciseSpecification;
+import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.WorkoutExerciseService;
 
 import java.util.List;
@@ -33,7 +36,15 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
     private final static Logger LOGGER = LoggerFactory.getLogger(WorkoutExerciseServiceImpl.class);
     private WorkoutExerciseRepository workoutExerciseRepository;
     private WorkoutRepository workoutRepository;
+    private ModeRepository modeRepository;
+    private ExerciseRepository exerciseRepository;
     private ModelMapper modelMapper;
+    private Mapper mapper;
+
+    @Autowired
+    public void setMapper(Mapper mapper) {
+        this.mapper = mapper;
+    }
 
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
@@ -43,6 +54,16 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
     @Autowired
     public void setWorkoutExerciseRepository(WorkoutExerciseRepository workoutExerciseRepository) {
         this.workoutExerciseRepository = workoutExerciseRepository;
+    }
+
+    @Autowired
+    public void setModeRepository(ModeRepository modeRepository) {
+        this.modeRepository = modeRepository;
+    }
+
+    @Autowired
+    public void setExerciseRepository(ExerciseRepository exerciseRepository) {
+        this.exerciseRepository = exerciseRepository;
     }
 
     @Autowired
@@ -78,8 +99,21 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
 
     @Override
     public Optional<WorkoutExerciseDto> save(WorkoutExerciseDto o) {
-        WorkoutExercise workoutExercise = workoutExerciseRepository.save(modelMapper.map(o, WorkoutExercise.class));
-        return findById(workoutExercise.getId());
+        LOGGER.info("-=Optional<WorkoutExerciseDto> save(WorkoutExerciseDto o)=-");
+        WorkoutExercise we = mapper.workoutExerciseDtoToWorkoutExercise(o);
+        we.setExercise(exerciseRepository.getById(o.getExerciseId()));
+        we.setWorkout(workoutRepository.getById(o.getWorkoutId()));
+        if (o.getModeId() != null && o.getModeId() > 0) {
+            we.setMode(modeRepository.getById(o.getModeId()));
+        }
+        if (we.getId() != null) {
+
+        } else {
+            int count = count(o.getWorkoutId());
+            we.setOrdinal((count > 0) ? ++count : 1);
+        }
+        we = workoutExerciseRepository.save(we);
+        return workoutExerciseRepository.findById(we.getId()).map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class));
     }
 
     @Override
@@ -87,21 +121,24 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
         LOGGER.info("-=Page<WorkoutExerciseDto> findAll(Map<String, String> params, PageRequest pageRequest)=-");
         Specification<WorkoutExercise> spec = WorkoutExerciseSpecification.trueLiteral();
         if (!params.isEmpty() && params.containsKey("workoutId") && !params.get("workoutId").isBlank()) {
-            LOGGER.info("spec="+spec);
+            LOGGER.info("spec=Page<WorkoutExerciseDto>");
             Workout workout = workoutRepository.findById(Integer.valueOf(params.get("workoutId"))).orElseThrow(NotFoundException::new);
             spec = spec.and(WorkoutExerciseSpecification.workoutEquals(workout));
         }
-        LOGGER.info("spec="+spec);
         List<WorkoutExercise> all = workoutExerciseRepository.findAll(spec);
-        System.out.println("all.isEmpty()");
-        System.out.println(all.isEmpty());
-        LOGGER.info("all is empty="+all.isEmpty());
-        LOGGER.info("all first="+all.stream().findFirst().map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class)));
-        return workoutExerciseRepository.findAll(spec, pageRequest).map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class));
+         return workoutExerciseRepository.findAll(spec, pageRequest).map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class));
     }
 
     @Override
     public long count() {
         return workoutExerciseRepository.count();
+    }
+
+    @Override
+    public int count(Integer workoutId) {
+        Workout workout = workoutRepository.getById(workoutId);
+        Specification<WorkoutExercise> spec = WorkoutExerciseSpecification.trueLiteral();
+        spec = spec.and(WorkoutExerciseSpecification.workoutEquals(workout));
+        return workoutExerciseRepository.findAll(spec).size();
     }
 }

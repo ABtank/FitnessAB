@@ -125,7 +125,7 @@
                             <td>{{workoutExercise.id}}</td>
                             <td>{{workoutExercise.ordinal}}</td>
                             <td>{{workoutExercise.exerciseName}}</td>
-                            <td>{{workoutExercise.mode}}</td>
+                            <td>{{workoutExercise.modeName}}</td>
                             <td>{{workoutExercise.descr}}</td>
                             <td class="text-center" style="width: 10px;">
                                 <div class="btn-group me-2" role="group" aria-label="First group">
@@ -146,26 +146,31 @@
         <!--        CREATE WORKOUT-EXERCISE-->
         <div class="col-md-6">
             <h3>Добавить упражнение в тренировку</h3>
-            <input type="hidden" ng-model="saveWorkoutExerciseId" id="saveWorkoutExerciseId" value="0">
+
+            <select class="custom-select" ng-model="selectWorkoutExercise" id="saveWorkoutExerciseId" ng-click="fillFormWorkoutExercise()">
+                <option value="" selected></option>
+                <option ng-repeat="workoutExercise in WorkoutExercises.content" value="{{workoutExercise.id}}">{{workoutExercise.exerciseName}}</option>
+            </select>
             <form novalidate ng-submit="submitSaveWorkoutExercise()" id="form_save_w_e">
                 <div class="form-group">
-                    <input type="hidden" ng-model="saveWorkoutExercise.id"  value="0">
+                    <input type="hidden" ng-model="saveWorkoutExercise.id" id="weId" value="0">
+                    <input type="hidden" ng-model="saveWorkoutExercise.workoutId" id="saveWorkoutExerciseWorkoutId" value="0">
                     <label for="saveWorkoutExerciseOrdinal">Ordinal</label>
                     <input class="form-control" type="text" ng-model="saveWorkoutExercise.ordinal" id="saveWorkoutExerciseOrdinal">
-                    <label for="workoutExerciseMode">Mode</label>
-                    <select class="custom-select" ng-model="saveWorkoutExercise.modeId" required id="workoutExerciseMode">
+                    <label for="saveWorkoutExerciseMode">Mode</label>
+                    <select class="custom-select" ng-model="saveWorkoutExercise.modeId" required id="saveWorkoutExerciseMode">
                         <option ng-repeat="mode in Modes" value="{{mode.id}}">{{mode.name}}</option>
                     </select>
-                    <label for="workoutExerciseExercise">Exercise</label>
-                    <select class="custom-select" ng-model="saveWorkoutExercise.exerciseId" required id="workoutExerciseExercise">
+                    <label for="saveWorkoutExerciseExercise">Exercise</label>
+                    <select class="custom-select" ng-model="saveWorkoutExercise.exerciseId" required id="saveWorkoutExerciseExercise">
                         <option ng-repeat="exercise in Exercises.content" value="{{exercise.id}}">{{exercise.name}}</option>
                     </select>
-                    <label for="workoutExerciseDescr">Description</label>
+                    <label for="saveWorkoutExerciseDescr">Description</label>
                     <textarea class="form-control" rows="5" type="text" ng-model="saveWorkoutExercise.descr"
-                              id="workoutExerciseDescr"></textarea>
+                              id="saveWorkoutExerciseDescr"></textarea>
                     <div class="input-group-append">
                         <button class="btn btn-success" type="submit">Сохранить</button>
-                        <a class="btn btn-danger" ng-click="delWorkout(saveWorkoutExercise.id)">
+                        <a class="btn btn-danger" ng-click="delWorkoutExercise(saveWorkoutExercise.id)">
                             <i class="bi bi-trash"></i></a>
                     </div>
                 </div>

@@ -66,7 +66,6 @@ public class Mapper {
 
     public Exercise exerciseDtoToExercise(ExerciseDto exerciseDto) {
         LOGGER.info("-=exerciseDtoToExercise(ExerciseDto exerciseDto)=-");
-//        return modelMapper.map(exerciseDto, Exercise.class);
         return new Exercise(
                 exerciseDto.getId(),
                 exerciseDto.getName(),
@@ -81,50 +80,14 @@ public class Mapper {
         );
     }
 
-    public WorkoutDto workoutToDto(Workout workout) {
-        LOGGER.info("-=workoutToDto(Workout workout) =-");
-        return modelMapper.map(workout, WorkoutDto.class);
-//        return new WorkoutDto(
-//                workout.getId(),
-//                workout.getName(),
-//                workout.getDescr(),
-//                userToCreatorDto(workout.getCreator())
-//        );
-    }
-
-    public Workout workoutDtoToWorkout(WorkoutDto w) {
-        LOGGER.info("-=workoutDtoToWorkout(WorkoutDto w)=-");
-        return modelMapper.map(w, Workout.class);
-//        return new Workout(
-//                w.getId(),
-//                w.getName(),
-//                w.getDescr(),
-//                creatorDtoToUser(w.getCreator())
-//        );
-    }
-
-    public WorkoutExerciseDto workoutExerciseToDto(WorkoutExercise we) {
-        LOGGER.info("-=workoutExerciseToDto(WorkoutExercise we)=-");
-        return modelMapper.map(we, WorkoutExerciseDto.class);
-//        return new WorkoutExerciseDto(
-//                we.getId(),
-//                modeToDto(we.getMode()),
-//                we.getOrdinal(),
-//                we.getDescr(),
-//                new WorkoutDtoId(we.getWorkout().getId()),
-//                new ExerciseDtoId(we.getExercise().getId()));
-    }
-
     public WorkoutExercise workoutExerciseDtoToWorkoutExercise(WorkoutExerciseDto we) {
         LOGGER.info("-=workoutExerciseDtoToWorkoutExercise(WorkoutExerciseDto we)=-");
-        return modelMapper.map(we, WorkoutExercise.class);
-//        return new WorkoutExercise(
-//                we.getId(),
-//                new Workout(we.getWorkout().getId()),
-//                new Exercise(we.getExercise().getId()),
-//                modeDtoToMode(we.getMode()),
-//                we.getOrdinal(),
-//                we.getDescr());
+        return new WorkoutExercise(
+                we.getId(),
+                new Workout(),
+                new Exercise(),
+                we.getOrdinal(),
+                we.getDescr());
     }
 
     public RoundDto roundToDto(Round round) {

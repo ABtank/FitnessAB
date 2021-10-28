@@ -269,12 +269,11 @@ GET http://localhost:8189/fitnessab/api/v1/workout_exercise/6
 Authorization: Basic in_user 123
 ###
 POST http://localhost:8189/fitnessab/api/v1/workout_exercise
-Authorization: Basic in_user 123
 Content-Type: application/json
 
 {
-  "workoutId": 0,
-  "exerciseId": 0,
+  "workoutId": 2,
+  "exerciseId":43,
   "modeId": 0,
   "ordinal": 0,
   "descr": "string"

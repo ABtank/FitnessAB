@@ -1,5 +1,6 @@
 package ru.abtank.fitnessab.persist.entities;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @Table(name = "modes")
 @Data
 @NoArgsConstructor
+@Builder
 public class Mode implements Serializable {
     private static final long SerialVersionUID = 3526649283349890875L;
 

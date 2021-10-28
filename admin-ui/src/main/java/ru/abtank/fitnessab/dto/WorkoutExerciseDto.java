@@ -13,7 +13,6 @@ public class WorkoutExerciseDto {
     @NonNull
     private Integer exerciseId;
     private String exerciseName;
-    @NonNull
     private Integer modeId;
     private String modeName;
     private Integer ordinal;
