@@ -109,6 +109,28 @@
             <div class="row justify-content-between">
                 <div class="col-md-12">
                     <h3>Упражнения в workout</h3>
+                    <div>
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" ng-click="fillWorkoutExerciseTable()" tabindex="-1">First</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" ng-click="fillWorkoutExerciseTable(WorkoutExercises.number)" tabindex="-1">Previous</a>
+                                </li>
+                                <li class="page-item" ng-class="{active : pageIndex == (WorkoutExercises.number+1)}"
+                                    ng-repeat="pageIndex in PaginationWorkoutExercises">
+                                    <a class="page-link" ng-click="fillWorkoutExerciseTable(pageIndex)">{{pageIndex}}</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" ng-click="fillWorkoutExerciseTable(WorkoutExercises.number+2)">Next</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" ng-click="fillWorkoutExerciseTable(WorkoutExercises.totalPages)">Last</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                     <table id="workoutExerciseTable" class="table table-bordered table-hover display">
                         <thead>
                         <tr>
@@ -129,12 +151,10 @@
                             <td>{{workoutExercise.descr}}</td>
                             <td class="text-center" style="width: 10px;">
                                 <div class="btn-group me-2" role="group" aria-label="First group">
-                                    <a class="btn btn-success" href="!#/workout_exercise/{{workoutExercise.id}}">
-                                        <i class="bi bi-pencil-square"></i></a>
                                     <a class="btn btn-warning" ng-click="setSaveWorkoutExercise(workoutExercise.id)">
                                         <i class="bi bi-pencil-square"></i></a>
                                     <a class="btn btn-danger" ng-click="deleteWorkoutExercise(workoutExercise.id)">
-                                        <i class="bi bi-trash"></i></a>
+                                        <i class="bi bi-box-arrow-up"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -163,7 +183,7 @@
                     </select>
                     <label for="saveWorkoutExerciseExercise">Exercise</label>
                     <select class="custom-select" ng-model="saveWorkoutExercise.exerciseId" required id="saveWorkoutExerciseExercise">
-                        <option ng-repeat="exercise in Exercises.content" value="{{exercise.id}}">{{exercise.name}}</option>
+                        <option ng-repeat="exercise in selectExercises.content" value="{{exercise.id}}">{{exercise.name}}</option>
                     </select>
                     <label for="saveWorkoutExerciseDescr">Description</label>
                     <textarea class="form-control" rows="5" type="text" ng-model="saveWorkoutExercise.descr"
@@ -175,6 +195,57 @@
                     </div>
                 </div>
             </form>
+
+            <div>
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" ng-click="fillExerciseTable()" tabindex="-1">First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" ng-click="fillExerciseTable(Exercises.number)" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item" ng-class="{active : pageIndex == (Exercises.number+1)}"
+                            ng-repeat="pageIndex in PaginationExercises">
+                            <a class="page-link" ng-click="fillExerciseTable(pageIndex)">{{pageIndex}}</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" ng-click="fillExerciseTable(Exercises.number+2)">Next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" ng-click="fillExerciseTable(Exercises.totalPages)">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <table id="exerciseTable" class="table table-bordered table-hover display">
+                <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Имя</td>
+                    <td>Category</td>
+                    <td>isCardio</td>
+                    <td>Action</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="exercise in Exercises.content">
+                    <td>{{exercise.id}}</td>
+                    <td>{{exercise.name}}</td>
+                    <td>{{exercise.category.name}}</td>
+                    <td>{{(exercise.isCardio)?"да":"нет"}}</td>
+                    <td scope="row" class="text-center" style="width: 10px;">
+                        <div class="btn-group me-2" role="group" aria-label="First group">
+                            <a class="btn btn-primary" ng-click="addExerciseInWorkout(exercise.id)">
+                                <i class="bi bi-box-arrow-in-down"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
         </div>
     </div>
 
