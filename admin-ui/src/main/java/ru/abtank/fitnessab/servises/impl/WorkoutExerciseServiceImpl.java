@@ -24,6 +24,7 @@ import ru.abtank.fitnessab.persist.repositories.specifications.WorkoutExerciseSp
 import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.WorkoutExerciseService;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -102,12 +103,27 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
         LOGGER.info("-=Optional<WorkoutExerciseDto> save(WorkoutExerciseDto o)=-");
         WorkoutExercise we = mapper.workoutExerciseDtoToWorkoutExercise(o);
         we.setExercise(exerciseRepository.getById(o.getExerciseId()));
-        we.setWorkout(workoutRepository.getById(o.getWorkoutId()));
+        Workout workout =workoutRepository.getById(o.getWorkoutId());
+        we.setWorkout(workout);
         if (o.getModeId() != null && o.getModeId() > 0) {
             we.setMode(modeRepository.getById(o.getModeId()));
         }
         if (we.getId() != null) {
-
+            List<WorkoutExercise> all = workoutExerciseRepository.findByWorkoutEquals(workout);
+            all = all.stream().sorted(Comparator.comparingInt(WorkoutExercise::getOrdinal)).collect(toList());
+            if (we.getOrdinal() < 1) we.setOrdinal(1);
+            if (we.getOrdinal() > all.size()) we.setOrdinal(all.size());
+            for (int i = 0; i < all.size(); i++) {
+                if(all.get(i).getId() == we.getId()){
+                    all.remove(i);
+                    break;
+                }
+            }
+            all.add(we.getOrdinal()-1,we);
+            for (int i = 0; i < all.size(); i++) {
+                all.get(i).setOrdinal(i+1);
+                workoutExerciseRepository.save(all.get(i));
+            }
         } else {
             int count = count(o.getWorkoutId());
             we.setOrdinal((count > 0) ? ++count : 1);
@@ -141,4 +157,7 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
         spec = spec.and(WorkoutExerciseSpecification.workoutEquals(workout));
         return workoutExerciseRepository.findAll(spec).size();
     }
+
+
+
 }
