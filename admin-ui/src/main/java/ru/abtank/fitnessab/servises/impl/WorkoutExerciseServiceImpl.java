@@ -24,10 +24,7 @@ import ru.abtank.fitnessab.persist.repositories.specifications.WorkoutExerciseSp
 import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.WorkoutExerciseService;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -109,26 +106,13 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
             we.setMode(modeRepository.getById(o.getModeId()));
         }
         if (we.getId() != null) {
-            List<WorkoutExercise> all = workoutExerciseRepository.findByWorkoutEquals(workout);
-            all = all.stream().sorted(Comparator.comparingInt(WorkoutExercise::getOrdinal)).collect(toList());
-            if (we.getOrdinal() < 1) we.setOrdinal(1);
-            if (we.getOrdinal() > all.size()) we.setOrdinal(all.size());
-            for (int i = 0; i < all.size(); i++) {
-                if(all.get(i).getId() == we.getId()){
-                    all.remove(i);
-                    break;
-                }
-            }
-            all.add(we.getOrdinal()-1,we);
-            for (int i = 0; i < all.size(); i++) {
-                all.get(i).setOrdinal(i+1);
-                workoutExerciseRepository.save(all.get(i));
-            }
+            List<WorkoutExercise> all = changeOrdinalInWorkout(we, workout);
+            workoutExerciseRepository.saveAll(all);
         } else {
             int count = count(o.getWorkoutId());
             we.setOrdinal((count > 0) ? ++count : 1);
+            we = workoutExerciseRepository.save(we);
         }
-        we = workoutExerciseRepository.save(we);
         return workoutExerciseRepository.findById(we.getId()).map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class));
     }
 
@@ -159,5 +143,22 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
     }
 
 
+    private List<WorkoutExercise> changeOrdinalInWorkout(WorkoutExercise we, Workout workout) {
+        List<WorkoutExercise> all = workoutExerciseRepository.findByWorkoutEquals(workout);
+        all = all.stream().sorted(Comparator.comparingInt(WorkoutExercise::getOrdinal)).collect(toList());
+        if (we.getOrdinal() < 1) we.setOrdinal(1);
+        if (we.getOrdinal() > all.size()) we.setOrdinal(all.size());
+        for (int i = 0; i < all.size(); i++) {
+            if(Objects.equals(all.get(i).getId(), we.getId())){
+                all.remove(i);
+                break;
+            }
+        }
+        all.add(we.getOrdinal()-1, we);
+        for (int i = 0; i < all.size(); i++) {
+            all.get(i).setOrdinal(i+1);
+        }
+        return all;
+    }
 
 }
