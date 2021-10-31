@@ -199,6 +199,14 @@ angular.module('app').controller('workoutController', function ($scope, $http) {
         $scope.deleteWorkoutExercise(id);
 
     }
+
+    $scope.changeOrdinalWorkoutExercise = function (we, ordinal) {
+        console.log("-=changeOrdinalWorkoutExercise=-");
+        console.log("we ordinal="+ordinal);
+        $scope.saveWorkoutExercise = we;
+        $scope.saveWorkoutExercise.ordinal = ordinal;
+        $scope.putWorkoutExercise();
+    }
 // <WorkoutExercise />
 
 
