@@ -75,7 +75,7 @@ angular.module('app').controller('workoutController', function ($scope, $http) {
 // <Workout
     $scope.submitCreateNewWorkout = function () {
         console.log($scope.newWorkout);
-        $scope.newWorkout['creator'] = {"id": 1};
+        $scope.newWorkout['creatorLogin'] = "abtank";
         $http.post(contextPath + '/api/v1/workout', $scope.newWorkout)
             .then(function (response) {
                 $scope.newWorkout = null;

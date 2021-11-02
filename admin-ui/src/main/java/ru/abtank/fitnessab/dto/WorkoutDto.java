@@ -2,6 +2,7 @@ package ru.abtank.fitnessab.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.Date;
 
@@ -9,8 +10,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class WorkoutDto {
     private Integer id;
+    @NonNull
     private String name;
     private String descr;
-    private CreatorDto creator;
+    private String creatorLogin;
     private Date createDate;
 }

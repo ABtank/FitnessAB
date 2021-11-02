@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="fragments/head :: head"></div>
+
+<body class="adminbody">
+
+<div id="main">
+    <!-- top bar navigation -->
+    <div th:replace="fragments/nav :: top_bar_navigation"></div>
+    <!-- End Navigation -->
+    <!-- Left Sidebar -->
+    <div th:replace="fragments/sidebar :: left_sidebar"></div>
+    <!-- End Sidebar -->
+
+
+    <div class="content-page">
+
+        <!-- Start content -->
+        <div class="content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="breadcrumb-holder">
+                            <h1 class="main-title float-left">Workouts Tables</h1>
+                            <ol class="breadcrumb float-right">
+                                <li class="breadcrumb-item">Home</li>
+                                <li class="breadcrumb-item active">DataTables</li>
+                            </ol>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+
+                <div class="row">
+                    <div th:replace="fragments/message :: msg"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="card mb-3">
+                            <div class="card-header">
+
+                                <span class="pull-right">
+                                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#modal_add_workout">
+                                <i class="fas fa-user-plus" aria-hidden="true"></i> Add new Workout</button>
+                                </span>
+                                <div class="modal fade custom-modal" tabindex="-1" role="dialog"
+                                     aria-labelledby="modal_add_workout" aria-hidden="true" id="modal_add_workout">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <form th:action="@{/workout/update}" method="post" th:object="${workout}"
+                                                  enctype="multipart/form-data">
+
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Add new Workout</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <input th:type="hidden" th:field="*{id}">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Workout (required)</label>
+                                                                <input class="form-control" th:field="*{name}"
+                                                                       th:errorclass="is-invalid" type="text"
+                                                                       required/>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Description</label>
+                                                                <textarea class="form-control" rows="2"
+                                                                          th:field="*{descr}" th:errorclass="is-invalid"
+                                                                          type="text"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" th:type="submit" class="btn btn-primary">Add
+                                                        Workout
+                                                    </button>
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3><i class="fas fa-table"></i>Workouts table</h3>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="workoutTable" class="table table-bordered table-hover display"
+                                           style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Имя</th>
+                                            <th>Descr</th>
+                                            <th>creator</th>
+                                            <th>Create</th>
+                                            <th sec:authorize="hasRole('ADMIN')">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="workout : ${workouts}">
+                                            <td th:text="*{workout.id}">id</td>
+                                            <td th:text="*{workout.name}">Workout</td>
+                                            <td th:text="*{workout.descr}">Workout</td>
+                                            <td th:text="*{workout.creatorLogin}">creator</td>
+                                            <td th:text="*{workout.createDate} != null?*{workout.createDate}:'-'"></td>
+                                            <td class="text-center" style="width: 10px;"
+                                                sec:authorize="hasRole('ADMIN')">
+                                                <div class="btn-group me-2" role="group" aria-label="First group">
+                                                    <a class="btn btn-success"
+                                                       th:href="@{/workout/{id}(id = ${workout.id})}"><i
+                                                            class="bi bi-pencil-square"></i></a>
+                                                    <form th:action="@{/workout/{id}/delete (id=*{workout.id})}"
+                                                          th:method="delete">
+                                                        <button class="btn btn-danger" type="Submit"><i
+                                                                class="fas fa-trash"></i></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- end table-responsive-->
+
+                            </div>
+                            <!-- end card-body-->
+
+                        </div>
+                        <!-- end card-->
+
+                    </div>
+
+                </div>
+                <!-- end row-->
+
+            </div>
+            <!-- END container-fluid -->
+
+        </div>
+        <!-- END content -->
+
+    </div>
+    <!-- END content-page -->
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+
+    <script th:replace="fragments/footer :: core_scripts"></script>
+
+</div>
+<!-- END main -->
+
+<script th:replace="fragments/footer :: datatables_scripts"></script>
+<script th:replace="fragments/message :: msg_close"></script>
+
+<script>
+    $(document).on('ready', function () {
+        $('#workoutTable').DataTable();
+
+        $('#isCardio').on('change', function () {
+            if ($(this).val() === 'false') {
+                $('#CardioNames input').prop('disabled', true);
+            } else {
+                $('#CardioNames input').prop('disabled', false);
+            }
+        });
+    });
+</script>
+<!-- END Java Script for this page -->
+
+</body>
+
+</html>

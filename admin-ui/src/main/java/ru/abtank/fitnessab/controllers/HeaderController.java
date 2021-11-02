@@ -19,6 +19,7 @@ public class HeaderController {
 
     private UserService userService;
     private ExerciseService exerciseService;
+    private WorkoutService workoutService;
     private RoleService roleService;
     private ModeService modeService;
     private TypeService typeService;
@@ -33,6 +34,11 @@ public class HeaderController {
     @Autowired
     public void setExerciseService(ExerciseService exerciseService) {
         this.exerciseService = exerciseService;
+    }
+
+    @Autowired
+    public void setWorkoutService(WorkoutService workoutService) {
+        this.workoutService = workoutService;
     }
 
     @Autowired
@@ -78,6 +84,7 @@ public class HeaderController {
             model.addAttribute("usr", userDto);
         }
         model.addAttribute("exercises_count", exerciseService.count());
+        model.addAttribute("workouts_count", workoutService.count());
         model.addAttribute("users_count", userService.count());
         model.addAttribute("roles_count", roleService.count());
         model.addAttribute("modes_count", modeService.count());

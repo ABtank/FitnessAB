@@ -90,6 +90,15 @@ public class Mapper {
                 we.getDescr());
     }
 
+    public Workout workoutDtoToWorkout(WorkoutDto w) {
+        LOGGER.info("-=workoutExerciseDtoToWorkoutExercise(WorkoutExerciseDto we)=-");
+        return new Workout(
+                w.getId(),
+                w.getName(),
+                w.getDescr(),
+                new User());
+    }
+
     public RoundDto roundToDto(Round round) {
         LOGGER.info("-=roundToDto(Round round)=-");
         return modelMapper.map(round, RoundDto.class);

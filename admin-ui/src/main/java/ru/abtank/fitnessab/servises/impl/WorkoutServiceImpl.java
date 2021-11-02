@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.WorkoutDto;
 import ru.abtank.fitnessab.persist.entities.Workout;
+import ru.abtank.fitnessab.persist.repositories.UserRepository;
 import ru.abtank.fitnessab.persist.repositories.WorkoutRepository;
+import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.WorkoutService;
 
 import java.util.List;
@@ -21,7 +23,15 @@ import static java.util.stream.Collectors.toList;
 public class WorkoutServiceImpl implements WorkoutService {
     private final static Logger LOGGER = LoggerFactory.getLogger(WorkoutServiceImpl.class);
     private WorkoutRepository workoutRepository;
+    private UserRepository userRepository;
     private ModelMapper modelMapper;
+    private Mapper mapper;
+
+
+    @Autowired
+    public void setMapper(Mapper mapper) {
+        this.mapper = mapper;
+    }
 
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
@@ -31,6 +41,10 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Autowired
     public void setWorkoutRepository(WorkoutRepository workoutRepository) {
         this.workoutRepository = workoutRepository;
+    }
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -60,7 +74,9 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public Optional<WorkoutDto> save(WorkoutDto o) {
-        Workout workout = workoutRepository.save(modelMapper.map(o, Workout.class));
+        Workout workout = mapper.workoutDtoToWorkout(o);
+        workout.setCreator(userRepository.findByLogin(o.getCreatorLogin()).get());
+        workoutRepository.save(workout);
         return findById(workout.getId());
     }
 
