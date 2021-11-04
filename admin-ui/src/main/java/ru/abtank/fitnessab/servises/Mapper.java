@@ -98,6 +98,14 @@ public class Mapper {
                 w.getDescr(),
                 new User());
     }
+    public Category categoryDtoToCategory(CategoryDto w) {
+        LOGGER.info("-=categoryExerciseDtoToCategoryExercise(CategoryExerciseDto we)=-");
+        return new Category(
+                w.getId(),
+                w.getName(),
+                w.getDescr(),
+                new User());
+    }
 
     public RoundDto roundToDto(Round round) {
         LOGGER.info("-=roundToDto(Round round)=-");

@@ -12,7 +12,7 @@ angular.module('app').controller('categoryController', function ($scope, $http) 
 
     $scope.submitCreateNewCategory = function () {
         console.log($scope.newCategory);
-        $scope.newCategory['creator'] = {"id": 1};
+        $scope.newCategory['creatorLogin'] = "abtank";
         $http.post(contextPath + '/api/v1/category', $scope.newCategory)
             .then(function (response) {
                 $scope.newCategory = null;

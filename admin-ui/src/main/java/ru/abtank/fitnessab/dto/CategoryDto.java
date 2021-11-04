@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 public class CategoryDto {
@@ -11,5 +13,6 @@ public class CategoryDto {
     @NonNull
     private String name;
     private String descr;
-    private CreatorDto creator;
+    private String creatorLogin;
+    private Date createDate;
 }
