@@ -4,4 +4,5 @@ import ru.abtank.fitnessab.dto.CounterDto;
 
 public interface CounterService {
     CounterDto allCount();
+    CounterDto allMyCount(Integer id);
 }

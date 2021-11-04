@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.abtank.fitnessab.dto.CounterDto;
+import ru.abtank.fitnessab.persist.entities.Counter;
 import ru.abtank.fitnessab.persist.repositories.CounterRepository;
 import ru.abtank.fitnessab.servises.CounterService;
 
@@ -20,6 +21,14 @@ public class CounterServiceImpl implements CounterService {
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public CounterDto allMyCount(Integer id) {
+        System.out.println("allMyCount(Integer id) ="+id);
+        Counter myCount = counterRepository.getMyCount(id);
+        System.out.println(myCount);
+        return modelMapper.map(myCount, CounterDto.class);
     }
 
     @Override

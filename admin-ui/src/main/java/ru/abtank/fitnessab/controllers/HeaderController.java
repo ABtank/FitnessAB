@@ -40,7 +40,18 @@ public class HeaderController {
         if (principal != null) {
             UserDto userDto = userService.findByLogin(principal.getName()).orElseThrow(NotFoundException::new);
             model.addAttribute("usr", userDto);
-        }
+            CounterDto allMyCount = counterService.allMyCount(userDto.getId());
+            System.out.println("allMyCount = "+allMyCount);
+            System.out.println("allCount = "+allCount);
+        model.addAttribute("exercises_my_count", allMyCount.getExercise());
+        model.addAttribute("workouts_my_count", allMyCount.getWorkout());
+        model.addAttribute("users_my_count", allMyCount.getUser());
+        model.addAttribute("roles_my_count", allMyCount.getRole());
+        model.addAttribute("modes_my_count", allMyCount.getMode());
+        model.addAttribute("types_my_count", allMyCount.getType());
+        model.addAttribute("categories_my_count", allMyCount.getCategory());
+        model.addAttribute("rounds_my_count", allMyCount.getRound());
+    }
         model.addAttribute("exercises_count", allCount.getExercise());
         model.addAttribute("workouts_count", allCount.getWorkout());
         model.addAttribute("users_count", allCount.getUser());
