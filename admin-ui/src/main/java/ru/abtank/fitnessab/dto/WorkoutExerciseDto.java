@@ -18,4 +18,7 @@ public class WorkoutExerciseDto {
     private Integer ordinal;
     private String descr;
 
+    public WorkoutExerciseDto(Integer workoutId) {
+        this.workoutId = workoutId;
+    }
 }

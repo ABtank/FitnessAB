@@ -105,7 +105,7 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
         if (o.getModeId() != null && o.getModeId() > 0) {
             we.setMode(modeRepository.getById(o.getModeId()));
         }
-        if (we.getId() != null) {
+        if (we.getOrdinal() != null) {
             List<WorkoutExercise> all = changeOrdinalInWorkout(we, workout);
             workoutExerciseRepository.saveAll(all);
         } else {
@@ -125,8 +125,9 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
             Workout workout = workoutRepository.findById(Integer.valueOf(params.get("workoutId"))).orElseThrow(NotFoundException::new);
             spec = spec.and(WorkoutExerciseSpecification.workoutEquals(workout));
         }
-        List<WorkoutExercise> all = workoutExerciseRepository.findAll(spec);
-         return workoutExerciseRepository.findAll(spec, pageRequest).map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class));
+//        List<WorkoutExerciseDto> all = workoutExerciseRepository.findAll(spec).stream().map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class)).collect(toList());
+        Page<WorkoutExerciseDto> workoutExerciseDtos = workoutExerciseRepository.findAll(spec, pageRequest).map(obj -> modelMapper.map(obj, WorkoutExerciseDto.class));
+        return workoutExerciseDtos;
     }
 
     @Override
