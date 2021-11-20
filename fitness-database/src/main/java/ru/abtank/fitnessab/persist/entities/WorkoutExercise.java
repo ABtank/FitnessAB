@@ -2,6 +2,7 @@ package ru.abtank.fitnessab.persist.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -29,7 +30,8 @@ public class WorkoutExercise implements Serializable {
     private Exercise exercise;
 
     @ManyToOne
-    @JoinColumn(name = "mode_id", nullable = false)
+    @ColumnDefault("1")
+    @JoinColumn(name = "mode_id")
     private Mode mode;
 
     @Column(name = "ordinal", nullable = false)
@@ -43,11 +45,11 @@ public class WorkoutExercise implements Serializable {
     @Column(name = "dt_create", updatable = false)
     private Date createDate;
 
-    public WorkoutExercise(Integer id, Workout workout, Exercise exercise, Mode mode, Integer ordinal, String descr) {
+    public WorkoutExercise(Integer id, Workout workout, Exercise exercise, Integer ordinal, String descr) {
         this.id = id;
         this.workout = workout;
         this.exercise = exercise;
-        this.mode = mode;
+        this.mode = Mode.builder().id(1).build();
         this.ordinal = ordinal;
         this.descr = descr;
     }

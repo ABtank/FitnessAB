@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import ru.abtank.fitnessab.persist.entities.Round;
 
 @Repository
-public interface RoundRepository extends JpaRepository<Round ,Integer>, JpaSpecificationExecutor<Round> {
+public interface RoundRepository extends JpaRepository<Round, Integer>, JpaSpecificationExecutor<Round> {
 
 }

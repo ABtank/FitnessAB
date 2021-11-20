@@ -1,5 +1,6 @@
 package ru.abtank.fitnessab.servises;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,13 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class Mapper {
     private PasswordEncoder passwordEncoder;
+    private ModelMapper modelMapper;
     private final static Logger LOGGER = LoggerFactory.getLogger(Mapper.class);
+
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -43,94 +50,17 @@ public class Mapper {
         );
     }
 
-    public User userDtoToCreator(CreatorDto creatorDto) {
-        LOGGER.info("-=userDtoToCreator(CreatorDto creatorDto)=-");
-        return new User(
-                creatorDto.getId(),
-                creatorDto.getLogin(),
-                creatorDto.getEmail()
-        );
-    }
-
-    public User creatorDtoToUser(CreatorDto creatorDto) {
-        LOGGER.info("-=creatorDtoToUser(CreatorDto creatorDto)=-");
-        return new User(
-                creatorDto.getId(),
-                creatorDto.getLogin(),
-                creatorDto.getEmail());
-    }
-
-    public CreatorDto userToCreatorDto(User user) {
-        LOGGER.info("-=userToCreatorDto(User user)=-");
-        return new CreatorDto(
-                user.getId(),
+    public UserCreationDto userToUserCreationDto(User user) {
+        LOGGER.info("-=userCreationDTOtoUser(UserCreationDto userCreationDTO)=-");
+        return new UserCreationDto(user.getId(),
                 user.getLogin(),
-                user.getEmail()
-        );
-    }
-
-    public Role roleDtoToRole(RoleDto roleDto) {
-        LOGGER.info("-=roleDtoToRole(RoleDto roleDto)=-");
-        return new Role(roleDto.getId(), roleDto.getName());
-    }
-
-    public RoleDto roleToDto(Role role) {
-        LOGGER.info("-=roleToDto(Role role)=-");
-        return new RoleDto(role.getId(), role.getName());
-    }
-
-    public Type typeDtoToType(TypeDto typeDto) {
-        LOGGER.info("-=typeDtoToType(TypeDto typeDto)=-");
-        return new Type(typeDto.getId(), typeDto.getName(), typeDto.getDescr());
-    }
-
-    public TypeDto typeToDto(Type type) {
-        LOGGER.info("-=typeToDto(Type type)=-");
-        return new TypeDto(type.getId(), type.getName(), type.getDescr());
-    }
-
-    public Mode modeDtoToMode(ModeDto modeDto) {
-        LOGGER.info("-=odeDtoToMode(ModeDto modeDto)=-");
-        return new Mode(modeDto.getId(), modeDto.getName(), modeDto.getIsStart(), modeDto.getDescr());
-    }
-
-    public ModeDto modeToDto(Mode mode) {
-        LOGGER.info("-=modeToDto(Mode mode)=-");
-        return new ModeDto(mode.getId(), mode.getName(), mode.getIsStart(), mode.getDescr());
-    }
-
-
-    public Category categoryDtoToCategory(CategoryDto categoryDto) {
-        LOGGER.info("-=categoryDtoToCategory(CategoryDto categoryDto)=-");
-        return new Category(categoryDto.getId(),
-                categoryDto.getName(),
-                categoryDto.getDescr(),
-                userDtoToCreator(categoryDto.getCreator()));
-    }
-
-    public CategoryDto categoryToDto(Category category) {
-        LOGGER.info("-=categoryToDto(Category category)=-");
-        return new CategoryDto(
-                category.getId(),
-                category.getName(),
-                category.getDescr(),
-                userToCreatorDto(category.getCreator())
-        );
-    }
-
-    public ExerciseDto exerciseToDto(Exercise exercise) {
-        LOGGER.info("-=exerciseToDto(Exercise exercise)=-");
-        return new ExerciseDto(
-                exercise.getId(),
-                exercise.getName(),
-                exercise.getDescr(),
-                exercise.getIsCardio(),
-                exercise.getCardioName1(),
-                exercise.getCardioName2(),
-                exercise.getCardioName3(),
-                typeToDto(exercise.getType()),
-                userToCreatorDto(exercise.getCreator()),
-                categoryToDto(exercise.getCategory())
+                null,
+                null,
+                user.getEmail(),
+                user.getRoles()
+                        .stream()
+                        .map(Role::getName)
+                        .collect(toList())
         );
     }
 
@@ -144,82 +74,69 @@ public class Mapper {
                 exerciseDto.getCardioName1(),
                 exerciseDto.getCardioName2(),
                 exerciseDto.getCardioName3(),
-                categoryDtoToCategory(exerciseDto.getCategory()),
-                typeDtoToType(exerciseDto.getType()),
-                userDtoToCreator(exerciseDto.getCreator())
+                new Category(),
+                new Type(),
+                modelMapper.map(exerciseDto.getCreator(), User.class)
         );
-    }
-
-    public WorkoutDto workoutToDto(Workout workout) {
-        LOGGER.info("-=workoutToDto(Workout workout) =-");
-        return new WorkoutDto(
-                workout.getId(),
-                workout.getName(),
-                workout.getDescr(),
-                userToCreatorDto(workout.getCreator())
-        );
-    }
-
-    public Workout workoutDtoToWorkout(WorkoutDto w) {
-        LOGGER.info("-=workoutDtoToWorkout(WorkoutDto w)=-");
-        return new Workout(
-                w.getId(),
-                w.getName(),
-                w.getDescr(),
-                creatorDtoToUser(w.getCreator())
-        );
-    }
-
-    public WorkoutExerciseDto workoutExerciseToDto(WorkoutExercise we){
-        LOGGER.info("-=workoutExerciseToDto(WorkoutExercise we)=-");
-        return new WorkoutExerciseDto(
-                we.getId(),
-                modeToDto(we.getMode()),
-                we.getOrdinal(),
-                we.getDescr(),
-                new WorkoutDtoId(we.getWorkout().getId()),
-                new ExerciseDtoId(we.getExercise().getId()));
     }
 
     public WorkoutExercise workoutExerciseDtoToWorkoutExercise(WorkoutExerciseDto we) {
         LOGGER.info("-=workoutExerciseDtoToWorkoutExercise(WorkoutExerciseDto we)=-");
         return new WorkoutExercise(
                 we.getId(),
-                new Workout(we.getWorkout().getId()),
-                new Exercise(we.getExercise().getId()),
-                modeDtoToMode(we.getMode()),
+                new Workout(),
+                new Exercise(),
                 we.getOrdinal(),
                 we.getDescr());
     }
 
-    public RoundDto roundToDto(Round round){
-        LOGGER.info("-=roundToDto(Round round)=-");
-        return new RoundDto(
-                round.getId(),
-                new WorkoutDtoId(round.getWorkout().getId()),
-                new ExerciseDtoId(round.getExercise().getId()),
-                round.getWeight(),
-                round.getReps(),
-                round.getDescr(),
-                round.getCardio1(),
-                round.getCardio2(),
-                round.getCardio3()
-        );
+    public Workout workoutDtoToWorkout(WorkoutDto w) {
+        LOGGER.info("-=workoutExerciseDtoToWorkoutExercise(WorkoutExerciseDto we)=-");
+        return new Workout(
+                w.getId(),
+                w.getName(),
+                w.getDescr(),
+                new User());
+    }
+    public Category categoryDtoToCategory(CategoryDto w) {
+        LOGGER.info("-=categoryExerciseDtoToCategoryExercise(CategoryExerciseDto we)=-");
+        return new Category(
+                w.getId(),
+                w.getName(),
+                w.getDescr(),
+                new User());
     }
 
-    public Round roundDtoToRound(RoundDto roundDto){
+    public RoundDto roundToDto(Round round) {
+        LOGGER.info("-=roundToDto(Round round)=-");
+        return modelMapper.map(round, RoundDto.class);
+//        return new RoundDto(
+//                round.getId(),
+//                new WorkoutDtoId(round.getWorkout().getId()),
+//                new ExerciseDtoId(round.getExercise().getId()),
+//                round.getWeight(),
+//                round.getReps(),
+//                round.getDescr(),
+//                round.getCardio1(),
+//                round.getCardio2(),
+//                round.getCardio3()
+//        );
+    }
+
+    public Round roundDtoToRound(RoundDto roundDto) {
         LOGGER.info("-=roundDtotoRound(RoundDto roundDto)=-");
-        return new Round(
-                roundDto.getId(),
-                new Workout(roundDto.getWorkout().getId()),
-                new Exercise(roundDto.getExercise().getId()),
-                roundDto.getWeight(),
-                roundDto.getReps(),
-                roundDto.getDescr(),
-                roundDto.getCardio1(),
-                roundDto.getCardio2(),
-                roundDto.getCardio3()
-        );
+        return modelMapper.map(roundDto, Round.class);
+//        return new Round(
+//                roundDto.getId(),
+//                new Workout(roundDto.getWorkout().getId()),
+//                new Exercise(roundDto.getExercise().getId()),
+//                roundDto.getWeight(),
+//                roundDto.getReps(),
+//                roundDto.getDescr(),
+//                roundDto.getCardio1(),
+//                roundDto.getCardio2(),
+//                roundDto.getCardio3()
+//        );
     }
 
 

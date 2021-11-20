@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nav">
+
+</nav>
+
+<div class="left main-sidebar" th:fragment="left_sidebar">
+
+    <div class="sidebar-inner leftscroll">
+
+        <div id="sidebar-menu">
+
+            <ul>
+
+                <li class="submenu" th:classappend="${nav_selected} == 'nav_users' ? active :' '">
+                    <a th:href="@{/user}"
+                       th:classappend="${nav_selected} == 'nav_users' ? active :' '"
+                       th:selected="${nav_selected} == 'nav_users'">
+                        <i class="fas fa-user"></i>
+                        <span> Users </span>
+                        <span class="label radius-circle bg-primary float-right" th:text="${users_count}">9</span>
+                    </a>
+                </li>
+
+                <li class="submenu">
+                    <a th:href="@{/swagger-ui/index.html?configUrl=/fitnessab/v3/api-docs/swagger-config#/}"
+                       target="_blank">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <span> Swagger </span>
+                    </a>
+                </li>
+                <li class="submenu">
+                    <a th:href="@{/index.html#!/}" target="_blank">
+                        <i class="fas fa-registered"></i>
+                        <span> REST API </span>
+                    </a>
+                </li>
+
+                <li class="submenu">
+                    <a id="tables" href="#">
+                        <i class="fas fa-table"></i>
+                        <span> Tables </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled">
+                        <li th:classappend="${nav_selected} == 'nav_workouts' ? active :' '">
+                            <a th:classappend="${nav_selected} == 'nav_workouts' ? active :' '"
+                               th:selected="${nav_selected} == 'nav_workouts'"
+                               th:href="@{/workout}">
+                                <span class="label radius-circle bg-primary float-right p-1 ml-1"
+                                      th:text="${workouts_count}">9</span>
+                                <span class="label radius-circle bg-danger float-right p-1"
+                                      sec:authorize="isAuthenticated()"
+                                      th:text="${workouts_my_count}">18</span>
+                                Тренировки</a>
+                        </li>
+                        <li th:classappend="${nav_selected} == 'nav_exercises' ? active :' '">
+                            <a th:classappend="${nav_selected} == 'nav_exercises' ? active :' '"
+                               th:selected="${nav_selected} == 'nav_exercises'"
+                               th:href="@{/exercise}">
+                                <span class="label radius-circle bg-primary float-right p-1 ml-1"
+                                      th:text="${exercises_count}">9</span>
+                                <span class="label radius-circle bg-danger float-right p-1"
+                                      sec:authorize="isAuthenticated()"
+                                      th:text="${exercises_my_count}">18</span>
+                                Упражнения</a>
+                        </li>
+                        <li th:classappend="${nav_selected} == 'nav_roles' ? active :' '">
+                            <a th:classappend="${nav_selected} == 'nav_roles' ? active :' '"
+                               th:selected="${nav_selected} == 'nav_roles'"
+                               th:href="@{/role}">
+                                <span class="label radius-circle bg-primary float-right p-1 ml-1"
+                                      th:text="${roles_count}">9</span>
+                                Роли</a>
+                        </li>
+                        <li th:classappend="${nav_selected} == 'nav_modes' ? active :' '">
+                            <a th:classappend="${nav_selected} == 'nav_modes' ? active :' '"
+                               th:selected="${nav_selected} == 'nav_modes'"
+                               th:href="@{/mode}">
+                                <span class="label radius-circle bg-primary float-right p-1 ml-1"
+                                      th:text="${modes_count}">9</span>
+                                Типы упражнения в тренировке</a>
+                        </li>
+                        <li th:classappend="${nav_selected} == 'nav_types' ? active :' '">
+                            <a th:classappend="${nav_selected} == 'nav_types' ? active :' '"
+                               th:selected="${nav_selected} == 'nav_types'"
+                               th:href="@{/type}">
+                                <span class="label radius-circle bg-primary float-right p-1 ml-1"
+                                      th:text="${types_count}">9</span>
+                                Характер упражнения</a>
+                        </li>
+                        <li th:classappend="${nav_selected} == 'nav_categories' ? active :' '">
+                            <a th:classappend="${nav_selected} == 'nav_categories' ? active :' '"
+                               th:selected="${nav_selected} == 'nav_categories'"
+                               th:href="@{/category}">
+                                <span class="label radius-circle bg-primary float-right p-1 ml-1"
+                                      th:text="${categories_count}">9</span>
+                                <span class="label radius-circle bg-danger float-right p-1"
+                                      sec:authorize="isAuthenticated()"
+                                      th:text="${categories_my_count}">18</span>
+                                Категории упражнений</a>
+                        </li>
+                        <li th:classappend="${nav_selected} == 'nav_rounds' ? active :' '">
+                            <a th:classappend="${nav_selected} == 'nav_rounds' ? active :' '"
+                               th:selected="${nav_selected} == 'nav_rounds'"
+                               th:href="@{/round}">
+                                <span class="label radius-circle bg-primary float-right p-1 ml-1"
+                                      th:text="${rounds_count}">9</span>
+                                <span class="label radius-circle bg-danger float-right p-1"
+                                      sec:authorize="isAuthenticated()"
+                                      th:text="${rounds_my_count}">18</span>
+                                Подходы</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <div class="clearfix"></div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

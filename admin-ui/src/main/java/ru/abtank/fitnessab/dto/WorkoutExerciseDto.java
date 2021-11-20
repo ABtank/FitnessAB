@@ -2,26 +2,23 @@ package ru.abtank.fitnessab.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
 public class WorkoutExerciseDto {
     private Integer id;
-    private WorkoutDtoId workout;
-    private ExerciseDtoId exercise;
-    private ModeDto mode;
+    @NonNull
+    private Integer workoutId;
+    @NonNull
+    private Integer exerciseId;
+    private String exerciseName;
+    private Integer modeId;
+    private String modeName;
     private Integer ordinal;
     private String descr;
 
-
-    public WorkoutExerciseDto(Integer id, ModeDto mode, Integer ordinal, String descr,
-                              WorkoutDtoId workout, ExerciseDtoId exercise) {
-        this.id = id;
-        this.mode = mode;
-        this.ordinal = ordinal;
-        this.descr = descr;
-        this.workout = workout;
-        this.exercise = exercise;
+    public WorkoutExerciseDto(Integer workoutId) {
+        this.workoutId = workoutId;
     }
-
 }

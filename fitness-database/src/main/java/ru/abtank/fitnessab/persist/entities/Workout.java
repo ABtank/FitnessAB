@@ -27,7 +27,7 @@ public class Workout implements Serializable {
     @Column(name = "descr")
     private String descr;
 
-    @OneToMany (mappedBy = "workout" )
+    @OneToMany(mappedBy = "workout")
     private List<WorkoutExercise> workoutExercises;
 
     @ManyToOne

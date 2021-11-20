@@ -2,20 +2,17 @@ package ru.abtank.fitnessab.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.abtank.fitnessab.persist.entities.Category;
+import lombok.NonNull;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 public class CategoryDto {
     private Integer id;
+    @NonNull
     private String name;
     private String descr;
-    private CreatorDto creator;
-
-    public CategoryDto(Integer id, String name, String descr, CreatorDto creator) {
-        this.id = id;
-        this.name = name;
-        this.descr = descr;
-        this.creator = creator;
-    }
+    private String creatorLogin;
+    private Date createDate;
 }

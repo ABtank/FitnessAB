@@ -1,0 +1,78 @@
+<div>
+    <div class="table-responsive">
+        <div class="row justify-content-start">
+            <div class="col">
+                <h3>Пользователи</h3>
+            </div>
+            <div class="col">
+                <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
+            </div>
+        </div>
+        <table id="userTable" class="table table-bordered table-hover display">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>Имя</td>
+                <td>email</td>
+                <td>Роль</td>
+                <td>Date</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in Users">
+                <td>{{user.id}}</td>
+                <td>{{user.login}}</td>
+                <td>{{user.email}}</td>
+                <td><p ng-repeat="role in user.roles">{{role}}</p></td>
+                <td><p>{{user.createDate}}</p>
+                    <p>{{user.modifyDate}}</p></td>
+                <td scope="row" class="text-center" style="width: 10px;">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <a class="btn btn-success" href="!#/user/{{user.id}}">
+                            <i class="bi bi-pencil-square"></i></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Удалить пользователя</h3>
+    <form ng-submit="submitDeleteUser()">
+        <div class="form-group col-md-6">
+            <label for="elementId">login</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                <select class="custom-select" required ng-model="delUser.id" id="elementId">
+                    <option ng-repeat="user in Users" value="{{user.id}}">{{user.login}}</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <h3>Добавить нового пользователя</h3>
+    <form novalidate ng-submit="submitCreateNewUser()">
+        <div class="form-group col-md-6">
+            <label for="elementLogin">Login</label>
+            <input class="form-control" required type="text" ng-model="newUser.login" id="elementLogin">
+            <label for="elementEmail">Email</label>
+            <input class="form-control" required type="text" ng-model="newUser.email" id="elementEmail">
+            <label for="elementPassword">Password</label>
+            <input class="form-control" required type="password" ng-model="newUser.password" id="elementPassword">
+            <label for="elementmatchingPassword">matchingPassword</label>
+            <input class="form-control" required type="password" ng-model="newUser.matchingPassword"
+                   id="elementmatchingPassword">
+            <label for="elementmatchingPassword">Roles</label>
+            <select multiple class="custom-select" ng-model="newUser.roles" required id="elementRole">
+                <option ng-repeat="role in Roles">{{role.name}}</option>
+            </select>
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Сохранить</button>
+        </div>
+    </form>
+</div>

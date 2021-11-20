@@ -1,0 +1,143 @@
+<div>
+    <div class="table-responsive">
+        <div class="row justify-content-start">
+            <div class="col">
+                <h3>Упражнения</h3>
+            </div>
+            <div class="col">
+                <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
+            </div>
+        </div>
+
+
+        <form ng-submit="fillTable()">
+            <div class="form-group col-md-6">
+                <label for="elementId">Filter</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-danger" type="button" id="button-clear_filter"
+                                ng-click="clearFilter()"><i class="bi bi-trash"></i></button>
+                        <button class="btn btn-outline-success" type="submit" id="button-filter"><i
+                                class="bi bi-filter"></i></button>
+                    </div>
+                    <input class="custom-select" ng-model="filter.name_filter" id="name_filter">
+                </div>
+            </div>
+        </form>
+
+
+        <table id="exerciseTable" class="table table-bordered table-hover display">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>Имя</td>
+                <td>Category</td>
+                <td>Descr</td>
+                <td>isCardio</td>
+                <td>cardioNames</td>
+                <td>type</td>
+                <td>creator</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="exercise in Exercises.content">
+                <td>{{exercise.id}}</td>
+                <td>{{exercise.name}}</td>
+                <td>{{exercise.category.name}}</td>
+                <td>{{exercise.descr}}</td>
+                <td>{{(exercise.isCardio)?"да":"нет"}}</td>
+                <td>
+                    <p>{{exercise.cardioName1}}</p>
+                    <p>{{exercise.cardioName2}}</p>
+                    <p>{{exercise.cardioName3}}</p>
+                </td>
+                <td>{{exercise.type.name}}</td>
+                <td>{{exercise.creator.login}}</td>
+                <td scope="row" class="text-center" style="width: 10px;">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <a class="btn btn-success" href="!#/exercise/{{exercise.id}}">
+                            <i class="bi bi-pencil-square"></i></a>
+                        <a class="btn btn-danger" ng-click="deleteExercise(exercise.id)">
+                            <i class="bi bi-trash"></i></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div>
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" ng-click="fillTable()" tabindex="-1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" ng-click="fillTable(Exercises.number)" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item" ng-class="{active : pageIndex == (Exercises.number+1)}"
+                    ng-repeat="pageIndex in PaginationArray">
+                    <a class="page-link" ng-click="fillTable(pageIndex)">{{pageIndex}}</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" ng-click="fillTable(Exercises.number+2)">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" ng-click="fillTable(Exercises.totalPages)">Last</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <h3>Удалить упражнние</h3>
+    <form ng-submit="submitDeleteExercise()">
+        <div class="form-group col-md-6">
+            <label for="elementId">Name</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                <select class="custom-select" required ng-model="delExercise.id" id="elementId">
+                    <option ng-repeat="exercise in Exercises.content" value="{{exercise.id}}">{{exercise.name}}</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <h3>Добавить новое упражнение</h3>
+    <form novalidate ng-submit="submitCreateNewExercise()">
+        <div class="form-group col-md-6">
+            <label for="elementName">Name</label>
+            <input class="form-control" required type="text" ng-model="newExercise.name" id="elementName">
+            <label for="elementDescr">Description</label>
+            <textarea class="form-control" rows="5" type="text" ng-model="newExercise.descr"
+                      id="elementDescr"></textarea>
+            <label for="elementCardio">IsCardio</label>
+            <select class="custom-select" ng-model="newExercise.isCardio" required id="elementCardio">
+                <option value=""></option>
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+            </select>
+            <label for="cardioName1">cardioName1</label>
+            <input class="form-control" type="text" ng-model="newExercise.cardioName1" id="cardioName1">
+            <label for="cardioName2">cardioName2</label>
+            <input class="form-control" type="text" ng-model="newExercise.cardioName2" id="cardioName2">
+            <label for="cardioName3">cardioName3</label>
+            <input class="form-control" type="text" ng-model="newExercise.cardioName3" id="cardioName3">
+            <label for="elementType">Types</label>
+            <select class="custom-select" ng-model="newExercise.typeId" required id="elementType">
+                <option ng-repeat="type in Types" value="{{type.id}}">{{type.name}}</option>
+            </select>
+            <label for="elementCategory">Categories</label>
+            <select class="custom-select" ng-model="newExercise.categoryId" required id="elementCategory">
+                <option ng-repeat="category in Categories" value="{{category.id}}">{{category.name}}</option>
+            </select>
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Сохранить</button>
+        </div>
+    </form>
+</div>

@@ -2,10 +2,12 @@ package ru.abtank.fitnessab.persist.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "categories")
@@ -29,6 +31,11 @@ public class Category implements Serializable {
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "dt_create", updatable = false)
+    private Date createDate;
 
     public Category(Integer id, @NotBlank(message = "Укажите категорию") String name, String descr, User creator) {
         this.id = id;

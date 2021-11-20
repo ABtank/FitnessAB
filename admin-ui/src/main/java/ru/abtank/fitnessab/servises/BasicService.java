@@ -9,5 +9,6 @@ public interface BasicService<E> {
     Optional<E> findByName(String name);
     void deleteById(Integer id);
     void deleteAll();
-    E save(E o);
+    Optional<E> save(E o);
+    long count();
 }

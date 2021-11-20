@@ -1,0 +1,75 @@
+<div>
+    <div class="table-responsive">
+        <div class="row justify-content-start">
+            <div class="col">
+                <h3>Тип упражнения в тренировке</h3>
+            </div>
+            <div class="col">
+                <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
+            </div>
+        </div>
+        <table id="modeTable" class="table table-bordered table-hover display">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>Имя</td>
+                <td>isStart</td>
+                <td>Descr</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="mode in Modes">
+                <td>{{mode.id}}</td>
+                <td>{{mode.name}}</td>
+                <td>{{(mode.isStart)?"да":"нет"}}</td>
+                <td>{{mode.descr}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row justify-content-between">
+        <div class="col-md-6">
+            <h3>Удалить mode</h3>
+            <form ng-submit="submitDeleteMode()">
+                <div class="form-group">
+                    <!--                    <label for="elementId">Mode</label>-->
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-danger" type="submit" id="button-addon2"><i
+                                    class="bi bi-trash"></i></button>
+                        </div>
+                        <select class="custom-select" required ng-model="delMode.id" id="elementId">
+                            <option ng-repeat="mode in Modes" value="{{mode.id}}">{{mode.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h3>Добавить новую mode</h3>
+            <form novalidate ng-submit="submitCreateNewMode()">
+                <div class="form-group">
+                    <!--                    <label for="elementName">Имя</label>-->
+                    <div class="form-group">
+                        <label for="elementName">Name</label>
+                        <input class="form-control" type="text" ng-model="newMode.name" id="elementName">
+                        <label for="elementIsStart">IsStart</label>
+                        <select class="custom-select" ng-model="newMode.isStart" required id="elementIsStart">
+                            <option value=""></option>
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                        <label for="elementDescr">Description</label>
+                        <textarea class="form-control" rows="5" type="text" ng-model="newMode.descr"
+                                  id="elementDescr"></textarea>
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
