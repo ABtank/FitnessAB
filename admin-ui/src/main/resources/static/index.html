@@ -26,13 +26,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="index.js"></script>
+    <script src="index_controller.js"></script>
 
 
 </head>
 
 <body class="adminbody" style="background-color: #ECECEC;">
 
-<div class="container-fluid p-0">
+<div class="container-fluid p-0" ng-controller="indexController">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav_header">
         <a class="navbar-brand active" href="#!/">FitnessAB</a>
@@ -65,12 +67,19 @@
                 </li>
             </ul>
         </div>
+        <div class="container">
+            <form ng-submit="tryToAuth()">
+                <input type="text" name="username" ng-model="user.username">
+                <input type="password" name="password" ng-model="user.password">
+                <button class="btn btn-outline-primary" type="submit">Войти</button>
+            </form>
+            <button class="btn btn-outline-secondary" ng-click="tryToLogout()">Выйти</button>
+        </div>
     </nav>
 
     <ng-view></ng-view>
 
 
-    <script src="index.js"></script>
     <script src="angular_page/main/main.js"></script>
     <script src="angular_page/role/role.js"></script>
     <script src="angular_page/user/user.js"></script>

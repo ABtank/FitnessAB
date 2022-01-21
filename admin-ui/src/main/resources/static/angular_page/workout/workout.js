@@ -1,5 +1,8 @@
-angular.module('app').controller('workoutController', function ($scope, $http) {
+angular.module('app').controller('workoutController', function ($scope, $http ,$localStorage) {
     const contextPath = 'http://localhost:8189/fitnessab';
+    if ($localStorage.currentUser) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+    }
 // <Table
     $scope.fillTable = function () {
         $http.get(contextPath + '/api/v1/workout')

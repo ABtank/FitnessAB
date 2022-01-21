@@ -1,6 +1,5 @@
 package ru.abtank.fitnessab.controllers.rest;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import ru.abtank.fitnessab.servises.UserService;
 
 import java.util.List;
 
-@Tag(name = "User resource API", description = "API to operate User resource ...")
 @RequestMapping("/api/v1/user")
 @RestController
 public class UserRestController {

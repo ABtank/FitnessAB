@@ -16,9 +16,12 @@ spring:
 
   #  Hibernate
   jpa:
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
         ddl-auto: validate
+
+jwt:
+  secret: topsecret12345678901234567890topsecret12345678901234567890topsecret12345678901234567890topsecret12345678901234567890

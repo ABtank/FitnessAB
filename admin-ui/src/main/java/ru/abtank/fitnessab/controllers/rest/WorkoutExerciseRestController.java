@@ -1,6 +1,5 @@
 package ru.abtank.fitnessab.controllers.rest;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import ru.abtank.fitnessab.servises.WorkoutExerciseService;
 import java.util.Map;
 import java.util.Optional;
 
-@Tag(name = "WorkoutExercise resource API", description = "API to operate WorkoutExercise resource ...")
 @RequestMapping("/api/v1/workout_exercise")
 @RestController
 public class WorkoutExerciseRestController {

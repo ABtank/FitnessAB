@@ -5,7 +5,6 @@ import org.modelmapper.ModelMapper;
 import ru.abtank.fitnessab.dto.TypeDto;
 import ru.abtank.fitnessab.persist.entities.Type;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TypeDtoUnitTest {
@@ -15,7 +14,7 @@ public class TypeDtoUnitTest {
     public void whenConvertTypeEntityToTypeDto_thenCorrect() {
         Type type = new Type();
         type.setId(1);
-        type.setName(randomAlphabetic(6));
+        type.setName("dafffega");
         type.setDescr("www.test.com");
 
         TypeDto typeDto = modelMapper.map(type, TypeDto.class);
@@ -28,7 +27,7 @@ public class TypeDtoUnitTest {
     public void whenConvertTypeDtoToTypeEntity_thenCorrect() {
         TypeDto typeDto = new TypeDto();
         typeDto.setId(1);
-        typeDto.setName(randomAlphabetic(6));
+        typeDto.setName("Adewhfsdnve");
         typeDto.setDescr("www.test.com");
 
         Type type = modelMapper.map(typeDto, Type.class);

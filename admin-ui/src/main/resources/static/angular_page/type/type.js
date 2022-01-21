@@ -1,5 +1,8 @@
-angular.module('app').controller('typeController', function ($scope, $http) {
+angular.module('app').controller('typeController', function ($scope, $http ,$localStorage) {
     const contextPath = 'http://localhost:8189/fitnessab';
+    if ($localStorage.currentUser) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+    }
 
     $scope.fillTable = function () {
 
