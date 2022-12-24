@@ -28,8 +28,10 @@ public interface CounterRepository extends JpaRepository<Counter, Integer> {
             ",0 as mode\n" +
             ",0 as type\n" +
             ",0 as role\n" +
-            ",(select count(*) from rounds r " +
-            "WHERE r.workout_id IN (select ww.workout_id from workouts ww WHERE ww.creator_id =:id)) as round\n" +
+            ",(Select count(*) FROM rounds r\n" +
+            "left join workouts_exercises we on we.workout_exercise_id = r.workout_exercise_id\n" +
+            "left outer join workouts w on w.workout_id = we.workout_id and w.creator_id=:id\n" +
+            "where w.workout_id is not null) as round\n" +
             ",0 as user\n" +
             ",(select count(*) from workouts w WHERE w.creator_id =:id) as workout")
     Counter getMyCount(@Param("id") Integer id);

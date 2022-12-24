@@ -39,7 +39,7 @@ public class RoundRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public RoundDto create(@RequestBody RoundDto roundDto) {
         LOGGER.info("-=create(@RequestBody RoundDto roundDto)=-");
-        if(roundDto.getWorkoutId() == null || roundDto.getExerciseId() == null){
+        if(roundDto.getWorkoutExerciseId() == null){
             throw new IllegalArgumentException("ERROR: must indicated workout and exercise of the Round");
         }else{
             roundDto.setId(null);

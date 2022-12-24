@@ -278,8 +278,7 @@ DROP TABLE IF EXISTS rounds CASCADE;
 CREATE TABLE rounds
 (
     round_id      bigserial PRIMARY KEY,
-    workout_id  bigint NOT NULL,
-    exercise_id bigint NOT NULL,
+    workout_exercise_id  bigint NOT NULL,
     dt_session  timestamp DEFAULT NOW(),
     weight      varchar(10),
     reps        varchar(10),
@@ -288,7 +287,6 @@ CREATE TABLE rounds
     cardio_2    varchar(10),
     cardio_3    varchar(10),
     dt_create   timestamp DEFAULT NOW(),
-    FOREIGN KEY (workout_id) references workouts (workout_id),
-    FOREIGN KEY (exercise_id) references exercises (exercise_id)
+    FOREIGN KEY (workout_exercise_id) references workouts_exercises (workout_exercise_id)
 );
 

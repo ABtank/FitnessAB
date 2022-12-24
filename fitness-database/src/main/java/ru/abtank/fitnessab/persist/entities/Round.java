@@ -21,12 +21,8 @@ public class Round implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "workout_id", nullable = false)
-    private Workout workout;
-
-    @ManyToOne
-    @JoinColumn(name = "exercise_id", nullable = false)
-    private Exercise exercise;
+    @JoinColumn(name = "workout_exercise_id", nullable = false)
+    private WorkoutExercise workoutExercise;
 
     @Column(name = "weight")
     private String weight;
@@ -56,10 +52,9 @@ public class Round implements Serializable {
     private Date createDate;
 
 
-    public Round(Integer id, Workout workout, Exercise exercise, String weight, Integer reps, String descr, String cardio1, String cardio2, String cardio3) {
+    public Round(Integer id, WorkoutExercise workoutExercise, String weight, Integer reps, String descr, String cardio1, String cardio2, String cardio3) {
         this.id = id;
-        this.workout = workout;
-        this.exercise = exercise;
+        this.workoutExercise = workoutExercise;
         this.weight = weight;
         this.reps = reps;
         this.descr = descr;

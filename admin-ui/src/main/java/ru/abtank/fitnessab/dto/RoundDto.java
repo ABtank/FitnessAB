@@ -9,8 +9,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class RoundDto {
     private Integer id;
-    private Integer workoutId;
-    private Integer exerciseId;
+    private Integer workoutExerciseId;
     private String weight;
     private Integer reps;
     private String descr;

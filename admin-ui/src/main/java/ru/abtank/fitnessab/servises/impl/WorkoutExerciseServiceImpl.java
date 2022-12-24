@@ -9,17 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.abtank.fitnessab.dto.ExerciseDto;
 import ru.abtank.fitnessab.dto.WorkoutExerciseDto;
 import ru.abtank.fitnessab.exception.NotFoundException;
-import ru.abtank.fitnessab.persist.entities.Exercise;
 import ru.abtank.fitnessab.persist.entities.Workout;
 import ru.abtank.fitnessab.persist.entities.WorkoutExercise;
 import ru.abtank.fitnessab.persist.repositories.ExerciseRepository;
 import ru.abtank.fitnessab.persist.repositories.ModeRepository;
 import ru.abtank.fitnessab.persist.repositories.WorkoutExerciseRepository;
 import ru.abtank.fitnessab.persist.repositories.WorkoutRepository;
-import ru.abtank.fitnessab.persist.repositories.specifications.ExerciseSpecification;
 import ru.abtank.fitnessab.persist.repositories.specifications.WorkoutExerciseSpecification;
 import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.WorkoutExerciseService;
@@ -146,20 +143,14 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
 
     private List<WorkoutExercise> changeOrdinalInWorkout(WorkoutExercise we, Workout workout) {
         List<WorkoutExercise> all = workoutExerciseRepository.findByWorkoutEquals(workout);
-        all = all.stream().sorted(Comparator.comparingInt(WorkoutExercise::getOrdinal)).collect(toList());
+        all = all.stream().sorted(Comparator.comparingInt(WorkoutExercise::getOrdinal)).toList();
         if (we.getOrdinal() < 1) we.setOrdinal(1);
         if (we.getOrdinal() > all.size()) we.setOrdinal(all.size());
-        for (int i = 0; i < all.size(); i++) {
-            if(Objects.equals(all.get(i).getId(), we.getId())){
-                all.remove(i);
-                break;
-            }
-        }
+        all = all.stream().filter(w -> !Objects.equals(w.getId(), we.getId())).toList();
         all.add(we.getOrdinal()-1, we);
         for (int i = 0; i < all.size(); i++) {
             all.get(i).setOrdinal(i+1);
         }
         return all;
     }
-
 }
