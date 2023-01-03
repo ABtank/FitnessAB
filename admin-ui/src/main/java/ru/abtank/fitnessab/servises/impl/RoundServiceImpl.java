@@ -62,13 +62,21 @@ public class RoundServiceImpl implements RoundService {
     @Override
     public Optional<RoundDto> save(RoundDto o) {
         Round round = modelMapper.map(o, Round.class);
-        Optional<Round> lustRound = roundRepository.findFirstByWorkoutExerciseOrderBySessionDateDesc(o.getWorkoutExerciseId());
-        if(lustRound.isPresent()){
-            Instant sessionDate = lustRound.get().getSessionDate().toInstant();
-            Instant dtEndSession = sessionDate.plus(3, ChronoUnit.HOURS);
-            if(dtEndSession.isAfter(Instant.now())){
-                round.setSessionDate(new Date());
+        if(round.getId() == null) {
+            Optional<Round> lustRound = roundRepository
+                    .findFirstByWorkoutExerciseOrderBySessionDateDesc(round.getWorkoutExercise());
+            if (lustRound.isPresent()) {
+                Instant instantNow = Instant.now().plus(3, ChronoUnit.HOURS);
+                Date sessionDate = lustRound.get().getSessionDate();
+                Instant dtEndSession = sessionDate.toInstant().plus(6, ChronoUnit.HOURS);
+                if (dtEndSession.isAfter(instantNow)) {
+                    round.setSessionDate(sessionDate);
+                }
             }
+        } else {
+            Round r = roundRepository.getById(o.getId());
+            round.setSessionDate(r.getSessionDate());
+            round.setCreateDate(r.getCreateDate());
         }
         roundRepository.save(round);
         return findById(round.getId());

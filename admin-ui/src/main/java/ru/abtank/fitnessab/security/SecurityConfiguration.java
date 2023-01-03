@@ -66,6 +66,7 @@ public class SecurityConfiguration {
                     .antMatchers("/plugins/*").permitAll()
                     .antMatchers("/auth/*").permitAll()
                     .antMatchers("/exercise/**").authenticated()
+                    .antMatchers("/round/**").authenticated()
                     .antMatchers("/role/**").hasRole("ADMIN")  // ограничение по роли
                     .antMatchers("/mode/**").hasRole("ADMIN")  // ограничение по роли
                     .antMatchers("/type/**").hasRole("ADMIN")  // ограничение по роли

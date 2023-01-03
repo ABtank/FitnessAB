@@ -17,4 +17,5 @@ public class RoundDto {
     private String cardio2;
     private String cardio3;
     private Date sessionDate;
+    private Date createDate;
 }
