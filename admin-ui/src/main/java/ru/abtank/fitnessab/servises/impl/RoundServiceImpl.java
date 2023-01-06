@@ -12,6 +12,7 @@ import ru.abtank.fitnessab.persist.repositories.ExerciseRepository;
 import ru.abtank.fitnessab.persist.repositories.RoundRepository;
 import ru.abtank.fitnessab.persist.repositories.WorkoutExerciseRepository;
 import ru.abtank.fitnessab.persist.repositories.WorkoutRepository;
+import ru.abtank.fitnessab.servises.Mapper;
 import ru.abtank.fitnessab.servises.RoundService;
 
 import java.time.Instant;
@@ -29,18 +30,19 @@ public class RoundServiceImpl implements RoundService {
     private final static Logger LOGGER = LoggerFactory.getLogger(RoundServiceImpl.class);
     private final RoundRepository roundRepository;
     private final ModelMapper modelMapper;
+    private final Mapper mapper;
     private final WorkoutExerciseRepository workoutExerciseRepository;
     private final WorkoutRepository workoutRepository;
     private final ExerciseRepository exerciseRepository;
 
     @Override
     public List<RoundDto> findAll() {
-        return roundRepository.findAll().stream().map(obj -> modelMapper.map(obj, RoundDto.class)).collect(toList());
+        return roundRepository.findAll().stream().map(mapper::roundToDto).collect(toList());
     }
 
     @Override
     public Optional<RoundDto> findById(Integer id) {
-        return roundRepository.findById(id).map(obj -> modelMapper.map(obj, RoundDto.class));
+        return roundRepository.findById(id).map(mapper::roundToDto);
     }
 
     @Override
@@ -78,8 +80,7 @@ public class RoundServiceImpl implements RoundService {
             round.setSessionDate(r.getSessionDate());
             round.setCreateDate(r.getCreateDate());
         }
-        roundRepository.save(round);
-        return findById(round.getId());
+        return findById(roundRepository.save(round).getId());
     }
 
     @Override

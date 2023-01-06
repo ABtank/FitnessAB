@@ -109,34 +109,20 @@ public class Mapper {
 
     public RoundDto roundToDto(Round round) {
         LOGGER.info("-=roundToDto(Round round)=-");
-        return modelMapper.map(round, RoundDto.class);
-//        return new RoundDto(
-//                round.getId(),
-//                new WorkoutDtoId(round.getWorkout().getId()),
-//                new ExerciseDtoId(round.getExercise().getId()),
-//                round.getWeight(),
-//                round.getReps(),
-//                round.getDescr(),
-//                round.getCardio1(),
-//                round.getCardio2(),
-//                round.getCardio3()
-//        );
-    }
-
-    public Round roundDtoToRound(RoundDto roundDto) {
-        LOGGER.info("-=roundDtotoRound(RoundDto roundDto)=-");
-        return modelMapper.map(roundDto, Round.class);
-//        return new Round(
-//                roundDto.getId(),
-//                new Workout(roundDto.getWorkout().getId()),
-//                new Exercise(roundDto.getExercise().getId()),
-//                roundDto.getWeight(),
-//                roundDto.getReps(),
-//                roundDto.getDescr(),
-//                roundDto.getCardio1(),
-//                roundDto.getCardio2(),
-//                roundDto.getCardio3()
-//        );
+//        return modelMapper.map(round, RoundDto.class);
+        return RoundDto.builder()
+                .id(round.getId())
+                .workoutExerciseId(round.getWorkoutExercise().getId())
+                .exercise(round.getWorkoutExercise().getExercise().getName())
+                .weight(round.getWeight())
+                .reps(round.getReps())
+                .cardio1(round.getCardio1())
+                .cardio2(round.getCardio2())
+                .cardio3(round.getCardio3())
+                .descr(round.getDescr())
+                .sessionDate(round.getSessionDate())
+                .createDate(round.getCreateDate())
+                .build();
     }
 
 

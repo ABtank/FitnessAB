@@ -1,5 +1,6 @@
 package ru.abtank.fitnessab.controllers.rest;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,11 @@ public class WorkoutExerciseRestController {
 
     @GetMapping
     public Page<WorkoutExerciseDto> getAllWorkoutExercises(
-            @RequestParam Map<String, String> params,
-            @RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size,
-            @RequestParam("sort") Optional<String> sort,
-            @RequestParam("direction") Optional<String> direction
+            @RequestParam @Parameter(description = "Указать {\"\",\"\"}") Map<String, String> params,
+            @RequestParam("page") @Parameter(example = "1") Optional<Integer> page,
+            @RequestParam("size") @Parameter(example = "10") Optional<Integer> size,
+            @RequestParam("sort") @Parameter(example = "ordinal") Optional<String> sort,
+            @RequestParam("direction") @Parameter(example = "ASC") Optional<String> direction
     ) {
         LOGGER.info("-=getAllWorkoutExercises()=-");
         LOGGER.info(String.valueOf(params));

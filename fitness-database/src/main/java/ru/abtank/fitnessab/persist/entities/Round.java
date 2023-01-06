@@ -1,5 +1,6 @@
 package ru.abtank.fitnessab.persist.entities;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Entity
 @Table(name = "rounds")
 @Data
+@Builder
 @NoArgsConstructor
 public class Round implements Serializable {
     private static final long SerialVersionUID = 2944526495564810297L;
@@ -52,7 +54,7 @@ public class Round implements Serializable {
     private Date createDate;
 
 
-    public Round(Integer id, WorkoutExercise workoutExercise, String weight, Integer reps, String descr, String cardio1, String cardio2, String cardio3) {
+    public Round(Integer id, WorkoutExercise workoutExercise, String weight, Integer reps, String descr, String cardio1, String cardio2, String cardio3, Date sessionDate, Date createDate) {
         this.id = id;
         this.workoutExercise = workoutExercise;
         this.weight = weight;
@@ -61,6 +63,8 @@ public class Round implements Serializable {
         this.cardio1 = cardio1;
         this.cardio2 = cardio2;
         this.cardio3 = cardio3;
+        this.sessionDate = sessionDate;
+        this.createDate = createDate;
     }
 
     public Date getCreateDate() {
