@@ -15,8 +15,4 @@ public final class WorkoutExerciseSpecification {
         return (root, quary, builder) -> builder.equal(root.get("workout"), id);
     }
 
-    public static Specification<WorkoutExercise> ordinalEquals(Integer ordinal) {
-        return (root, quary, builder) -> builder.equal(root.get("ordinal"), ordinal);
-    }
-
 }

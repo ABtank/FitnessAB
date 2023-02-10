@@ -214,10 +214,11 @@ angular.module('app').controller('workoutController', function ($scope, $http ,$
 
 
 // Init
-    $('#nav_header').find('li').removeClass('active');
-    $('#nav_workout').addClass('active');
+//     $('#nav_header').find('li').removeClass('active');
+//     $('#nav_workout').addClass('active');
     $scope.fillTable();    // <Workout
     $scope.fillExerciseTable();
     $scope.fillExerciseTable(null,true);
     $scope.fillModeTable();
+    $scope.navActive = "workout";
 });

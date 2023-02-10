@@ -71,12 +71,16 @@
             </ul>
         </div>
         <div class="container">
-            <form ng-submit="tryToAuth()">
-                <input type="text" name="username" ng-model="user.username">
-                <input type="password" name="password" ng-model="user.password">
-                <button class="btn btn-outline-primary" type="submit">Войти</button>
-            </form>
-            <button class="btn btn-outline-secondary" ng-click="tryToLogout()">Выйти</button>
+            <div class="pull-right" ng-show="authUser!=null && authUser.username !=null">
+                <button class="btn btn-outline-secondary" ng-click="tryToLogout()">{{authUser.username}} Выйти</button>
+            </div>
+            <div class="pull-right" ng-show="authUser==null">
+                <form ng-submit="tryToAuth()">
+                    <input type="text" name="username" ng-model="user.username">
+                    <input type="password" name="password" ng-model="user.password">
+                    <button class="btn btn-outline-primary" type="submit">Войти</button>
+                </form>
+            </div>
         </div>
     </nav>
 
@@ -91,6 +95,7 @@
     <script src="angular_page/type/type.js"></script>
     <script src="angular_page/category/category.js"></script>
     <script src="angular_page/workout/workout.js"></script>
+    <script src="angular_page/workout/workout_go.js"></script>
     <script src="angular_page/round/round.js"></script>
 </div>
 </body>

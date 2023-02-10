@@ -25,11 +25,11 @@
                 <td>{{user.login}}</td>
                 <td>{{user.email}}</td>
                 <td><p ng-repeat="role in user.roles">{{role}}</p></td>
-                <td><p>{{user.createDate}}</p>
-                    <p>{{user.modifyDate}}</p></td>
+                <td><p>{{user.createDate | date: 'yyyy-MM-dd HH:mm'}}</p>
+                    <p>{{user.modifyDate | date: 'yyyy-MM-dd HH:mm'}}</p></td>
                 <td scope="row" class="text-center" style="width: 10px;">
                     <div class="btn-group me-2" role="group" aria-label="First group">
-                        <a class="btn btn-success" href="!#/user/{{user.id}}">
+                        <a class="btn btn-success" href="#!/user/{{user.id}}">
                             <i class="bi bi-pencil-square"></i></a>
                     </div>
                 </td>

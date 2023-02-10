@@ -8,8 +8,8 @@ angular.module('app').controller('userController', function ($scope, $http ,$loc
 
         $http.get(contextPath + '/api/v1/user')
             .then(function (response) {
-                $scope.Users = response.data;
                 console.log(response.data);
+                $scope.Users = response.data;
             });
     };
     $scope.fillSelectRoles = function () {

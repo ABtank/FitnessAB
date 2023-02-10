@@ -143,10 +143,10 @@ public class WorkoutExerciseServiceImpl implements WorkoutExerciseService {
 
     private List<WorkoutExercise> changeOrdinalInWorkout(WorkoutExercise we, Workout workout) {
         List<WorkoutExercise> all = workoutExerciseRepository.findByWorkoutEquals(workout);
-        all = all.stream().sorted(Comparator.comparingInt(WorkoutExercise::getOrdinal)).toList();
+        all = all.stream().sorted(Comparator.comparingInt(WorkoutExercise::getOrdinal)).collect(toList());
         if (we.getOrdinal() < 1) we.setOrdinal(1);
         if (we.getOrdinal() > all.size()) we.setOrdinal(all.size());
-        all = all.stream().filter(w -> !Objects.equals(w.getId(), we.getId())).toList();
+        all = all.stream().filter(w -> !Objects.equals(w.getId(), we.getId())).collect(toList());
         all.add(we.getOrdinal()-1, we);
         for (int i = 0; i < all.size(); i++) {
             all.get(i).setOrdinal(i+1);

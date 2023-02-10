@@ -1,0 +1,173 @@
+<div>
+  <div class="row justify-content-center">
+    <h3>Тренировка {{Workout.name}}</h3>
+  </div>
+
+  <div class="row justify-content-between">
+    <div class="col-md-6">
+
+      <!--            TABLE WE-->
+      <div class="row justify-content-between">
+        <div class="col-md-12">
+          <h3>Упражнения в workout</h3>
+          <div>
+            <nav aria-label="...">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" ng-click="fillWorkoutExerciseTable()" tabindex="-1">First</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" ng-click="fillWorkoutExerciseTable(WorkoutExercises.number)"
+                     tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item" ng-class="{active : pageIndex == (WorkoutExercises.number+1)}"
+                    ng-repeat="pageIndex in PaginationWorkoutExercises">
+                  <a class="page-link"
+                     ng-click="fillWorkoutExerciseTable(pageIndex)">{{pageIndex}}</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" ng-click="fillWorkoutExerciseTable(WorkoutExercises.number+2)">Next</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link"
+                     ng-click="fillWorkoutExerciseTable(WorkoutExercises.totalPages)">Last</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <table id="workoutExerciseTable" class="table table-bordered table-hover display">
+            <thead>
+            <tr>
+              <td>№</td>
+              <td>Упражнение</td>
+              <td>Тип</td>
+              <td>Descr</td>
+              <td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="workoutExercise in WorkoutExercises.content"
+                ng-class="{'table-primary': workoutExercise.exerciseId==Exercise.id}">
+              <td>{{workoutExercise.ordinal}}</td>
+              <td>{{workoutExercise.exerciseName}}</td>
+              <td>{{workoutExercise.modeName}}</td>
+              <td>{{workoutExercise.descr}}</td>
+              <td class="text-center" style="width: 10px;">
+                <div class="btn-group me-2" role="group" aria-label="First group">
+                  <a class="btn"
+                     ng-class="{'btn-outline-secondary': workoutExercise.exerciseId!=Exercise.id, 'btn-primary': workoutExercise.exerciseId==Exercise.id}"
+                     ng-click="getWorkoutExerciseById(workoutExercise.id)">
+                    <i ng-class="{'bi-pencil-square': workoutExercise.exerciseId==Exercise.id,'bi-square': workoutExercise.exerciseId!=Exercise.id}"></i></a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--        CREATE ROUND-->
+    <div class="col-md-6">
+
+      <div class="row justify-content-between">
+        <div class="col-md-12">
+          <h3>Добавить Раунд в упражнение {{Exercise.name}}</h3>
+          <form novalidate ng-submit="submitRound()">
+            <div class="form-group">
+              <input type="hidden" ng-model="Round.id" id="roundId">
+              <div ng-show="!Exercise.isCardio">
+                <label for="roundWeight">Weight</label>
+                <input class="form-control" type="text" ng-model="Round.weight" id="roundWeight">
+                <label for="roundReps">Reps</label>
+                <input class="form-control" type="text" ng-model="Round.reps" id="roundReps">
+              </div>
+              <div ng-show="Exercise.isCardio">
+                <label for="roundCardio1">{{Exercise.cardioName1}}</label>
+                <input class="form-control" type="text" ng-model="Round.cardio1" id="roundCardio1">
+                <label for="roundCardio2">{{Exercise.cardioName2}}</label>
+                <input class="form-control" type="text" ng-model="Round.cardio2" id="roundCardio2">
+                <label for="roundCardio3">{{Exercise.cardioName3}}</label>
+                <input class="form-control" type="text" ng-model="Round.cardio3" id="roundCardio3">
+              </div>
+              <label for="RoundDescr">Descr</label>
+              <textarea class="form-control" rows="5" type="text" ng-model="Round.descr"
+                        id="RoundDescr"></textarea>
+              <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Сохранить</button>
+              </div>
+            </div>
+          </form>
+          <div>
+            <nav aria-label="...">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" ng-click="fillRoundTable()" tabindex="-1">First</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" ng-click="fillRoundTable(Rounds.number)"
+                     tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item" ng-class="{active : pageIndex == (Rounds.number+1)}"
+                    ng-repeat="pageIndex in PaginationRounds">
+                  <a class="page-link"
+                     ng-click="fillRoundTable(pageIndex)">{{pageIndex}}</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" ng-click="fillRoundTable(Rounds.number+2)">Next</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link"
+                     ng-click="fillRoundTable(Rounds.totalPages)">Last</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <table id="roundTable" class="table table-bordered table-hover display">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th ng-show="!Exercise.isCardio">weight</th>
+              <th ng-show="!Exercise.isCardio">reps</th>
+              <th ng-show="Exercise.isCardio">{{Exercise.cardioName1}}</th>
+              <th ng-show="Exercise.isCardio">{{Exercise.cardioName2}}</th>
+              <th ng-show="Exercise.isCardio">{{Exercise.cardioName3}}</th>
+              <th>sessionDate</th>
+              <th>createDate</th>
+              <th>descr</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="round in Rounds.content"
+                ng-class="{'table-primary': round.id==Round.id,'table-secondary': RoundsSessions.get(round.sessionDate).indexOf(round)==0 && round.id!=Round.id}"
+            >
+              <td >{{RoundsSessions.get(round.sessionDate).indexOf(round)+1}}</td>
+              <td ng-show="!Exercise.isCardio">{{round.weight}}</td>
+              <td ng-show="!Exercise.isCardio">{{round.reps}}</td>
+              <td ng-show="Exercise.isCardio">{{round.cardio1}}</td>
+              <td ng-show="Exercise.isCardio">{{round.cardio2}}</td>
+              <td ng-show="Exercise.isCardio">{{round.cardio3}}</td>
+              <td><p>{{round.sessionDate | date: 'yyyy-MM-dd'}}</p></td>
+              <td><p>{{round.createDate | date: 'HH:mm'}}</p></td>
+              <td><p>{{round.descr}}</p></td>
+              <td scope="row" class="text-center" style="width: 10px;">
+                <div class="btn-group me-2" role="group" aria-label="First group">
+                  <a class="btn" ng-click="fillFormRound(round.id)"
+                     ng-class="{'btn-outline-secondary': round.id!=Round.id, 'btn-primary': round.id==Round.id}"
+                  >
+                    <i ng-class="{'bi-pencil-square': round.id==Round.id,'bi-square': round.id!=Round.id}"></i></a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row justify-content-between">
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

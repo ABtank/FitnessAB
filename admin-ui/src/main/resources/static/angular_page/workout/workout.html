@@ -25,10 +25,10 @@
                 <td>{{workout.name}}</td>
                 <td>{{workout.descr}}</td>
                 <td>{{workout.creatorLogin}}</td>
-                <td>{{workout.createDate}}</td>
+                <td>{{workout.createDate | date: 'yyyy-MM-dd HH:mm'}}</td>
                 <td class="text-center" style="width: 10px;">
                     <div class="btn-group me-2" role="group" aria-label="First group">
-                        <a class="btn btn-success" href="!#/workout/{{workout.id}}">
+                        <a class="btn btn-success" href="#!/workout/{{workout.id}}">
                             <i class="bi bi-pencil-square"></i></a>
                         <a class="btn btn-warning" ng-click="setUpdWorkout(workout.id)">
                             <i class="bi bi-pencil-square"></i></a>

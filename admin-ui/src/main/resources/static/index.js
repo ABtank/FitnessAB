@@ -40,6 +40,10 @@
                 templateUrl: 'angular_page/round/round.html',
                 controller: 'roundController'
             })
+            .when('/workout/:id', { //    http://localhost:8189/fitnessab/index.html#!/workout/id
+                templateUrl: 'angular_page/workout/workout_go.html',
+                controller: 'workoutGoController'
+            })
             .when('/user', {
                 templateUrl: 'angular_page/user/user.html',
                 controller: 'userController'

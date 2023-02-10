@@ -8,11 +8,11 @@
                 <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
             </div>
         </div>
-        <table id="userTable" class="table table-bordered table-hover display">
+        <table id="roundTable" class="table table-bordered table-hover display">
             <thead>
             <tr>
                 <td>#</td>
-                <td>workout_exercise_id</td>
+                <td>w_e_id</td>
                 <td>exercise</td>
                 <td>weight</td>
                 <td>reps</td>
@@ -26,7 +26,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="round in Rounds">
+            <tr ng-repeat="round in Rounds.content">
                 <td>{{round.id}}</td>
                 <td>{{round.workoutExerciseId}}</td>
                 <td>{{round.exercise}}</td>
@@ -35,12 +35,12 @@
                 <td>{{round.cardio1}}</td>
                 <td>{{round.cardio2}}</td>
                 <td>{{round.cardio3}}</td>
-                <td><p>{{round.sessionDate}}</p></td>
-                <td><p>{{round.createDate}}</p></td>
+                <td><p>{{round.sessionDate | date: 'yyyy-MM-dd HH:mm'}}</p></td>
+                <td><p>{{round.createDate | date: 'yyyy-MM-dd HH:mm'}}</p></td>
                 <td><p>{{round.descr}}</p></td>
                 <td scope="row" class="text-center" style="width: 10px;">
                     <div class="btn-group me-2" role="group" aria-label="First group">
-                        <a class="btn btn-success" href="!#/round/{{round.id}}">
+                        <a class="btn btn-success" href="#!/round/{{round.id}}">
                             <i class="bi bi-pencil-square"></i></a>
                     </div>
                 </td>
