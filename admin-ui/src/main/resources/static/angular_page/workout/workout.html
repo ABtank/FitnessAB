@@ -224,6 +224,22 @@
             </div>
             <div class="row justify-content-between">
                 <div class="col-md-12">
+                    <form ng-submit="fillExerciseTable()">
+                        <div class="form-group col-md-12">
+                            <label for="elementId">Filter</label>
+                            <div class="input-group mb-12">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-danger" type="button" id="button-clear_filter"
+                                            ng-click="clearExerciseFilter()"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-outline-success" type="submit" id="button-filter"><i
+                                        class="bi bi-filter"></i></button>
+                                </div>
+                                <input class="custom-select" ng-model="filter.name_filter" id="name_filter">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12">
                     <h3>Добавить упражнение из списка</h3>
                     <div>
                         <nav aria-label="...">

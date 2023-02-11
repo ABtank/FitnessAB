@@ -55,6 +55,11 @@ angular.module('app').controller('workoutController', function ($scope, $http ,$
             });
     };
 
+    $scope.clearExerciseFilter = function () {
+        $scope.filter = null;
+        $scope.fillExerciseTable();
+    };
+
     function generatePageIndex(data) {
         const startPage = (data.number < 1) ? 1 : data.number;
         const endPage = (data.number + 2 > data.totalPages) ? data.totalPages : data.number + 2;
@@ -214,8 +219,8 @@ angular.module('app').controller('workoutController', function ($scope, $http ,$
 
 
 // Init
-//     $('#nav_header').find('li').removeClass('active');
-//     $('#nav_workout').addClass('active');
+    $('#nav_header').find('li').removeClass('active');
+    $('#nav_workout').addClass('active');
     $scope.fillTable();    // <Workout
     $scope.fillExerciseTable();
     $scope.fillExerciseTable(null,true);
