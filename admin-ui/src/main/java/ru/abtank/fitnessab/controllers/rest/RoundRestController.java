@@ -80,9 +80,9 @@ public class RoundRestController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id) {
-        LOGGER.info("-=delete(@PathVariable Integer id)=-");
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Integer id) {
+        LOGGER.info("-=delete(@PathVariable Integer id)={}",id);
         roundService.deleteById(id);
-        return new ResponseEntity<>("Round deleted", HttpStatus.OK);
     }
 }

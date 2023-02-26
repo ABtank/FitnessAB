@@ -31,33 +31,45 @@ angular.module('app').controller('workoutGoController', function ($scope, $http 
         let data= {
             workoutId: $scope.Workout?.id,
             workoutExerciseId: $scope?.WorkoutExercise?.id,
-            page: pageIndex, size: 10
+            page: pageIndex, size: 20
         };
         $http({
             url: contextPath + '/api/v1/round',
             method: 'GET',
             params: data
         }).then(function (response) {
-            $scope.Rounds = response.data;
-            console.log(response.data)
-            $scope.RoundsSessions = new Map();
-            // if (pageIndex === 1) {
-                new Set(response.data.content.map(x => x.sessionDate)).forEach(session => {
+            if(response.status === 200) {
+                $scope.Rounds = response.data;
+                console.log(response.data)
+                $scope.RoundsSessions = new Map();
+                let sessionDates = Array.from(new Set(response.data.content.map(x => x.sessionDate)));
+                sessionDates.forEach(session => {
                     $scope.RoundsSessions.set(
                         session, response.data.content.filter(r => r.sessionDate === session));
                 });
-                console.log($scope.RoundsSessions);
-            // }
-            if(response.data.numberOfElements === 0 && response.data.totalPages < pageIndex ){
-                $scope.fillRoundTable(--pageIndex);
-            }
-            if(response.data.content.length > 0 && pageIndex === 1) {
-                $scope.Round = Object.assign({},response.data.content[0]);
-                $scope.Round.id = null;
-            }
-            $scope.RoundsPage = pageIndex;
+                if (response.data.numberOfElements === 0 && response.data.totalPages < pageIndex) {
+                    $scope.fillRoundTable(--pageIndex);
+                }
+                let lustRound = Object.assign({}, response.data.content[0]);
+                if (response.data.content.length > 0 && pageIndex === 1) {
+                    let session = new Date(sessionDates[0]);
+                    let endSession = new Date();
+                    endSession.setTime(endSession.getTime() - (3 * 60 * 60 * 1000));
+                    if (sessionDates.length > 1 && session > endSession) {
+                        let lustRoundNumber = $scope.RoundsSessions.get(sessionDates[0]).length;
+                        if (lustRoundNumber < $scope.RoundsSessions.get(sessionDates[1]).length) {
+                            lustRound = Object.assign({}, $scope.RoundsSessions.get(sessionDates[1])[lustRoundNumber]);
+                        } else {
+                            lustRound = Object.assign({}, $scope.RoundsSessions.get(sessionDates[1]).at(-1));
+                        }
+                    }
+                    $scope.Round = lustRound;
+                    $scope.Round.id = null;
+                }
+                $scope.RoundsPage = pageIndex;
                 $scope.PaginationRounds = generatePageIndex($scope.Rounds);
-            });
+            }
+        });
     };
 
     function generatePageIndex(data) {
@@ -135,11 +147,10 @@ angular.module('app').controller('workoutGoController', function ($scope, $http 
     };
 
     $scope.deleteRound = function (id) {
-        $scope.saveWorkoutExercise = null;
-        $("#saveWorkoutExerciseId").val(null);
         $http.delete(contextPath + '/api/v1/round/' + id)
             .then(function (response) {
-                $scope.fillRoundTable($scope.RoundsPage);
+                console.log(response);
+                $scope.fillRoundTable();
             });
     }
 

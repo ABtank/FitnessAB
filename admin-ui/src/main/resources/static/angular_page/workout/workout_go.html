@@ -156,6 +156,8 @@
                      ng-class="{'btn-outline-secondary': round.id!=Round.id, 'btn-primary': round.id==Round.id}"
                   >
                     <i ng-class="{'bi-pencil-square': round.id==Round.id,'bi-square': round.id!=Round.id}"></i></a>
+                  <a class="btn btn-danger" ng-click="deleteRound(round.id)">
+                    <i class="bi bi-trash"></i></a>
                 </div>
               </td>
             </tr>
